@@ -32,7 +32,8 @@ class SSHServerHandler(paramiko.ServerInterface):
     
     def check_auth_password(self, username, password):
         self.username = username
-
+        self.password = password
+        self.llm_model.add_system_prompt('user-name=' + self.username + ' passowrd=' + self.password + '.')
         # save login info to a file
         LOGFILE_LOCK.acquire()
         try:
@@ -47,16 +48,21 @@ class SSHServerHandler(paramiko.ServerInterface):
     
     def handle_shell(self):
         log_filename = f"logs/log_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-    
+        response = self.llm_model.answer('{generate prompt for input}', self.log_history)
+        #self.channel.sendall(f'{response}')
         while not self.channel.exit_status_ready():
             try:
                 # Receive user input
-                self.channel.sendall(f'{self.username}@localhost:~/ $')
+                # self.channel.sendall(f'{self.username}@localhost:~/ $')
                 command = self.channel.recv(1024).decode("utf-8").strip()
+                
                 print("CMD:", command)
 
                 # Produce output with LLM
                 response = self.llm_model.answer(command, self.log_history)
+                print(response)
+                if response == 'exit' or response == 'logout':
+                    break
                 
                 # Save the logs
                 self.log_history.append(command)
@@ -66,7 +72,7 @@ class SSHServerHandler(paramiko.ServerInterface):
                 log_file.close()
 
                 # Send response
-                self.channel.sendall(f'{response}\n')
+                self.channel.sendall(f'{response} ')
 
             except Exception as e:
                 print("Channel closed:", e)

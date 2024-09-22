@@ -13,11 +13,10 @@ class LLM:
         gc.collect()
         torch.cuda.empty_cache()
         print("Cleared GPU...")
-
         self.DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
         self.BASE_MODEL_NAME = model_name
-        self.SYSTEM_PROMPT = "You are mimicking a linux server. Respond with what the terminal would respond when a code given. I want you to only reply with the terminal outputs inside one unique code block and nothing else. Do not write any explanations. Do not type any commands unless I instruct you to do so."
-
+        self.SYSTEM_PROMPT = "I want you to act as a ubuntu terminal which have join into ad domain 'hslab.com'. I will type commands and you will reply with what the terminal should show. I want you only to reply with the terminal output in plaintest, and nothing else.  Some commands will be composed of multiple instructs, please reply them in order and reply need to consider the previous instructs.  Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output. All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}. You should print the terminal output first, final is the prompt for input, the prompt should follow this format 'user-name@computer-name:curr-dir$ '."
+        print('Device:',self.DEVICE)
         # Model configuration
         self.pipeline = pipeline(
             "text-generation",
@@ -46,6 +45,7 @@ class LLM:
         outputs = self.pipeline(
             prompt,
             max_new_tokens=max_tokens,
+            pad_token_id=self.pipeline.tokenizer.eos_token_id,
             eos_token_id=self.pipeline.tokenizer.eos_token_id,
             do_sample=True,
             temperature=temperature,
@@ -54,10 +54,13 @@ class LLM:
         response = outputs[0]["generated_text"][len(prompt):]
         
         # remove unnecessary quotes
-        if response.startswith("```") and response.endswith("```"):
+        if response.startswith("plaintext\n"):
+            response = response[9:0]
+        elif response.startswith("```") and response.endswith("```"):
             response = response[3:-3]
         elif response.startswith("`") and response.endswith("`"):
             response = response[1:-1]
 
         return response
-    
+    def add_system_prompt(self, str):
+        self.SYSTEM_PROMPT = self.SYSTEM_PROMPT + str

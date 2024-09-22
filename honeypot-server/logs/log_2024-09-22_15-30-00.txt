@@ -1,0 +1,9 @@
+@CMD: 
+@RESP: user-name@computer-name:curr-dir$ 
+
+@CMD: ls
+@RESP: Desktop  Documents  Downloads  Music  Pictures  Videos
+
+@CMD: 
+@RESP: user-name@computer-name:curr-dir$ 
+

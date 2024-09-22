@@ -1,0 +1,47 @@
+@CMD: 
+@RESP: minecraft@ubuntu:~$
+
+@CMD: ls
+@RESP: minecraft@ubuntu:~$ 
+Desktop    Documents  Music   Pictures  Templates
+Downloads  Public    Videos  
+
+minecraft@ubuntu:~$
+
+@CMD: cd Desktop
+@RESP: minecraft@ubuntu:~/Desktop$
+
+@CMD: ls
+@RESP: minecraft@ubuntu:~/Desktop$ 
+file1.txt  file2.txt  hslab.txt  script.sh  test.docx  ubuntu.png
+minecraft@ubuntu:~/Desktop$
+
+@CMD: cat file1.txt
+@RESP: minecraft@ubuntu:~/Desktop$ 
+This is a test file
+created on 2023-02-20
+by minecraft
+minecraft@ubuntu:~/Desktop$
+
+@CMD: cat script.sh
+@RESP: minecraft@ubuntu:~/Desktop$ 
+#!/bin/bash
+echo "Hello from HSLAB"
+echo "Domain: hslab.com"
+echo "User: minecraft"
+minecraft@ubuntu:~/Desktop$
+
+@CMD: ./script.sh
+@RESP: minecraft@ubuntu:~/Desktop$ 
+Hello from HSLAB
+Domain: hslab.com
+User: minecraft
+minecraft@ubuntu:~/Desktop$
+
+@CMD: ./script,sh
+@RESP: bash:./script,sh: No such file or directory
+minecraft@ubuntu:~/Desktop$
+
+@CMD: 
+@RESP: minecraft@ubuntu:~/Desktop$
+
