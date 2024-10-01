@@ -45,7 +45,7 @@ class DQN(object):
         self.target_replace_iter = target_replace_iter
         self.memory_capacity = memory_capacity
 
-    def choose_action(self):
+    def choose_action(self, state):
         x = torch.unsqueeze(torch.FloatTensor(state), 0)
 
         # epsilon-greedy
@@ -57,7 +57,7 @@ class DQN(object):
 
         return action
 
-    def store_transition(self):
+    def store_transition(self, state, action, reward, next_state):
         # 打包 experience
         transition = np.hstack((state, [action, reward], next_state))
 
@@ -74,11 +74,27 @@ class DQN(object):
         b_action = torch.LongTensor(b_memory[:, self.n_states:self.n_states+1].astype(int))
         b_reward = torch.FloatTensor(b_memory[:, self.n_states+1:self.n_states+2])
         b_next_state = torch.FloatTensor(b_memory[:, -self.n_states:])
-
+        '''
         # 計算現有 eval net 和 target net 得出 Q value 的落差
         q_eval = self.eval_net(b_state).gather(1, b_action) # 重新計算這些 experience 當下 eval net 所得出的 Q value
         q_next = self.target_net(b_next_state).detach() # detach 才不會訓練到 target net
         q_target = b_reward + self.gamma * q_next.max(1)[0].view(self.batch_size, 1) # 計算這些 experience 當下 target net 所得出的 Q value
+        loss = self.loss_func(q_eval, q_target)
+        '''
+        # 計算現有 eval net 和 target net 得出 Q value 的落差
+        q_eval = self.eval_net(b_state).gather(1, b_action)  # eval net 所得出的 Q value
+
+        # **DDQN 核心修改**
+        # 使用 eval_net 選擇下一步的動作
+        next_action = self.eval_net(b_next_state).max(1)[1].view(self.batch_size, 1)
+        
+        # 使用 target_net 計算這個動作的 Q 值
+        q_next = self.target_net(b_next_state).gather(1, next_action).detach()
+
+        # 計算目標 Q 值
+        q_target = b_reward + self.gamma * q_next
+
+        # 計算 loss
         loss = self.loss_func(q_eval, q_target)
 
         # Backpropagation
