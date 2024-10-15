@@ -48,8 +48,10 @@ class SSHServerHandler(paramiko.ServerInterface):
     
     def handle_shell(self):
         log_filename = f"logs/log_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-        response = self.llm_model.answer('{generate prompt for input}', self.log_history)
-        #self.channel.sendall(f'{response}')
+        response = self.llm_model.answer('\n', self.log_history)
+        self.channel.sendall(f'{response}')
+        self.log_history.append('\n')
+        self.log_history.append(response)
         while not self.channel.exit_status_ready():
             try:
                 # Receive user input

@@ -1,6 +1,8 @@
 import gym
 from gym import spaces
-
+import numpy as np
+import paramiko
+import time
 class HoneypotEnv(gym.Env):
     def __init__(self, llm):
         super(HoneypotEnv, self).__init__()
@@ -8,23 +10,26 @@ class HoneypotEnv(gym.Env):
         self.observation_space = spaces.Box(low=0, high=1, shape=(12,), dtype=np.float32)
         self.state = 1
         self.command_buffer = []
+        self.tactic_buffer = []
         self.max_tactic = 1
         self.histroy = []
 
         self.llm = llm
 
-    def reset(self):
-        self.state = 1
-        self.command_buffer = []
+    def reset(self, lifecycle):
+        self.state = np.zeros(12)
+        self.state[0] = 1
+        self.command_buffer = ['\n']
         self.max_tactic = 1
         self.histroy = []
+        self.lifecycle = lifecycle
         return self.state
 
     def step(self, action):
         reward = 0
         done = False
         
-        if self.histroy = []:
+        if self.histroy == []:
             self.histroy.append('ls')
         
         # 將 action 與 command 送入 LLM honeypot 生成輸出
@@ -53,6 +58,34 @@ class HoneypotEnv(gym.Env):
 
         return self.state, reward, done, {}
 
+    def step2(self, action)
+        reward = 0
+        done = False
+
+        ## 從 command buffer 取出 command 執行
+        for command in self.command_buffer:
+            system_response = self.llm.answer(action, command, self.histroy)
+            self.histroy.append(command)
+            self.histroy.append(system_response)
+        
+        ## 如果判斷系統輸出是 honeypot 或出現錯誤輸出就結束
+        if self.llm.detect_honeypot(self.histroy) or self.lifecycle = []:
+            done = True
+            return 0, -1, done, {}
+
+        ## 取得下一個 technique 與下一次要執行的 command set
+        technique = self.lifecycle[0]
+        del lifecycle[0]
+        self.command_buffer = get_command_set(technique)
+        self.state = self.llm.next_state(self.command_buffer, self.histroy)
+        reward = self.state
+
+        return self.state, reward, done, {}
+
+    def get_command_set(self, technique):
+        
+
+    '''
     def _next_state(self, action):
         message = self.histroy
         message.append({"role":"user","content": '{please determine the tactic when i input this command "' + command + '"}'})
@@ -63,7 +96,7 @@ class HoneypotEnv(gym.Env):
         )
         tactic = Completion.choices[0].message.content
         return tactic
-
+    
     def _attack_technique(self, tactic_history, system_response):
         content = ''
         for item in self.histroy:
@@ -114,3 +147,5 @@ class HoneypotEnv(gym.Env):
         )
         system_response = Completion.choices[0].message.content
         return system_response
+    
+    '''
