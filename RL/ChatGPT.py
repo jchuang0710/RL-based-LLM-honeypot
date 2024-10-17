@@ -7,7 +7,7 @@ class ChatGPT:
     def __init__(self, model_name="gpt-4o-mini"):
         # Model configuration
         self.BASE_MODEL_NAME = model_name
-        self.SYSTEM_PROMPT = "I want you to act as a ubuntu terminal which have join into ad domain 'hslab.com'.Please set the relevant parameters randomly.  I will type commands and you will reply with what the terminal should show. I want you only to reply with the terminal output in plaintest, and nothing else. Some commands will be composed of multiple instructs, please reply them in order and reply need to consider the previous instructs.  Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output. All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}. You should print the terminal output first, final line is the prompt for input, the prompt should follow this format 'user-name@computer-name:curr-dir$ '."
+        self.SYSTEM_PROMPT = "I want you to act as a ubuntu terminal which have join into ad domain 'hslab.com' which contain ten domain computer and 20 domain user.Please set the relevant parameters randomly.  I will type commands and you will reply with what the terminal should show. I want you only to reply with the terminal output in plaintest, and nothing else.You have already install all atomic red team relatvie file under path '/home/atomic'. Some commands will be composed of multiple instructs, please reply them in order and reply need to consider the previous instructs.  Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output. All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}."
         
         # 記得金鑰不要洩漏出去
         self.llm = OpenAI(api_key = api_key)
@@ -23,9 +23,15 @@ class ChatGPT:
                     message_history.append({"role": "user", "content": item})
                 else:
                     message_history.append({"role": "assistant", "content": item})
-
-        user_prompt = message_history + [{"role": "user", "content": action + query}]
-        
+        tmp = action
+        if type(query) == 'list':
+            for item in query:
+                tmp = tmp + item
+        else:
+            tmp = action + query
+        #print(tmp)
+        user_prompt = message_history + [{"role": "user", "content": tmp}]
+        #print(message_history)
         outputs = self.llm.chat.completions.create( 
             model=self.BASE_MODEL_NAME,
             messages=user_prompt
@@ -49,13 +55,13 @@ class ChatGPT:
     def detect_honeypot(self, log_history=[], max_tokens=4096, temperature=0.01, top_p=0.8):
 
         message_history = [{"role": "system", "content": "According to the system input and output detect the system is honeypot or not,just reply yes or no, don't explain why."}]
-        
+        message = "According to the system input and output detect the system is honeypot or not,just reply yes or no, don't explain why.\n"
         if len(log_history) > 0:
             for i, item in enumerate(log_history):
                 if i % 2 == 0:
-                    message.append("input: "+ item + "\n")
+                    message = message + "input: "+ item + "\n"
                 else:
-                    message.append("output: "+ item + "\n")
+                    message = message + "output: "+ item + "\n"
 
         user_prompt = message_history + [{"role": "user", "content": message}]
         
@@ -73,15 +79,24 @@ class ChatGPT:
 
     def next_state(self, action, query, log_history=[], max_tokens=4096, temperature=0.01, top_p=0.8):
         
-        message_history = [{"role": "system", "content": "Please analysis current tactic state about current input ,just tactic ID, don't explain why."}]
-        
+        message_history = [{"role": "system", "content": "Please analysis current state is in which MITRE tactic ID when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Please reply in this format 'Tactic ID: TA0001', don't explain why and don't reply anything else."}]
+        message = "Please analysis current state is in which MITRE tactic ID when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Please reply in this format 'Tactic ID: TA0001', don't explain why and don't reply anything else.\n"
         if len(log_history) > 0:
             for i, item in enumerate(log_history):
                 if i % 2 == 0:
-                    message.append("past_input: "+ item + "\n")
+                    message = message + "past_input: "+ item + "\n"
 
-        message.append("current input: "+ query + "\n")
-        user_prompt = message_history + [{"role": "user", "content": message}]
+        #message.append("current input: "+ query + "\n")
+        #print(query)
+        tmp = ""
+        if type(query) == 'list':
+            for item in query:
+                tmp = tmp + item
+        else:
+            tmp = query
+        #print(type(tmp))
+        tmp = message + "current command: "+ str(tmp) + "\n"
+        user_prompt = [{"role": "user", "content": tmp}] 
         
         outputs = self.llm.chat.completions.create( 
             model=self.BASE_MODEL_NAME,
@@ -89,5 +104,35 @@ class ChatGPT:
         ) 
 
         response = outputs.choices[0].message.content
+        #print(response)
+        return self.translate_tactic_id(response)
 
-        return response
+    def translate_tactic_id(self, response):
+        response = response[-6:]
+        if 'TA0001' == response:
+            return 1
+        elif 'TA0002' == response:
+            return 2
+        elif 'TA0003' == response:
+            return 3
+        elif 'TA0004' == response:
+            return 4
+        elif 'TA0005' == response:
+            return 5
+        elif 'TA0006' == response:
+            return 6
+        elif 'TA0007' == response:
+            return 7
+        elif 'TA0008' == response:
+            return 8
+        elif 'TA0009' == response:
+            return 9
+        elif 'TA0011' == response:
+            return 10
+        elif 'TA0010' == response:
+            return 11
+        elif 'TA0040' == response:
+            return 12
+        else:
+            return 1
+

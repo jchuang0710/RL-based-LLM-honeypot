@@ -1,8 +1,7 @@
 import gym
 from gym import spaces
 import numpy as np
-import paramiko
-import time
+
 class HoneypotEnv(gym.Env):
     def __init__(self, llm):
         super(HoneypotEnv, self).__init__()
@@ -16,16 +15,16 @@ class HoneypotEnv(gym.Env):
 
         self.llm = llm
 
-    def reset(self, lifecycle):
-        self.state = np.zeros(12)
+    def reset(self, lifecycle_command):
+        self.state = np.zeros(self.observation_space.shape[0])
         self.state[0] = 1
-        self.command_buffer = ['\n']
+        self.command_buffer = lifecycle_command
         self.max_tactic = 1
         self.histroy = []
-        self.lifecycle = lifecycle
+        #self.lifecycle = lifecycle
         return self.state
 
-    def step(self, action):
+    '''def step(self, action):
         reward = 0
         done = False
         
@@ -56,34 +55,42 @@ class HoneypotEnv(gym.Env):
         reward = self.state
         self.histroy.append(command)
 
-        return self.state, reward, done, {}
+        return self.state, reward, done, {}'''
 
-    def step2(self, action)
+    def step2(self, action):
         reward = 0
         done = False
 
-        ## 從 command buffer 取出 command 執行
-        for command in self.command_buffer:
-            system_response = self.llm.answer(action, command, self.histroy)
-            self.histroy.append(command)
-            self.histroy.append(system_response)
+        # 從 command buffer 取出 command 執行
+        #
+        system_response = self.llm.answer(action, self.command_buffer[0], self.histroy)
+        self.histroy.append(self.command_buffer[0])
+        self.histroy.append(system_response)
+        #print(self.command_buffer[0])
+        #print(system_response)
+        del self.command_buffer[0]
         
+        self.next_state = np.zeros(12)
+        self.next_state[0] = 1
         ## 如果判斷系統輸出是 honeypot 或出現錯誤輸出就結束
-        if self.llm.detect_honeypot(self.histroy) or self.lifecycle = []:
+        if self.llm.detect_honeypot(self.histroy) or self.command_buffer == []:
             done = True
-            return 0, -1, done, {}
+            return self.next_state, -1, done, {}
 
-        ## 取得下一個 technique 與下一次要執行的 command set
-        technique = self.lifecycle[0]
-        del lifecycle[0]
-        self.command_buffer = get_command_set(technique)
-        self.state = self.llm.next_state(self.command_buffer, self.histroy)
-        reward = self.state
+        ## 取得下一個 command 的 tactic 作為狀態
+        id = self.llm.next_state(self.command_buffer[0], self.histroy)
+        #print('id:', id)
+        self.next_state = np.zeros(self.observation_space.shape[0])
+        self.next_state[id-1] = 1
 
-        return self.state, reward, done, {}
+        reward = id
+        if self.max_tactic < id:
+            self.max_tactic = id
 
-    def get_command_set(self, technique):
-        
+        return self.next_state, reward, done, {}
+
+    '''def get_command_set(self, technique):
+        pass'''
 
     '''
     def _next_state(self, action):

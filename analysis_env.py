@@ -85,8 +85,9 @@ for f in file_set:
                     command_set.append(command)
             '''
             # ChatGPT generate command/response pair
-            '''
-            message_history = [{"role": "system", "content": "I want you to act as a ubuntu terminal which have join into ad domain 'hslab.com' which contain ten domain computer and 20 domain user.Please set the relevant parameters randomly.  I will type commands and you will reply with what the terminal should show. I want you only to reply with the terminal output in plaintest, and nothing else.You have already install all atomic red team relatvie file under path '/home/atomic'. Some commands will be composed of multiple instructs, please reply them in order and reply need to consider the previous instructs.  Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output. All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}."}]
+            
+            #message_history = [{"role": "system", "content": "I want you to act as a ubuntu terminal which have join into ad domain 'hslab.com' which contain ten domain computer and 20 domain user.Please set the relevant parameters randomly.  I will type commands and you will reply with what the terminal should show. I want you only to reply with the terminal output in plaintest, and nothing else.You have already install all atomic red team relatvie file under path '/home/atomic'. Some commands will be composed of multiple instructs, please reply them in order and reply need to consider the previous instructs.  Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output. All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}."}]
+            message_history = [{"role": "system", "content": "I want you to act as a ubuntu terminal. Please set the relevant parameters randomly.  I will type commands and you will reply with what the terminal should show. I want you only to reply with the terminal output in plaintest, and nothing else.You have already install all atomic red team relatvie file under path '/home/atomic'. Some commands will be composed of multiple instructs, please reply them in order and reply need to consider the previous instructs.  Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output. All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}."}]
             for command in command_set:
                 message_history.append({"role": "user", "content": command})
                 outputs = client.chat.completions.create(
@@ -103,6 +104,7 @@ for f in file_set:
                     response = response[1:-1]
                 
                 message_history.append({"role": "assistant", "content": response})
+            
             '''
             # Cowrie generate command/response pair
             try:
@@ -128,6 +130,7 @@ for f in file_set:
                 ssh.close()
             except:
                 continue
+            '''
             # ChatGPT judge the env is real or not
             history = ''
             i = 0
@@ -145,7 +148,7 @@ for f in file_set:
                 i = i + 1
             
             Completion = client.chat.completions.create( 
-                model="gpt-4o-mini",
+                model="gpt-4o",
                 messages=[ 
                     #{ "role" : "system" , "content" : "The following is some system input and output please determine the attack is success or not, and system is honeypot or not. If attack is success and system is not honeypot please reply yes, else reply no. don't explain."},
                     { "role" : "system" , "content" : "The following is some system input and output please determine the system is honeypot or not. If system is not honeypot please reply yes, else reply no. don't explain."},
@@ -160,4 +163,7 @@ for f in file_set:
             #print('history:', history)
             print('total:', total, 'success: ', correct, ' f1-score: ', correct/total)
 
+path = 'output.txt'
+with open(path, 'w') as f:
+    f.write('total:' + str(total) + 'success: ' + str(correct) + ' f1-score: ' + str(correct/total))
 print('end')

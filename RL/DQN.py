@@ -106,13 +106,12 @@ class DQN(object):
         q_target = b_reward + self.gamma * q_next
 
         # 計算 loss
-        loss = self.loss_func(q_eval, q_target)
+        self.loss = self.loss_func(q_eval, q_target)
 
         # Backpropagation
         self.optimizer.zero_grad()
-        loss.backward()
+        self.loss.backward()
         self.optimizer.step()
-
         # 每隔一段時間 (target_replace_iter), 更新 target net，即複製 eval net 到 target net
         self.learn_step_counter += 1
         if self.learn_step_counter % self.target_replace_iter == 0:
