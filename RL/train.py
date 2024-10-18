@@ -10,6 +10,7 @@ import pandas as pd
 import glob
 import random
 import torch
+random.seed(10)
 
 def replace_placeholders(data, input_arguments):
     # 使用正則表達式匹配 #{VAR_NAME} 的樣式
