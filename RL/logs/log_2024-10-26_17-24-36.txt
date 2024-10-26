@@ -1,0 +1,59 @@
+@CMD: ls
+@RESP: ls: cannot access 'degrade': No such file or directory
+user-name@computer-name:curr-dir$
+
+@CMD: ls
+@RESP: ls: cannot access 'degrade': No such file or directory
+user-name@computer-name:curr-dir$
+
+@CMD: ls
+@RESP: ls: cannot access 'degrade': No such file or directory
+user-name@computer-name:curr-dir$
+
+@CMD: uname -a
+@RESP: Linux computer-name 5.4.0-42-generic #46-Ubuntu SMP Fri Jul 3 18:05:13 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+user-name@computer-name:curr-dir$
+
+@CMD: curl -XGET "http://127.0.0.1/users/?id=SELECT+*+FROM+users";
+@RESP: curl: (7) Failed to connect to 127.0.0.1 port 80: Connection refused
+user-name@computer-name:curr-dir$
+
+@CMD: curl -XGET "http://127.0.0.1/users/?id=SELECT+*+FROM+users";
+@RESP: curl: (7) Failed to connect to 127.0.0.1 port 80: Connection refused
+user-name@computer-name:curr-dir$
+
+@CMD: curl -XGET "http://127.0.0.1/users/?id=SELECT+*+FROM+users";
+@RESP: curl: (7) Failed to connect to 127.0.0.1 port 80: Connection refused
+user-name@computer-name:curr-dir$
+
+@CMD: ping 8.8.8.8
+@RESP: ping: icmp open socket: Network is unreachable
+user-name@computer-name:curr-dir$
+
+@CMD: ping
+@RESP: user-name@computer-name:curr-dir$
+
+@CMD: ping 8.8.8.8
+@RESP: ping: icmp open socket: Network is unreachable
+user-name@computer-name:curr-dir$
+
+@CMD: ifconfig
+@RESP: eth0      Link encap:Ethernet  HWaddr 00:11:22:33:44:55  
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:123456 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:654321 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:12345678 (12.3 MB)  TX bytes:87654321 (87.6 MB)
+
+lo        Link encap:Local Loopback  
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:100 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:100 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:10000 (10.0 KB)  TX bytes:10000 (10.0 KB)
+
+user-name@computer-name:curr-dir$
+
+@CMD: 
+@RESP: user-name@computer-name:curr-dir$
+
