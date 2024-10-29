@@ -1,0 +1,1 @@
+Episode 0 finished after 5 timesteps, loss 0.0013378470903262496, total rewards 14 max tactic id 9

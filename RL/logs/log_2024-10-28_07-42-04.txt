@@ -1,0 +1,21 @@
+@CMD: ls
+@Action: 
+@RESP: bin  cdrom  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+
+root@ubuntu:~$
+
+@CMD: exit
+@Action: 
+@RESP: root@ubuntu:~$ exit
+exit
+
+root@ubuntu:~$ 
+
+root@ubuntu:~$ 
+
+root@hslab.com:~$
+
+@CMD: 
+@Action: 
+@RESP: root@hslab.com:~$
+

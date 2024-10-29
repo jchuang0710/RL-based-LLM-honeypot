@@ -10,6 +10,7 @@ import pandas as pd
 import glob
 import random
 import torch
+torch.set_num_threads(8) 
 random.seed(10)
 
 def replace_placeholders(data, input_arguments):
@@ -128,16 +129,17 @@ def get_lifecycle_command():
                 lifecycle_command.append(command)
     return lifecycle_command
 
-env = HoneypotEnv(ChatGPT())
+#env = HoneypotEnv(ChatGPT())
+env = HoneypotEnv(LLM("../models/Meta-Llama-3.1-8B-Instruct"))
 
-action_set = ["{ allow command execution }", "{ Restore to original state }", "{ Degrade the network speed }", "{ Block the network traffic }", "{ Change hardware setting }","{ Change output }","{ Change the file content }", "{ Change the access rights }"]
+action_set = ["", "{ Restore to original state }", "{ Degrade the network speed }", "{ Block the network traffic }", "{ Change hardware setting }","{ Change output }","{ Change the file content }", "{ Change the access rights }"]
 
 # Environment parameters
 n_actions = env.action_space.n
 n_states = env.observation_space.shape[0]
 
 # Hyper parameters
-n_hidden = 50
+n_hidden = 64
 batch_size = 32
 lr = 0.01                 # learning rate
 epsilon = 0.1             # epsilon-greedy
@@ -145,7 +147,7 @@ gamma = 0.9               # reward discount factor
 target_replace_iter = 100 # target network 更新間隔
 memory_capacity = 2000
 n_episodes = 10000
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 # 建立 DQN
 dqn = DQN(device, n_states, n_actions, n_hidden, batch_size, lr, epsilon, gamma, target_replace_iter, memory_capacity)
@@ -160,18 +162,21 @@ dqn = DQN(device, n_states, n_actions, n_hidden, batch_size, lr, epsilon, gamma,
 
 # 學習
 for i_episode in range(n_episodes):
-    print(i_episode)
+    print('episode: ',i_episode)
     t = 0
     rewards = 0
     tmp = get_lifecycle_command()
     while tmp == []:
         tmp = get_lifecycle_command()
     state = env.reset(tmp)
-
+    step = 0
     while True:
 
         # 可視化環境
         # env.render()
+
+        print('step: ',step)
+        step = step +1
 
         # 選擇 action
         # state 丟入，回傳 MITRE Engage Action

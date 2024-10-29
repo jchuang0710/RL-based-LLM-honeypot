@@ -6,7 +6,7 @@ class HoneypotEnv(gym.Env):
     def __init__(self, llm):
         super(HoneypotEnv, self).__init__()
         self.action_space = spaces.Discrete(8)  # 定義8個離散動作
-        self.observation_space = spaces.Box(low=0, high=1, shape=(12,), dtype=np.float32)
+        self.observation_space = spaces.Box(low=0, high=1, shape=(202,), dtype=np.float32)
         self.state = 1
         self.command_buffer = []
         self.tactic_buffer = []
@@ -70,7 +70,7 @@ class HoneypotEnv(gym.Env):
         #print(system_response)
         del self.command_buffer[0]
         
-        self.next_state = np.zeros(12)
+        self.next_state = np.zeros(self.observation_space.shape[0])
         self.next_state[0] = 1
         ## 如果判斷系統輸出是 honeypot 或出現錯誤輸出就結束
         if self.llm.detect_honeypot(self.histroy) or self.command_buffer == []:
@@ -78,14 +78,15 @@ class HoneypotEnv(gym.Env):
             return self.next_state, -1, done, {}
 
         ## 取得下一個 command 的 tactic 作為狀態
-        id = self.llm.next_state(self.command_buffer[0], self.histroy)
-        #print('id:', id)
+        tactic, technique = self.llm.next_state(self.command_buffer[0], self.histroy)
+        print('tactic:', tactic)
+        print('technique:', technique)
         self.next_state = np.zeros(self.observation_space.shape[0])
-        self.next_state[id-1] = 1
+        self.next_state[technique] = 1
 
-        reward = id
-        if self.max_tactic < id:
-            self.max_tactic = id
+        reward = tactic+1
+        if self.max_tactic < tactic + 1:
+            self.max_tactic = tactic + 1
 
         return self.next_state, reward, done, {}
 

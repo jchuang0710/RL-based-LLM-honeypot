@@ -37,7 +37,7 @@ class SSHServerHandler(paramiko.ServerInterface):
         self.event = threading.Event()
         self.llm_model = llm_model
         self.log_history = []
-        self.action_set = ["", "{ Restore to original state }", "{ Degrade the network speed }", "{ Block the network traffic }", "{ Change hardware setting }","{ Change output }","{ Change the file content }", "{ Change the access rights }"]
+        self.action_set = ["", "{ Restore to original state }", "{ Degrade the network speed }", "{ Block the network traffic }", "{ Change hardware setting of current command}","{ Change output of current command }","{ Change the file content of current command }", "{ Change the access rights of current command }"]
         self.dpn = dqn
 
     def check_channel_request(self, kind, channelID): 
