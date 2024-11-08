@@ -16,16 +16,16 @@ Toolkit:
 * pip install openpyxl
 * pip install accelerate
 
-Setting
-`export OPENAI_API_KEY=`
-
-RUN:
-* `python .RL/main.py` : can use ssh to connect
-* `python .RL/train.py` : use to train RL
+Setting:
+* `export OPENAI_API_KEY=`
 
 Setting for RUN by CPU:
 * `sudo sysctl vm.swappiness=10`
 * `device_map="auto”`
+
+RUN:
+* `python .RL/main.py` : can use ssh to connect
+* `python .RL/train.py` : use to train RL
 
 Connect:
 * `ssh -T -p 2222 root@localhost`
