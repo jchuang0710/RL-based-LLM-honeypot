@@ -1,0 +1,57 @@
+@CMD: ls
+@Action: { Change the access rights of current command }
+@RESP: root@ubuntu:~$ sudo chmod 755 *
+root@ubuntu:~$
+
+@CMD: ls
+@Action: { Restore to original state }
+@RESP: root@ubuntu:~$ ls
+Desktop    Downloads  Music   Pictures  Templates
+Documents  examples.desktop  Public   Videos
+root@ubuntu:~$
+
+@CMD: ls
+@Action: { Restore to original state }
+@RESP: root@ubuntu:~$ ls
+Desktop    Downloads  Music   Pictures  Templates
+Documents  examples.desktop  Public   Videos
+root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: 
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Restore to original state }
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+ping: 8.8.8.8: Name or service not known
+root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Block the network traffic }
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+ping: 8.8.8.8: Name or service not known
+root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Change hardware setting of current command}
+@RESP: root@ubuntu:~$ sudo dhclient -r
+root@ubuntu:~$ sudo dhclient
+root@ubuntu:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+root@ubuntu:~$
+

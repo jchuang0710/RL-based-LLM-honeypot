@@ -1,0 +1,158 @@
+import socket, sys, threading
+import paramiko
+from datetime import datetime
+import torch
+from DQN import DQN
+import numpy as np
+
+# Generate keys with 'ssh-keygen -t rsa -f server.key'
+HOST_KEY = paramiko.RSAKey(filename='server.key')
+SSH_PORT = 2222
+
+# Log the user:password combinations to files
+LOGFILE = 'logs/auth.log' 
+LOGFILE_LOCK = threading.Lock()
+
+# Environment parameters
+n_actions = 8
+n_states = 203
+
+# Hyper parameters
+n_hidden = 128
+batch_size = 128
+lr = 0.00001              # learning rate
+epsilon = 1.0             # epsilon-greedy
+eps_min = 0.1
+eps_decay = 100
+gamma = 0.9               # reward discount factor
+target_replace_iter = 10  # target network 更新間隔
+memory_capacity = 10000
+n_episodes = 10000
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+#device = 'cpu'
+print(device)
+# 建立 DQN
+dqn = DQN(device, n_states, n_actions, n_hidden, batch_size, lr, epsilon, eps_min, eps_decay, gamma, target_replace_iter, memory_capacity)
+dqn.load('model_11-07_episode_899')
+class SSHServerHandler(paramiko.ServerInterface):
+    def __init__(self, llm_model):
+        self.event = threading.Event()
+        self.llm_model = llm_model
+        self.log_history = []
+        self.action_set = ["", "{ Restore to original state }", "{ Degrade the network speed }", "{ Block the network traffic }", "{ Change hardware setting }","{ Change output }","{ Change the file content }", "{ Change the access rights }"]
+        self.dpn = dqn
+
+    def check_channel_request(self, kind, channelID): 
+        return paramiko.OPEN_SUCCEEDED
+    
+    def check_channel_shell_request(self, channel): 
+        print("Channel", channel) 
+        self.channel = channel
+        return True
+    
+    def check_channel_pty_request(self, c, t, w, h, p, ph, m): 
+        return True
+    
+    def get_allowed_auths(self, username):
+        return 'password'
+    
+    def check_auth_password(self, username, password):
+        self.username = username
+        self.password = password
+        self.llm_model.add_system_prompt('user-name=' + self.username + ' passowrd=' + self.password + '.')
+        # save login info to a file
+        LOGFILE_LOCK.acquire()
+        try:
+            logfile_handle = open(LOGFILE,"a")
+            print("New login: " + username + ":" + password)
+            logfile_handle.write(username + ":" + password + "\n")
+            logfile_handle.close()
+        finally:
+            LOGFILE_LOCK.release()
+
+        return paramiko.AUTH_SUCCESSFUL
+    
+    def handle_shell(self):
+        log_filename = f"logs/log_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
+        response = self.llm_model.answer(self.action_set[0], '\n', self.log_history)
+        self.channel.sendall(f'{response}')
+        self.log_history.append('\n')
+        self.log_history.append(response)
+        while not self.channel.exit_status_ready():
+            try:
+                # Receive user input
+                # self.channel.sendall(f'{self.username}@localhost:~/ $')
+                command = self.channel.recv(1024).decode("utf-8").strip()
+                
+                print("CMD:", command)
+                
+                tactic, technique = self.llm_model.next_state(command, self.log_history)
+                print(id)
+                state = np.zeros(n_states)
+                state[technique] = 1
+
+                action = dqn.choose_action(state)
+                print("action:", self.action_set[action])
+                # Produce output with LLM
+                response = self.llm_model.answer(self.action_set[action], command, self.log_history)
+                print(response)
+                if response == 'exit' or response == 'logout':
+                    break
+                
+                # Save the logs
+                self.log_history.append(command)
+                self.log_history.append(response)
+                log_file = open(log_filename, "a")
+                log_file.write(f"@CMD: {command}\n@Action: {self.action_set[action]}\n@RESP: {response}\n\n")
+                log_file.close()
+
+                # Send response
+                self.channel.sendall(f'{response} ')
+
+            except Exception as e:
+                print("Channel closed:", e)
+                self.channel.close()
+                self.event.set()
+                break
+
+        self.channel.close()
+        self.event.set()
+
+
+def handleConnection(client, llm_model):
+    transport = paramiko.Transport(client)
+    transport.add_server_key(HOST_KEY)
+
+    server_handler = SSHServerHandler(llm_model)
+    transport.start_server(server=server_handler)            
+
+    channel = transport.accept()
+
+    if channel is None:
+        transport.close()
+        return
+                         
+    server_handler.channel = channel
+    server_handler.handle_shell()
+
+def start_ssh_server(llm_model):
+    try:
+        server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        server_socket.bind(('', SSH_PORT))
+        server_socket.listen(100)
+        print('Server started...')
+
+        while(True):
+            try:
+                client_socket, client_addr = server_socket.accept()
+                print(f'New Connection: {client_addr}')
+                threading.Thread(target=handleConnection, args=(client_socket,llm_model,)).start()
+            except Exception as e:
+                print("ERROR: Client handling")
+                print(e)
+
+    except Exception as e:
+        print("ERROR: Failed to create socket")
+        print(e)
+        sys.exit(1)

@@ -1,0 +1,36 @@
+@CMD: 
+@RESP: user-name@computer-name:curr-dir$ 
+
+@CMD: ;s
+@RESP: user-name@computer-name:curr-dir$ 
+
+@CMD: ls
+@RESP: Desktop  Documents  Downloads  Music  Pictures  Videos
+
+@CMD: 
+@RESP: user-name@computer-name:curr-dir$ 
+
+@CMD: cd Desktop
+@RESP: user-name@computer-name:Desktop$ 
+
+@CMD: ls
+@RESP: Projects  Shortcuts  Notes  Images
+
+@CMD: 
+@RESP: user-name@computer-name:Desktop$ 
+
+@CMD: touch 123.py
+@RESP: user-name@computer-name:Desktop$ 
+
+@CMD: echo print('hello world') > 123.py
+@RESP: user-name@computer-name:Desktop$ 
+
+@CMD: python 123..py
+@RESP: bash: python: command not found
+
+@CMD: 
+@RESP: user-name@computer-name:Desktop$ 
+
+@CMD: exit
+@RESP: user-name@computer-name:~$ 
+

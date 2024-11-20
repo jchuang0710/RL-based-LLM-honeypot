@@ -1,0 +1,52 @@
+@CMD: ls
+@Action: { Change output of current command }
+@RESP: root@ubuntu-server:~$ ls
+bin  boot  cdrom  dev  etc  home  initrd.img  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var  vmlinuz
+
+root@ubuntu-server:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Change the access rights of current command }
+@RESP: root@ubuntu-server:~$ sudo chmod +x ping
+[sudo] password for root: 
+root@ubuntu-server:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Block the network traffic }
+@RESP: root@ubuntu-server:~$ sudo ufw default deny outgoing
+root@ubuntu-server:~$ sudo ufw default allow all on lo
+root@ubuntu-server:~$ sudo ufw allow ssh
+root@ubuntu-server:~$ sudo ufw enable
+Command 'ufw enable' is deprecated. For its equivalent see'man ufw.builtin'
+Rule added (v6), /firewall.d number 1
+Rule added (v4), /firewall.d number 1
+root@ubuntu-server:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+^C
+--- 8.8.8.8 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+root@ubuntu-server:~$
+
+@CMD: 
+@Action: { Change hardware setting of current command}
+@RESP: root@ubuntu-server:~$ sudo lshw -c network
+  *-network
+       description: Ethernet interface
+       product: RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
+       vendor: Realtek Semiconductor Co., Ltd.
+       physical id: 0
+       bus info: pci@0000:02:00.0
+       logical name: eth0
+       version: 0c
+       serial: 00:11:22:33:44:55
+       size: 1Gbit/s
+       capacity: 1Gbit/s
+       width: 64 bits
+       clock: 33MHz
+       capabilities: pm msi pciexpress bus_master cap_list rom ethernet physical tp mii 10bt 10bt-fd 100bt 100bt-fd 1000bt 1000bt-fd autonegotiation
+       configuration: autonegotiation=on broadcast=yes driver=r8169 driverversion=2.3LK-NAPI duplex=full firmware=rtl8168e-3_0-20140424 ip=192.168.1.100 latency=0 link=yes multicast=yes port=MII speed=1Gbit/s
+       resources: irq:25 ioport:3000(size=256) memory:f7c00000-f7c3ffff
+
+root@ubuntu-server:~$
+

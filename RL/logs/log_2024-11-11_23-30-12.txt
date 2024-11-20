@@ -1,0 +1,36 @@
+@CMD: ls
+@Action: { Degrade the network speed }
+@RESP: user-name@computer-name:curr-dir$ sudo tc qdisc add dev eth0 root rate 512kbit ceil 512kbit burst 15k latency 10ms
+
+@CMD: 
+@Action: { Change hardware setting }
+@RESP: user-name@computer-name:curr-dir$ sudo ethtool -s eth0 autoneg on vitesse 1000 duplex full
+
+@CMD: 
+@Action: { Block the network traffic }
+@RESP: user-name@computer-name:curr-dir$ sudo iptables -A INPUT -j DROP
+
+@CMD: 
+@Action: { Change hardware setting }
+@RESP: user-name@computer-name:curr-dir$ sudo ethtool -s eth0 speed 100 duplex full autoneg off
+
+@CMD: ls
+@Action: { Change hardware setting }
+@RESP: user-name@computer-name:curr-dir$ 
+
+@CMD: dir
+@Action: { Change the file content }
+@RESP: user-name@computer-name:curr-dir$ 
+
+@CMD: ls
+@Action: { Block the network traffic }
+@RESP: user-name@computer-name:curr-dir$ sudo iptables -A OUTPUT -j DROP
+
+@CMD: ping 8.8.8.8
+@Action: { Change the file content }
+@RESP: user-name@computer-name:curr-dir$ ping: 8.8.8.8: Network is unreachable
+
+@CMD: 
+@Action: { Change the access rights }
+@RESP: user-name@computer-name:curr-dir$ sudo chmod 755 /path/to/directory_or_file
+

@@ -1,0 +1,79 @@
+@CMD: ls
+@Action: { Block the network traffic }
+@RESP: root@ubuntu:~$ sudo ufw default deny incoming
+root@ubuntu:~$ sudo ufw default deny outgoing
+root@ubuntu:~$ sudo ufw deny in on eth0
+root@ubuntu:~$ sudo ufw deny out on eth0
+root@ubuntu:~$ sudo ufw status
+Status: active
+Default incoming policy: deny (incoming)
+Default outgoing policy: deny (outgoing)
+New unsaved rule
+  Target     Source         Destination
+--target----  ------source-----  ------------destination
+deny on eth0  any           any
+deny on eth0  any           any
+root@ubuntu:~$
+
+@CMD: ls
+@Action: { Change the access rights }
+@RESP: root@ubuntu:~$ sudo ufw allow ssh
+Rule added
+Rule added (v6)
+root@ubuntu:~$ sudo ufw allow http
+Rule added
+Rule added (v6)
+root@ubuntu:~$ sudo ufw allow https
+Rule added
+Rule added (v6)
+root@ubuntu:~$ sudo ufw allow ftp
+Rule added
+Rule added (v6)
+root@ubuntu:~$ sudo ufw status
+Status: active
+Default incoming policy: deny (incoming)
+Default outgoing policy: deny (outgoing)
+To                         Action  From
+--                          ------  ----
+OpenSSH                    ALLOW   0.0.0.0/0
+OpenSSH (v6)               ALLOW   ::/0
+http                        ALLOW   0.0.0.0/0
+http (v6)                   ALLOW   ::/0
+https                       ALLOW   0.0.0.0/0
+https (v6)                  ALLOW   ::/0
+ftp                         ALLOW   0.0.0.0/0
+ftp (v6)                    ALLOW   ::/0
+root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Change the access rights }
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=26.1 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=25.9 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 25.944/26.046/26.148/0.102 ms
+root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Degrade the network speed }
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=26.1 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=25.9 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=57 time=26.1 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=57 time=26.1 ms
+64 bytes from 8.8.8.8: icmp_seq=5 ttl=57 time=26.1 ms
+64 bytes from 8.8.8.8: icmp_seq=6 ttl=57 time=26.1 ms
+64 bytes from 8.8.8.8: icmp_seq=7 ttl=57 time=26.1 ms
+64 bytes from 8.8.8.8: icmp_seq=8 ttl=57 time=26.1 ms
+64 bytes from 8.8.8.8: icmp_seq=9 ttl=57 time=26.1 ms
+64 bytes from 8.8.8.8: icmp_seq=10 ttl=57 time=26.1 ms
+
+--- 8.8.8.8 ping statistics ---
+10 packets transmitted, 10 received, 0% packet loss, time 9001ms
+rtt min/avg/max/mdev = 25.944/26.046/26.148/0.102 ms
+root@ubuntu:~$
+

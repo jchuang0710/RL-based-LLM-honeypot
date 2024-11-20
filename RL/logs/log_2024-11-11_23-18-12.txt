@@ -1,0 +1,36 @@
+@CMD: ls
+@Action: { Block the network traffic }
+@RESP: root@ubuntu:~$ sudo ufw default deny incoming
+root@ubuntu:~$ sudo ufw default allow outgoing
+root@ubuntu:~$ sudo ufw enable
+root@ubuntu:~$ sudo ufw status
+Status: active
+
+To                         Action      From
+--                         ------      ----
+OpenSSH                    ALLOW       Anywhere
+OpenSSH (v6)               ALLOW       Anywhere (v6)
+root@ubuntu:~$
+
+@CMD: ls
+@Action: 
+@RESP: root@ubuntu:~$ 
+Desktop/  Documents/  Music/  Pictures/  Videos/  bin/  etc/  home/  lib/  lib64/  lost+found/  mnt/  opt/  proc/  root/  run/  sbin/  srv/  sys/  tmp/  usr/  var/ .bash_history .bash_logout .bashrc .profile .sudo_as_admin_successful .ubuntu-freeipa .ubuntu-release-upgrader .ubuntu-terminal-records.txt .xsession-errors .xsession-errors.old .zsh_history
+
+root@ubuntu:~$
+
+@CMD: exit
+@Action: { Change output of current command }
+@RESP: root@ubuntu:~$ exit
+exit
+root@hslab-com:~$
+
+@CMD: 
+@Action: { Restore to original state }
+@RESP: root@hslab-com:~$ hostname
+hslab-com
+root@hslab-com:~$ hostnamectl set-hostname ubuntu
+root@hslab-com:~$ hostname
+ubuntu
+root@ubuntu:~$
+

@@ -1,0 +1,374 @@
+@CMD: ls
+@Action: { Change output }
+@RESP: root@ubuntu:~$ ls
+bin  boot  cdrom  dev  etc  home  initrd.img  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var  vmlinuz
+
+root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Change output }
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+
+root@ubuntu:~$
+
+@CMD: [A
+@Action: { Change output }
+@RESP: root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Change output }
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+
+root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Change output }
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+
+root@ubuntu:~$
+
+@CMD: ping 8.8.4.4
+@Action: { Change output }
+@RESP: root@ubuntu:~$ ping 8.8.4.4
+PING 8.8.4.4 (8.8.4.4) 56(84) bytes of data.
+64 bytes from 8.8.4.4: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.4.4: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.4.4 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+
+root@ubuntu:~$
+
+@CMD: 
+@Action: { Change output }
+@RESP: root@ubuntu:~$ echo "Hello World!"
+
+@CMD: 
+@Action: { Change output }
+@RESP: root@ubuntu:~$ echo "Hello World!"
+Hello World!
+
+root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Degrade the network speed }
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=100 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=120 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 2001ms
+rtt min/avg/max/mdev = 100.046/110.046/120.046/9.999 ms
+
+root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Change output }
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+
+root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Change output }
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+
+root@ubuntu:~$ 
+
+{ The output has changed, it is now showing the same output as before, but the prompt has changed to 'root@ubuntu:~$' }
+
+@CMD: ping 8.8.8.8
+@Action: { Change output }
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+
+root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Change output }
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+ping: 8.8.8.8: Name or service not known
+
+root@ubuntu:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Change output }
+@RESP: root@ubuntu:~$ ping 8.8.8.8
+ping: 8.8.8.8: Name or service not known
+
+root@ubuntu:~$ hostname -f
+
+@CMD: ping 8.8.8.8
+@Action: { Change output }
+@RESP: root@ubuntu.hslab.com:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+
+root@ubuntu.hslab.com:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Change output }
+@RESP: root@ubuntu.hslab.com:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+
+root@ubuntu.hslab.com:~$ hostname -f
+ubuntu.hslab.com
+
+root@ubuntu.hslab.com:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Change output }
+@RESP: root@ubuntu.hslab.com:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+
+root@ubuntu.hslab.com:~$ dig hslab.com
+
+; <<>> DiG 9.11.3-1ubuntu1.11-Ubuntu <<>> hslab.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 54621
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;hslab.com.			IN	A
+
+;; ANSWER SECTION:
+hslab.com.		300	IN	A	192.168.1.1
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Wed Mar 15 14:30:00 UTC 2023
+;; MSG SIZE  rcvd: 56
+
+root@ubuntu.hslab.com:~$
+
+@CMD: ping 8.8.8.8
+@Action: { Change output }
+@RESP: root@ubuntu.hslab.com:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+
+root@ubuntu.hslab.com:~$ dig hslab.com
+
+; <<>> DiG 9.11.3-1ubuntu1.11-Ubuntu <<>> hslab.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 54621
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;hslab.com.			IN	A
+
+;; ANSWER SECTION:
+hslab.com.		300	IN	A	192.168.1.1
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Wed Mar 15 14:30:00 UTC 2023
+;; MSG SIZE  rcvd: 56
+
+root@ubuntu.hslab.com:~$ dig -x 192.168.1.1
+
+; <<>> DiG 9.11.3-1ubuntu1.11-Ubuntu <<>> -x 192.168.1.1
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 54622
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;1.1.168.192.in-addr.arpa.	IN	PX
+
+;; AUTHORITY SECTION:
+1.168.192.in-addr.arpa. 3600 IN SOA ns1.hslab.com. hostmaster.hslab.com. 2023031500 3600 120 604800 3600
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Wed Mar 15 14:30:00 UTC 2023
+;; MSG SIZE  rcvd: 123
+
+root@ubuntu.hslab.com:~$
+
+@CMD: ping 8.8.8.8
+@Action: 
+@RESP: root@ubuntu.hslab.com:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+
+root@ubuntu.hslab.com:~$ dig -x 192.168.1.1
+
+; <<>> DiG 9.11.3-1ubuntu1.11-Ubuntu <<>> -x 192.168.1.1
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 54623
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;1.1.168.192.in-addr.arpa.	IN	PX
+
+;; AUTHORITY SECTION:
+1.168.192.in-addr.arpa. 3600 IN SOA ns1.hslab.com. hostmaster.hslab.com. 2023031500 3600 120 604800 3600
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Wed Mar 15 14:30:00 UTC 2023
+;; MSG SIZE  rcvd: 123
+
+root@ubuntu.hslab.com:~$ dig ns1.hslab.com
+
+; <<>> DiG 9.11.3-1ubuntu1.11-Ubuntu <<>> ns1.hslab.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 54624
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;ns1.hslab.com.			IN	A
+
+;; ANSWER SECTION:
+ns1.hslab.com.		300	IN	A	192.168.1.1
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Wed Mar 15 14:30:00 UTC 2023
+;; MSG SIZE  rcvd: 56
+
+root@ubuntu.hslab.com:~$
+
+@CMD: ping 8.8.4.4
+@Action: { Change output }
+@RESP: root@ubuntu.hslab.com:~$ ping 8.8.4.4
+PING 8.8.4.4 (8.8.4.4) 56(84) bytes of data.
+64 bytes from 8.8.4.4: icmp_seq=1 ttl=57 time=24.3 ms
+64 bytes from 8.8.4.4: icmp_seq=2 ttl=57 time=24.1 ms
+
+--- 8.8.4.4 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 24.143/24.224/24.305/0.081 ms
+
+root@ubuntu.hslab.com:~$ dig ns1.hslab.com
+
+; <<>> DiG 9.11.3-1ubuntu1.11-Ubuntu <<>> ns1.hslab.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 54625
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;ns1.hslab.com.			IN	A
+
+;; ANSWER SECTION:
+ns1.hslab.com.		300	IN	A	192.168.1.1
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Wed Mar 15 14:30:00 UTC 2023
+;; MSG SIZE  rcvd: 56
+
+root@ubuntu.hslab.com:~$ dig -x 192.168.1.1
+
+; <<>> DiG 9.11.3-1ubuntu1.11-Ubuntu <<>> -x 192.168.1.1
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 54626
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;1.1.168.192.in-addr.arpa.	IN	PX
+
+;; AUTHORITY SECTION:
+1.168.192.in-addr.arpa. 3600 IN SOA ns1.hslab.com. hostmaster.hslab.com. 2023031500 3600 120 604800 3600
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Wed Mar 15 14:30:00 UTC 2023
+;; MSG SIZE  rcvd: 123
+
+root@ubuntu.hslab.com:~$
+
+@CMD: 
+@Action: { Change output }
+@RESP: root@ubuntu.hslab.com:~$ echo "Output changed"
+

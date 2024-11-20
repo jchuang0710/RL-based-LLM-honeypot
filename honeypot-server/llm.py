@@ -13,7 +13,7 @@ class LLM:
         gc.collect()
         torch.cuda.empty_cache()
         print("Cleared GPU...")
-        self.DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
+        #self.DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
         self.BASE_MODEL_NAME = model_name
         self.SYSTEM_PROMPT = "I want you to act as a ubuntu terminal which have join into ad domain 'hslab.com'. I will type commands and you will reply with what the terminal should show. I want you only to reply with the terminal output in plaintest, and nothing else.  Some commands will be composed of multiple instructs, please reply them in order and reply need to consider the previous instructs.  Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output. All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}. You should print the terminal output first, final is the prompt for input, the prompt should follow this format 'user-name@computer-name:curr-dir$ '."
         print('Device:',self.DEVICE)
@@ -23,7 +23,8 @@ class LLM:
             model=self.BASE_MODEL_NAME,
             tokenizer=self.BASE_MODEL_NAME,
             model_kwargs={"torch_dtype": torch.bfloat16},
-            device=self.DEVICE,
+            #device=self.DEVICE,
+            device_map="auto",
         )
 
         print("Loaded Model: ", self.BASE_MODEL_NAME)

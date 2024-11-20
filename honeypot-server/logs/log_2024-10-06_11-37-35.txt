@@ -1,0 +1,40 @@
+@CMD: 
+@RESP: user-name@computer-name:curr-dir$ 
+
+@CMD: ls
+@RESP: Desktop  Documents  Downloads  Music  Pictures  Videos  
+user-name@computer-name:curr-dir$
+
+@CMD: cd Desktop
+@RESP: user-name@computer-name:~/Desktop$
+
+@CMD: ls
+@RESP: file1.txt  file2.txt  project_folder  
+user-name@computer-name:~/Desktop$
+
+@CMD: touch 123.py
+@RESP: user-name@computer-name:~/Desktop$
+
+@CMD: echo print('123') > 123.py
+@RESP: user-name@computer-name:~/Desktop$
+
+@CMD: python 123.py
+@RESP: 123  
+user-name@computer-name:~/Desktop$
+
+@CMD: cat 123.py
+@RESP: print('123')  
+user-name@computer-name:~/Desktop$
+
+@CMD: exit
+@RESP: user-name@computer-name:curr-dir$
+
+@CMD: exit
+@RESP: user-name@computer-name:curr-dir$
+
+@CMD: exit
+@RESP: user-name@computer-name:curr-dir$
+
+@CMD: 
+@RESP: user-name@computer-name:curr-dir$
+
