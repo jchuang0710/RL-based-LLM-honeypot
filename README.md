@@ -17,12 +17,8 @@ Toolkit:
 Setting:
 * `set OPENAI_API_KEY=`
 
-Setting for RUN by CPU:
-* `sudo sysctl vm.swappiness=10`
-* `device_map="auto”`
-
 RUN:
-* `activate honeypot`: conda
+* `activate honeypot` : conda
 * `python .RL/main.py` : can use ssh to connect
 * `python .RL/train.py` : use to train RL
 
