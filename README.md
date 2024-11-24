@@ -3,13 +3,25 @@
 Author: jchuang0710
 ```
 ## Environment
-Base Image: 
-* pytorch/pytorch
 
 Toolkit:
-* paramiko
-* transformers
-* openai
+* pip install openai
+* pip install gym
+* pip install transformers
+* pip install paramiko
+* pip install keras
+* pip install pandas
+* pip install openpyxl
+* pip install accelerate
 
-Setting
-`export OPENAI_API_KEY=`
+Setting:
+* `set OPENAI_API_KEY=`
+
+RUN:
+* `activate honeypot` : conda
+* `python .RL/main.py` : can use ssh to connect
+* `python .RL/train.py` : use to train RL
+
+Connect:
+* `ssh -T -p 2222 root@localhost`
+
