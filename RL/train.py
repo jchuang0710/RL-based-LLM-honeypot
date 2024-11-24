@@ -18,7 +18,7 @@ n_actions = env.action_space.n
 n_states = env.observation_space.shape[0]
 
 # Other parameters
-date = '11-07'
+date = datetime.now().strftime("%m-%d")
 warmup_steps = 500
 total_step = 0
 
@@ -26,12 +26,13 @@ total_step = 0
 n_hidden = 128
 batch_size = 128
 lr = 0.00001              # learning rate
-epsilon = 1.0             # epsilon-greedy
-eps_min = 0.1
-eps_decay = 100
+epsilon = 1.0             # 最初的 epsilon-greedy
+eps_min = 0.1             # 最多
+eps_decay = 100           # 下降的區間有 100 個
 gamma = 0.9               # reward discount factor
 target_replace_iter = 10  # target network 更新間隔
-memory_capacity = 10000
+memory_capacity = 2500    # 可以儲存多少經驗
+train_time = 1000
 n_episodes = 10000
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
@@ -82,18 +83,20 @@ for i_episode in range(n_episodes):
         dqn.store_transition(state, action, reward, next_state)
 
         # 有足夠 experience 後進行訓練
-        if total_step % 500 == 0:
+        if total_step % train_time == 0: # 儲存 500 個經驗後訓練一次
             dqn.learn_DDQN()
             dqn.epsilon_decay()
+            dqn.save('model_{}_episode_{}'.format(date, i_episode))
+            with open('loss_{}.txt'.format(date), 'a') as f:
+                f.write('Episode {} finished after {} steps loss {} \n'.format(i_episode, total_step, dqn.loss))
 
         # 進入下一 state
         state = next_state
 
         if done:
             with open('rewards_{}.txt'.format(date), 'a') as f:
-                f.write('Episode {} finished after {} steps loss {} total rewards {} max tactic id {}\n'.format(i_episode, total_step, dqn.loss, rewards, env.max_tactic))
-            if i_episode % 100 == 99:
-                dqn.save('model_{}_episode_{}'.format(date, i_episode))
+                f.write('Episode {} finished after {} steps total rewards {} max tactic id {}\n'.format(i_episode, total_step, rewards, env.max_tactic))
+            dqn.record_reward(i_episode, rewards)
             break
         
         

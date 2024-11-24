@@ -48,7 +48,7 @@ class HoneypotEnv(gym.Env):
             return self.next_state, 0, done, {}
 
         ## 取得下一個 command 的 technique 作為狀態，tactic 作為 reward
-        tactic, technique = self.llm.next_state(self.command_buffer[0], self.histroy)
+        tactic, technique = self.llm.next_state(action, self.command_buffer[0], self.histroy)
         print('tactic:', tactic)
         print('technique:', technique)
         self.next_state = np.zeros(self.observation_space.shape[0])

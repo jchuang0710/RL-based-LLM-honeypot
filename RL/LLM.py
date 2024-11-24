@@ -19,17 +19,22 @@ class LLM:
         print("Cleared GPU...")
         #self.DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
         self.BASE_MODEL_NAME = model_name
-        self.SYSTEM_PROMPT = "I want you to act as a ubuntu terminal which have join into ad domain 'hslab.com'. I will type commands and you will reply with what the terminal should show. I want you only to reply with the terminal output in plaintest, and nothing else. You should not generate any instruction from { }, only response the system output from which command outside the { }.  Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output. All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}. You should print the terminal output first, final is the prompt for input like this 'user-name@computer-name:curr-dir$ '."
+        self.SYSTEM_PROMPT = f"""
+            I want you to act as a ubuntu terminal which have join into ad domain 'hslab.com'.
+            I will type commands and you will reply with what the terminal should show.
+            I want you only to reply with the terminal output in plaintest, and nothing else.
+            You should not generate any instruction from {{}}, only response the system output from which command outside the {{}}.
+            Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output.
+            All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets.
+            You should print the terminal output first, final is the prompt for input like this 'user-name@computer-name:curr-dir$ '.
+            """
         # Model configuration
         self.pipeline = pipeline(
             "text-generation",
             model=self.BASE_MODEL_NAME,
             tokenizer=self.BASE_MODEL_NAME,
             model_kwargs={"torch_dtype": torch.bfloat16},
-            #device=self.DEVICE,
-            #load_in_8bit=True,
             device_map="auto",
-            #low_cpu_mem_usage=True,
         )
 
         print("Loaded Model: ", self.BASE_MODEL_NAME)
@@ -50,7 +55,7 @@ class LLM:
                 tmp = tmp + item
         else:
             tmp = action + query
-        #print(tmp)
+            
         user_prompt = message_history + [{"role": "user", "content": tmp}]
 
         prompt = self.pipeline.tokenizer.apply_chat_template(
@@ -116,21 +121,45 @@ class LLM:
     def next_state(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
         #message = "Please analysis current state is in which MITRE tactic ID when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Please just reply Tactic ID, don't explain why and don't reply anything else.\n"
         message = "Please analysis current state is in which MITRE tactic and technique when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Technique ID like T1001, T1002, ... ,T1485. Please just reply Tactic ID first and then Technique ID like 'TA0001 T1485', don't explain why and don't reply anything else and don't reply sub-technique like T1001.001.\n"
+        message_history = [{"role": "system", "content": message}]
+        message = ""
         if len(log_history) > 0:
             for i, item in enumerate(log_history):
                 if i % 2 == 0:
                     message = message + "past_input: "+ item + "\n"
+        
+        tmp = message + "current command: "+ str(query) + "\n"
+        message_history.append({"role": "user", "content": tmp})
+        user_prompt = message_history
+        
+        chatgpt = OpenAI(api_key = os.environ['OPENAI_API_KEY'])
 
-        #message.append("current input: "+ query + "\n")
-        #print(query)
-        tmp = ""
-        if type(query) == 'list':
-            for item in query:
-                tmp = tmp + item
-        else:
-            tmp = query
-        #print(type(tmp))
-        tmp = message + "current command: "+ str(tmp) + "\n"
+        response = []
+        while len(response) < 2:
+            try:
+                outputs = chatgpt.chat.completions.create( 
+                    model="ft:gpt-4o-mini-2024-07-18:personal:detect-ttp-atomic-0924:AAqZyEOo",
+                    messages=user_prompt
+                ) 
+
+                response = outputs.choices[0].message.content
+                response = response.split(' ')
+            except:
+                print('sleep 20s')
+                time.sleep(20)
+                continue
+
+        return self.translate_tactic_id(response[0]), self.translate_technique_id(response[1])
+
+    def next_state_groq(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
+        #message = "Please analysis current state is in which MITRE tactic ID when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Please just reply Tactic ID, don't explain why and don't reply anything else.\n"
+        message = "Please analysis current state is in which MITRE tactic and technique when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Technique ID like T1001, T1002, ... ,T1485. Please just reply Tactic ID first and then Technique ID like 'TA0001 T1485', don't explain why and don't reply anything else and don't reply sub-technique like T1001.001.\n"
+        if len(log_history) > 0:
+            for i, item in enumerate(log_history):
+                if i % 2 == 0:
+                    message = message + "past_input: "+ item + "\n"
+        
+        tmp = message + "current command: "+ str(query) + "\n"
         user_prompt = [{"role": "user", "content": tmp}] 
         
         chatgpt = OpenAI(api_key = os.environ['OPENAI_API_KEY'])
@@ -152,7 +181,7 @@ class LLM:
 
         return self.translate_tactic_id(response[0]), self.translate_technique_id(response[1])
 
-    def next_state_LLM(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
+    def next_state_local(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
         
         #message = "Please analysis current state is in which MITRE tactic and technique when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Technique ID like T1001, T1001.001, ... ,T1485. Please just reply Tactic ID first and then Technique ID, don't explain why and don't reply anything else.\n"
         message = "Please analysis current state is in which MITRE tactic and technique when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Technique ID like T1001, T1002, ... ,T1485. Please just reply Tactic ID first and then Technique ID like 'TA0001 T1485', don't explain why and don't reply anything else and don't reply sub-technique like T1001.001.\n"
@@ -160,17 +189,8 @@ class LLM:
             for i, item in enumerate(log_history):
                 if i % 2 == 0:
                     message = message + "past_input: "+ item + "\n"
-
-        #message.append("current input: "+ query + "\n")
-        #print(query)
-        tmp = ""
-        if type(query) == 'list':
-            for item in query:
-                tmp = tmp + item
-        else:
-            tmp = query
-        #print(type(tmp))
-        tmp = message + "current command: "+ str(tmp) + "\n"
+        
+        tmp = message + "current command: "+ str(query) + "\n"
         user_prompt = [{"role": "user", "content": tmp}] 
         
         prompt = self.pipeline.tokenizer.apply_chat_template(

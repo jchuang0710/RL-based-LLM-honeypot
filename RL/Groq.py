@@ -1,10 +1,10 @@
-from openai import OpenAI 
+from groq import Groq
 import os
 
-api_key = os.environ['OPENAI_API_KEY']
+api_key = os.environ['GROQ_API_KEY']
 
-class ChatGPT:
-    def __init__(self, model_name="gpt-4o-mini"):
+class Groq_LLM:
+    def __init__(self, model_name="llama-3.1-8b-instant"):
         # Model configuration
         self.BASE_MODEL_NAME = model_name
         #self.SYSTEM_PROMPT = "I want you to act as a ubuntu terminal which have join into ad domain 'hslab.com' which contain ten domain computer and 20 domain user.Please set the relevant parameters randomly.  I will type commands and you will reply with what the terminal should show. I want you only to reply with the terminal output in plaintest, and nothing else.You have already install all atomic red team relatvie file under path '/home/atomic'. Some commands will be composed of multiple instructs, please reply them in order and reply need to consider the previous instructs.  Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output. All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}."

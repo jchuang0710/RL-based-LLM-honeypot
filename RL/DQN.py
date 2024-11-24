@@ -12,7 +12,7 @@ from keras.optimizers import Adam
 import torch
 import torch.nn as nn
 import torch.optim as optim
-
+from torch.utils.tensorboard import SummaryWriter
 
 class Net(nn.Module):
     def __init__(self, _input_size: int, _output_size: int, _hidden_size: int = 24):
@@ -46,7 +46,6 @@ class DQN(object):
         self.target_replace_iter = target_replace_iter
         self.memory_capacity = memory_capacity
         
-        
         self.eval_net = self._build_model()
         self.target_net = self._build_model()
 
@@ -57,6 +56,7 @@ class DQN(object):
         self.learn_step_counter = 0 # 讓 target network 知道什麼時候要更新
         self.loss = 0
 
+        self.writer = SummaryWriter("logs/" + datetime.now().strftime("%m-%d"))
 
     def _build_model(self):
         # Neural Net for Deep-Q learning Model
@@ -111,6 +111,9 @@ class DQN(object):
         self.learn_step_counter += 1
         if self.learn_step_counter % self.target_replace_iter == 0:
             self.target_net.load_state_dict(self.eval_net.state_dict())
+
+        # TensorBoard: 記錄 loss
+        self.writer.add_scalar('Loss/train', self.loss.item(), self.learn_step_counter)
     
     def learn_DDQN(self):
         # 隨機取樣 batch_size 個 experience
@@ -145,6 +148,12 @@ class DQN(object):
         self.learn_step_counter += 1
         if self.learn_step_counter % self.target_replace_iter == 0:
             self.target_net.load_state_dict(self.eval_net.state_dict())
+
+        # TensorBoard: 記錄 loss
+        self.writer.add_scalar('Loss/train', self.loss.item(), self.learn_step_counter)
+    
+    def record_reward(self, episode, reward):
+        self.writer.add_scalar('Reward/episode', reward, episode)
 
     def load(self, name):
         self.eval_net.load_state_dict(torch.load(name, map_location=self.device))

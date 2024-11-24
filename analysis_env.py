@@ -18,7 +18,7 @@ api_key = os.environ['OPENAI_API_KEY']
 client = OpenAI(api_key = api_key)
 
 path = '/home/atomics'
-dirPath = '/workspace/LLM-Honeypot/atomic-red-team/atomics/T*/*.yaml'
+dirPath = '.\\atomic-red-team\\atomics\\T*\\*.yaml'
 file_set = glob.glob(dirPath)
 file_set.sort()
 
@@ -47,12 +47,14 @@ set1 = set()
 total = 0
 correct = 0
 i=0
+num = 0
 for f in file_set:
     yaml_dict = load_yaml(f)
     flag = False
     for item in yaml_dict['atomic_tests']:
         command_set = []
-        if 'linux' in item['supported_platforms']:
+        if 'windows' in item['supported_platforms']:
+            num = num + 1 
             set1.add(yaml_dict['attack_technique'])
             print(yaml_dict['attack_technique'])
             arguments = {}
@@ -65,7 +67,6 @@ for f in file_set:
                         arguments[argument] = item['input_arguments'][argument]['default']
             if 'dependencies' in item:
                 for index in item['dependencies']:
-                    
                     if 'prereq_command' in index:
                         '''
                         command = replace_placeholders(index['prereq_command'], arguments).replace('PathToAtomicsFolder', path)
@@ -122,7 +123,7 @@ for f in file_set:
                 
                 message_history.append({"role": "assistant", "content": response})
             '''
-            
+            '''
             # Cowrie generate command/response pair
             
             # 建立一个sshclient对象
@@ -154,8 +155,8 @@ for f in file_set:
             finally:
                 # 关闭连接
                 ssh.close()
-            
-            
+            '''
+            '''
             # ChatGPT judge the env is real or not
             history = ''
             i = 0
@@ -188,8 +189,9 @@ for f in file_set:
             #print('history:', history)
             print('total:', total, 'success: ', correct, ' f1-score: ', correct/total)
             #input('next')
-
+            '''
+print(num)
 path = 'output.txt'
-with open(path, 'w') as f:
-    f.write('total:' + str(total) + 'success: ' + str(correct) + ' f1-score: ' + str(correct/total))
-print('end')
+#with open(path, 'w') as f:
+#    f.write('total:' + str(total) + 'success: ' + str(correct) + ' f1-score: ' + str(correct/total))
+#print('end')

@@ -59,7 +59,7 @@ class SSHServerHandler(paramiko.ServerInterface):
     def check_auth_password(self, username, password):
         self.username = username
         self.password = password
-        self.llm_model.add_system_prompt('user-name=' + self.username + ' passowrd=' + self.password + '.')
+        self.llm_model.add_system_prompt('user-name is ' + self.username + ' passowrd is' + self.password + '.')
         # save login info to a file
         LOGFILE_LOCK.acquire()
         try:
