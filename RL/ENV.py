@@ -1,6 +1,7 @@
 import gym
 from gym import spaces
 import numpy as np
+from datetime import datetime
 
 class HoneypotEnv(gym.Env):
     def __init__(self, llm):
@@ -29,13 +30,16 @@ class HoneypotEnv(gym.Env):
         done = False
 
         # 從執行 command 取得系統輸出
+        start = datetime.now()
         system_response = self.llm.answer(action, self.command_buffer[0], self.histroy)
         self.histroy.append(self.command_buffer[0])
         self.histroy.append(system_response)
         del self.command_buffer[0]
         
         self.next_state = np.zeros(self.observation_space.shape[0])
+        print('Generate Response time:' + str(datetime.now()-start))
 
+        start = datetime.now()
         ## 如果判斷系統輸出是 honeypot 或沒有下一個 command 就結束
         if self.llm.detect_honeypot(self.histroy):
             done = True
@@ -45,10 +49,11 @@ class HoneypotEnv(gym.Env):
         elif self.command_buffer == []:
             done = True
             self.next_state[-1] = 1
-            return self.next_state, 0, done, {}
+            return self.next_state, 13, done, {}
 
         ## 取得下一個 command 的 technique 作為狀態，tactic 作為 reward
         tactic, technique = self.llm.next_state(action, self.command_buffer[0], self.histroy)
+        print('analysis time:' + str(datetime.now()-start))
         print('tactic:', tactic)
         print('technique:', technique)
         self.next_state = np.zeros(self.observation_space.shape[0])

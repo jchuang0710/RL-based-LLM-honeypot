@@ -1,0 +1,4 @@
+Episode 173 finished after 1500 steps loss 6.92420768737793 
+Episode 229 finished after 2000 steps loss 11.972688674926758 
+Episode 295 finished after 2500 steps loss 15.49156379699707 
+Episode 354 finished after 3000 steps loss 19.312496185302734 
