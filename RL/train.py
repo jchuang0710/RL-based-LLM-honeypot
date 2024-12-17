@@ -86,6 +86,7 @@ for i_episode in range(n_episodes):
             dqn.epsilon = 1.0
         elif total_step % train_step == 0: # 儲存 500 個經驗後訓練一次
             dqn.learn_DDQN()
+            dqn.record_loss()
             dqn.epsilon_decay()
             dqn.save('model/model_{}_episode_{}'.format(date, i_episode))
             with open('loss_{}.txt'.format(date), 'a') as f:

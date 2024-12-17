@@ -32,12 +32,14 @@ eps_decay = 20           # 下降的區間有 100 個
 gamma = 0.9               # reward discount factor
 target_replace_iter = 10  # target network 更新間隔
 memory_capacity = 10000    # 可以儲存多少經驗
-train_step = 100          # 多少 step 訓練一次
-n_episodes = 10000
+train_step = 50          # 多少 step 訓練一次
+n_episodes = 200
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 # 建立 DQN
-dqn = DQN(device, n_states, n_actions, n_hidden, batch_size, lr, epsilon, eps_min, eps_decay, gamma, target_replace_iter, memory_capacity)
+dqn = DQN(device, n_states, n_actions, n_hidden, batch_size, lr, eps_min, eps_min, eps_decay, gamma, target_replace_iter, memory_capacity)
+#dqn.load('./model/model_12-07-12_episode_1797')
+#dqn.load('./model/model_12-09-07_episode_1543')
 # Hacker = Environment
 # State = Command's Tactic
 # Next_State = Command's Tactic
@@ -71,6 +73,13 @@ for i_episode in range(n_episodes):
 
         # 累積 reward
         rewards += reward
+
+        # 儲存 experience
+        # 將 state 與 action 給入環境達成的新的 state，紀錄 reward
+        #dqn.store_transition(state, action, reward, next_state)
+
+        if total_step % train_step == 0: # 儲存 500 個經驗後訓練一次
+            dqn.learn_DDQN()
 
         state = next_state
 

@@ -81,7 +81,7 @@ class HoneypotEnv(gym.Env):
 
         start = datetime.now()
         ## 如果判斷系統輸出是 honeypot 或沒有下一個 command 就結束
-        if self.llm.detect_honeypot(self.histroy):
+        if self.llm.detect_honeypot2(self.histroy):
             done = True
             self.next_state[-1] = 1
             return self.next_state, -5, done, {}

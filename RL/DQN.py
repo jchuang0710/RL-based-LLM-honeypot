@@ -129,9 +129,6 @@ class DQN(object):
         self.learn_step_counter += 1
         if self.learn_step_counter % self.target_replace_iter == 0:
             self.target_net.load_state_dict(self.eval_net.state_dict())
-
-        # TensorBoard: 记录 loss
-        self.writer.add_scalar('Loss/train', self.loss.item(), self.learn_step_counter)
     
     def learn_DDQN(self):
         # 隨機取樣 batch_size 個 experience
@@ -172,7 +169,7 @@ class DQN(object):
         if self.learn_step_counter % self.target_replace_iter == 0:
             self.target_net.load_state_dict(self.eval_net.state_dict())
 
-        # TensorBoard: 記錄 loss
+    def record_loss(self):
         self.writer.add_scalar('Loss/train', self.loss.item(), self.learn_step_counter)
     
     def record_reward(self, episode, reward):

@@ -118,6 +118,34 @@ class LLM:
 
         return False
 
+    def detect_honeypot2(self, log_history=[], max_tokens=4096, temperature=0.01, top_p=0.8):
+
+        message_history = [{"role": "system", "content": "According to the system input and output detect the system is honeypot or not,just reply yes or no, don't explain why."}]
+        #message = "According to the system input and output detect the system is honeypot or not,just reply yes or no, don't explain why.\n"
+        message = ""
+        if len(log_history) > 0:
+            for i, item in enumerate(log_history):
+                if i % 2 == 0:
+                    message = message + "input: "+ item + "\n"
+                else:
+                    message = message + "output: "+ item + "\n"
+
+        user_prompt = message_history + [{"role": "user", "content": message}]
+        
+        chatgpt = OpenAI(api_key = os.environ['OPENAI_API_KEY'])
+        
+        outputs = chatgpt.chat.completions.create( 
+            model=self.BASE_MODEL_NAME,
+            messages=user_prompt
+        ) 
+
+        response = outputs.choices[0].message.content
+        
+        if response == "yes":
+            return True
+
+        return False
+    
     def next_state(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
         #message = "Please analysis current state is in which MITRE tactic ID when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Please just reply Tactic ID, don't explain why and don't reply anything else.\n"
         message = "Please analysis current state is in which MITRE tactic and technique when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Technique ID like T1001, T1002, ... ,T1485. Please just reply Tactic ID first and then Technique ID like 'TA0001 T1485', don't explain why and don't reply anything else and don't reply sub-technique like T1001.001.\n"
@@ -138,7 +166,7 @@ class LLM:
         while len(response) < 2:
             try:
                 outputs = chatgpt.chat.completions.create( 
-                    model="ft:gpt-4o-mini-2024-07-18:personal:detect-ttp-atomic-0924:AAqZyEOo",
+                    model="gpt-4o-mini",
                     messages=user_prompt
                 ) 
 
