@@ -16,7 +16,14 @@ def get_max_depth(file):
     with open(file, 'r', encoding='utf-8') as file:
         for line in file:
             max_depth.append(int(line.strip().split(' ')[12]))
-    return max_depth[0:200]
+    return max_depth
+
+def get_total_reward(file):
+    total_reward = []
+    with open(file, 'r', encoding='utf-8') as file:
+        for line in file:
+            total_reward.append(int(line.strip().split(' ')[8]))
+    return total_reward
 
 episodes = np.arange(1, 201) 
 bar_width = 0.125
@@ -24,15 +31,19 @@ bar_width = 0.125
 fig, ax1 = plt.subplots(1, 1)    # a figure with a 2x1 grid of Axes
 ax1.bar(episodes - bar_width, get_max_depth("rewards_12-16-12.txt"), width=bar_width, color="g", label="Original")
 ax1.bar(episodes, get_max_depth("rewards_12-14-17.txt"), width=bar_width, color="#3399FF", label="DQN")
-ax1.bar(episodes + bar_width, get_max_depth("rewards_12-15-02.txt"), width=bar_width, color="#9933FF", label="DDQN")
+ax1.bar(episodes + bar_width, get_max_depth("rewards_12-18-12.txt"), width=bar_width, color="#9933FF", label="DDQN")
 ax1.set_xlabel("Epsiode")
 ax1.set_ylabel("Depth")
 ax1.set_title("Max Depth")
 ax1.legend()
 plt.show()
 fig.savefig(fname='./Max_Depth'+'.png', format='png')
-print(sum(get_max_depth("rewards_12-16-12.txt")))
-print(sum(get_max_depth("rewards_12-14-03.txt")))
-print(sum(get_max_depth("rewards_12-14-07.txt")))
-print(sum(get_max_depth("rewards_12-14-17.txt")))
-print(sum(get_max_depth("rewards_12-15-02.txt")))
+print('Original-Depth:', sum(get_max_depth("rewards_12-16-12.txt")))
+print('DQN-Depth:', sum(get_max_depth("rewards_12-14-03.txt")))
+print('DDQN-Depth:', sum(get_max_depth("rewards_12-14-07.txt")))
+print('DQN-Depth:', sum(get_max_depth("rewards_12-14-17.txt")))
+print('DDQN-Depth:', sum(get_max_depth("rewards_12-18-12.txt")))
+print('Original-Reward:', sum(get_total_reward("rewards_12-21-16.txt")))
+print('Original-Depth:', sum(get_max_depth("rewards_12-21-16.txt")))
+print('DDQN-Reward:', sum(get_total_reward("rewards_12-22-03.txt")))
+print('DDQN-Depth:', sum(get_max_depth("rewards_12-22-03.txt")))

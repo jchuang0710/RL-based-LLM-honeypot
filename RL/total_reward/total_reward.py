@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 len_mean = pd.read_csv("12-16-12.csv")
 DQN_len_mean = pd.read_csv("12-14-17.csv")
-DDQN_len_mean = pd.read_csv("12-15-02.csv")
+DDQN_len_mean = pd.read_csv("12-18-12.csv")
 episodes = np.arange(1, 201) 
 bar_width = 0.2
 # 第一幅图片：训练的平均长度
@@ -19,4 +19,7 @@ plt.show()
 fig.savefig(fname='./Total_Reward'+'.png', format='png')
 print(sum(len_mean['Value'])/200)
 print(sum(DQN_len_mean['Value'])/200)
+print(sum(DDQN_len_mean['Value'])/200)
+DDQN_len_mean = pd.read_csv("12-18-12.csv")
+print(sum(DDQN_len_mean['Value']))
 print(sum(DDQN_len_mean['Value'])/200)

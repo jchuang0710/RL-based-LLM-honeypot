@@ -72,7 +72,7 @@ for i_episode in range(n_episodes):
 
         # 執行並取得回饋
         ## 送 action + command 給 LLM honeypot，LLM honeypot 送 response 給駭客 ，等駭客回覆 command
-        next_state, reward, done, info = env.step(action_set[action])
+        next_state, reward, done, info = env.evaluate(action_set[action])
 
         # 累積 reward
         rewards += reward

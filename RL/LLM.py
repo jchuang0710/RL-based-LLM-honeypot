@@ -135,7 +135,7 @@ class LLM:
         chatgpt = OpenAI(api_key = os.environ['OPENAI_API_KEY'])
         
         outputs = chatgpt.chat.completions.create( 
-            model=self.BASE_MODEL_NAME,
+            model='gpt-4o-mini',
             messages=user_prompt
         ) 
 
@@ -166,7 +166,7 @@ class LLM:
         while len(response) < 2:
             try:
                 outputs = chatgpt.chat.completions.create( 
-                    model="gpt-4o-mini",
+                    model="ft:gpt-4o-mini-2024-07-18:personal:detect-ttp-atomic-0924:AAqZyEOo",
                     messages=user_prompt
                 ) 
 
