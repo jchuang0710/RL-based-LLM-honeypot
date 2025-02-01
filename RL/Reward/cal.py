@@ -45,5 +45,9 @@ print('DQN-Depth:', sum(get_max_depth("rewards_12-14-17.txt")))
 print('DDQN-Depth:', sum(get_max_depth("rewards_12-18-12.txt")))
 print('Original-Reward:', sum(get_total_reward("rewards_12-21-16.txt")))
 print('Original-Depth:', sum(get_max_depth("rewards_12-21-16.txt")))
-print('DDQN-Reward:', sum(get_total_reward("rewards_12-22-03.txt")))
-print('DDQN-Depth:', sum(get_max_depth("rewards_12-22-03.txt")))
+print('DDQN-Reward:', sum(get_total_reward("rewards_01-31-08.txt")))
+print('DDQN-Depth:', sum(get_max_depth("rewards_01-31-08.txt")))
+
+print('ABSI-Reward:', sum(get_total_reward("rewards_01-31-16.txt")))
+print('ABSI-Depth:', sum(get_max_depth("rewards_01-31-16.txt")))
+

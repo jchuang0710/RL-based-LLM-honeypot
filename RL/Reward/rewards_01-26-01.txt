@@ -1,0 +1,2 @@
+Episode 0 finished after 1 steps total rewards -5 max tactic id 1
+Episode 1 finished after 10 steps total rewards 55 max tactic id 8

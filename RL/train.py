@@ -7,11 +7,11 @@ import torch
 from datetime import datetime
 torch.set_num_threads(8) 
 
-
-#env = HoneypotEnv(ChatGPT())
-env = HoneypotEnv(LLM("../models/Meta-Llama-3.1-8B-Instruct"))
-
 action_set = ["", "{ Restore to original state }", "{ Degrade the network speed }", "{ Block the network traffic }", "{ Change hardware setting }","{ Change output }","{ Change the file content }", "{ Change the access rights }"]
+#action_set = ["", "{ Block this command this time }", "{ Change output }", "{ Insult user }"]
+
+#env = HoneypotEnv(ChatGPT(), len(action_set))
+env = HoneypotEnv(LLM("../models/Meta-Llama-3.1-8B-Instruct"), len(action_set))
 
 # Environment parameters
 n_actions = env.action_space.n
@@ -72,7 +72,7 @@ for i_episode in range(n_episodes):
 
         # 執行並取得回饋
         ## 送 action + command 給 LLM honeypot，LLM honeypot 送 response 給駭客 ，等駭客回覆 command
-        next_state, reward, done, info = env.evaluate(action_set[action])
+        next_state, reward, done, info = env.step(action_set[action])
 
         # 累積 reward
         rewards += reward
@@ -88,7 +88,7 @@ for i_episode in range(n_episodes):
             dqn.learn_DDQN()
             dqn.record_loss()
             dqn.epsilon_decay()
-            dqn.save('model/model_{}_episode_{}'.format(date, i_episode))
+            dqn.save('model/{}/model_{}_episode_{}'.format(date, date, i_episode))
             with open('loss_{}.txt'.format(date), 'a') as f:
                 f.write('Episode {} finished after {} steps loss {} \n'.format(i_episode, total_step, dqn.loss))
 

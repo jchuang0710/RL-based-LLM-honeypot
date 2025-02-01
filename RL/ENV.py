@@ -4,9 +4,9 @@ import numpy as np
 from datetime import datetime
 
 class HoneypotEnv(gym.Env):
-    def __init__(self, llm):
+    def __init__(self, llm, action_space):
         super(HoneypotEnv, self).__init__()
-        self.action_space = spaces.Discrete(8)  # 定義8個離散動作
+        self.action_space = spaces.Discrete(action_space)  # 定義8個離散動作
         self.observation_space = spaces.Box(low=0, high=1, shape=(203,), dtype=np.float32)
         self.state = np.zeros(self.observation_space.shape[0])
         self.state[0] = 1
@@ -32,6 +32,7 @@ class HoneypotEnv(gym.Env):
         # 從執行 command 取得系統輸出
         start = datetime.now()
         system_response = self.llm.answer(action, self.command_buffer[0], self.histroy)
+        #print('system_response:', system_response)
         self.histroy.append(self.command_buffer[0])
         self.histroy.append(system_response)
         del self.command_buffer[0]
@@ -41,7 +42,7 @@ class HoneypotEnv(gym.Env):
 
         start = datetime.now()
         ## 如果判斷系統輸出是 honeypot 或沒有下一個 command 就結束
-        if self.llm.detect_honeypot(self.histroy):
+        if self.llm.detect_honeypot2(self.histroy):
             done = True
             self.next_state[-1] = 1
             return self.next_state, -5, done, {}
@@ -52,7 +53,7 @@ class HoneypotEnv(gym.Env):
             return self.next_state, 13, done, {}
 
         ## 取得下一個 command 的 technique 作為狀態，tactic 作為 reward
-        tactic, technique = self.llm.next_state(action, self.command_buffer[0], self.histroy)
+        tactic, technique = self.llm.detect_next_state(action, self.command_buffer[0], self.histroy)
         print('analysis time:' + str(datetime.now()-start))
         print('tactic:', tactic)
         print('technique:', technique)
@@ -92,7 +93,7 @@ class HoneypotEnv(gym.Env):
             return self.next_state, 13, done, {}
 
         ## 取得下一個 command 的 technique 作為狀態，tactic 作為 reward
-        tactic, technique = self.llm.next_state(action, self.command_buffer[0], self.histroy)
+        tactic, technique = self.llm.detect_next_state(action, self.command_buffer[0], self.histroy)
         print('analysis time:' + str(datetime.now()-start))
         print('tactic:', tactic)
         print('technique:', technique)

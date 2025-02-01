@@ -48,15 +48,8 @@ class LLM:
                     message_history.append({"role": "user", "content": item})
                 else:
                     message_history.append({"role": "assistant", "content": item})
-
-        tmp = action
-        if type(query) == 'list':
-            for item in query:
-                tmp = tmp + item
-        else:
-            tmp = action + query
             
-        user_prompt = message_history + [{"role": "user", "content": tmp}]
+        user_prompt = message_history + [{"role": "user", "content": action + query}]
 
         prompt = self.pipeline.tokenizer.apply_chat_template(
             user_prompt, tokenize=False, add_generation_prompt=True
@@ -134,10 +127,17 @@ class LLM:
         
         chatgpt = OpenAI(api_key = os.environ['OPENAI_API_KEY'])
         
-        outputs = chatgpt.chat.completions.create( 
-            model='gpt-4o-mini',
-            messages=user_prompt
-        ) 
+        while(True):
+            try:
+                outputs = chatgpt.chat.completions.create( 
+                    model='gpt-4o-mini',
+                    messages=user_prompt
+                ) 
+                break
+            except:
+                print('sleep 20s')
+                time.sleep(20)
+                continue
 
         response = outputs.choices[0].message.content
         
@@ -146,7 +146,7 @@ class LLM:
 
         return False
     
-    def next_state(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
+    def detect_next_state(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
         #message = "Please analysis current state is in which MITRE tactic ID when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Please just reply Tactic ID, don't explain why and don't reply anything else.\n"
         message = "Please analysis current state is in which MITRE tactic and technique when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Technique ID like T1001, T1002, ... ,T1485. Please just reply Tactic ID first and then Technique ID like 'TA0001 T1485', don't explain why and don't reply anything else and don't reply sub-technique like T1001.001.\n"
         message_history = [{"role": "system", "content": message}]
@@ -179,7 +179,7 @@ class LLM:
 
         return self.translate_tactic_id(response[0]), self.translate_technique_id(response[1])
 
-    def next_state_groq(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
+    def detect_next_state_groq(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
         #message = "Please analysis current state is in which MITRE tactic ID when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Please just reply Tactic ID, don't explain why and don't reply anything else.\n"
         message = "Please analysis current state is in which MITRE tactic and technique when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Technique ID like T1001, T1002, ... ,T1485. Please just reply Tactic ID first and then Technique ID like 'TA0001 T1485', don't explain why and don't reply anything else and don't reply sub-technique like T1001.001.\n"
         if len(log_history) > 0:
@@ -209,7 +209,7 @@ class LLM:
 
         return self.translate_tactic_id(response[0]), self.translate_technique_id(response[1])
 
-    def next_state_local(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
+    def detect_next_state_local(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
         
         #message = "Please analysis current state is in which MITRE tactic and technique when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Technique ID like T1001, T1001.001, ... ,T1485. Please just reply Tactic ID first and then Technique ID, don't explain why and don't reply anything else.\n"
         message = "Please analysis current state is in which MITRE tactic and technique when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Technique ID like T1001, T1002, ... ,T1485. Please just reply Tactic ID first and then Technique ID like 'TA0001 T1485', don't explain why and don't reply anything else and don't reply sub-technique like T1001.001.\n"
@@ -254,3 +254,35 @@ class LLM:
             return techniqueID.index(technique)
         else:
             return 1
+
+    def get_next_attack_technique(self, log_history=[], technique_set=[]):
+
+        while(true):
+            message_history = [{"role": "system", "content": "According to the system input and output decide the next MITRE Technique attacker should use. just reply one technique ID, like 'T1101.001'. dont reply anything else"}]
+            #message = "According to the system input and output detect the system is honeypot or not,just reply yes or no, don't explain why.\n"
+            message = ""
+            if len(log_history) > 0:
+                for i, item in enumerate(log_history):
+                    if i % 2 == 0:
+                        message.append("input: "+ item + "\n")
+                    else:
+                        message.append("output: "+ item + "\n")
+
+            user_prompt = message_history + [{"role": "user", "content": message}]
+
+            prompt = self.pipeline.tokenizer.apply_chat_template(
+                user_prompt, tokenize=False, add_generation_prompt=True
+            )
+            outputs = self.pipeline(
+                prompt,
+                max_new_tokens=max_tokens,
+                pad_token_id=self.pipeline.tokenizer.eos_token_id,
+                eos_token_id=self.pipeline.tokenizer.eos_token_id,
+                do_sample=True,
+                temperature=temperature,
+                top_p=top_p,
+            )
+            response = outputs[0]["generated_text"][len(prompt):]
+            
+            if response in technique_set:
+                return response

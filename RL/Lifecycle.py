@@ -7,7 +7,7 @@ import pandas as pd
 import glob
 import random
 random.seed(11) #evaluate.py
-#random.seed(10) #train.py
+# random.seed(10) #train.py
 atomic_path = '../atomic-red-team/atomics/T*/*.yaml'
 victim_path = '/home/atomic'
 lifecycle_path = "lifecycle.xlsx"

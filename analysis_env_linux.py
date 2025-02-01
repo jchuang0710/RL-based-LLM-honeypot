@@ -136,6 +136,13 @@ for f in file_set:
             shell = ssh.invoke_shell()
             time.sleep(0.1)
             output = shell.recv(65535).decode()
+            
+            shell.send('su root\n')
+            time.sleep(0.2)
+            output = shell.recv(65535).decode()
+            shell.send('test\n')
+            time.sleep(0.1)
+            output = shell.recv(65535).decode()
             message_history = []
             try:
                 for command in command_set:
