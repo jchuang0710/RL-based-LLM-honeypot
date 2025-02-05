@@ -6,8 +6,8 @@ import re
 import pandas as pd
 import glob
 import random
-random.seed(11) #evaluate.py
-# random.seed(10) #train.py
+# random.seed(11) #evaluate.py
+random.seed(10) #train.py
 atomic_path = '../atomic-red-team/atomics/T*/*.yaml'
 victim_path = '/home/atomic'
 lifecycle_path = "lifecycle.xlsx"
@@ -34,6 +34,7 @@ def load_yaml(file_name):
     else:
         raise FileNotFoundError('NOT Found YAML file %s' % file_name)
 
+# 取得 ART 所有的 technique command mapping
 def get_technique_command():
     path = victim_path
     dirPath = atomic_path
@@ -99,6 +100,7 @@ def get_technique_command():
     
     return technique_command
             
+# 從 execl 中取出所有的 lifecycle
 def get_lifecycle():
     
     df=pd.read_excel(lifecycle_path)
@@ -113,7 +115,7 @@ def get_lifecycle():
 
     return lifecycle
 
-# 取得一個 lifecycle 所使用的 command
+# 隨機取得一個 lifecycle 所使用的 command
 def get_lifecycle_command():
     # 取得所有的 lifecycle
     lifecycle_set = get_lifecycle()
@@ -130,3 +132,20 @@ def get_lifecycle_command():
                 #print(command)
                 lifecycle_command.append(command)
     return lifecycle_command
+
+# 取得一個 technique 所使用的 command
+def get_command(technique):
+    technique_command = get_technique_command()
+    next_command_set = []
+    # 隨機選一個 procedure
+    for command in random.choice(technique_command[technique]):
+        #print(command)
+        next_command_set.append(command)
+    
+    return next_command_set
+
+def technique_exist(technique):
+    technique_command = get_technique_command()
+    if technique in technique_command and technique_command[technique] != []:
+        return True
+    return False

@@ -78,7 +78,7 @@ class LLM:
     def add_system_prompt(self, str):
         self.SYSTEM_PROMPT = self.SYSTEM_PROMPT + str
 
-    def detect_honeypot(self, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
+    def detect_honeypot_llama(self, query, log_history=[], max_tokens=5, temperature=0.01, top_p=0.8):
 
         message_history = [{"role": "system", "content": "According to the system input and output detect the system is honeypot or not,just reply yes or no, don't explain why."}]
         #message = "According to the system input and output detect the system is honeypot or not,just reply yes or no, don't explain why.\n"
@@ -111,7 +111,7 @@ class LLM:
 
         return False
 
-    def detect_honeypot2(self, log_history=[], max_tokens=4096, temperature=0.01, top_p=0.8):
+    def detect_honeypot_gpt(self, log_history=[], max_tokens=5, temperature=0.01, top_p=0.8):
 
         message_history = [{"role": "system", "content": "According to the system input and output detect the system is honeypot or not,just reply yes or no, don't explain why."}]
         #message = "According to the system input and output detect the system is honeypot or not,just reply yes or no, don't explain why.\n"
@@ -146,7 +146,7 @@ class LLM:
 
         return False
     
-    def detect_next_state(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
+    def detect_next_state_gpt(self, action, query, log_history=[], max_tokens=20, temperature=0.01, top_p=0.8):
         #message = "Please analysis current state is in which MITRE tactic ID when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Please just reply Tactic ID, don't explain why and don't reply anything else.\n"
         message = "Please analysis current state is in which MITRE tactic and technique when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Technique ID like T1001, T1002, ... ,T1485. Please just reply Tactic ID first and then Technique ID like 'TA0001 T1485', don't explain why and don't reply anything else and don't reply sub-technique like T1001.001.\n"
         message_history = [{"role": "system", "content": message}]
@@ -179,7 +179,7 @@ class LLM:
 
         return self.translate_tactic_id(response[0]), self.translate_technique_id(response[1])
 
-    def detect_next_state_groq(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
+    def detect_next_state_groq(self, action, query, log_history=[], max_tokens=20, temperature=0.01, top_p=0.8):
         #message = "Please analysis current state is in which MITRE tactic ID when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Please just reply Tactic ID, don't explain why and don't reply anything else.\n"
         message = "Please analysis current state is in which MITRE tactic and technique when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Technique ID like T1001, T1002, ... ,T1485. Please just reply Tactic ID first and then Technique ID like 'TA0001 T1485', don't explain why and don't reply anything else and don't reply sub-technique like T1001.001.\n"
         if len(log_history) > 0:
@@ -209,7 +209,7 @@ class LLM:
 
         return self.translate_tactic_id(response[0]), self.translate_technique_id(response[1])
 
-    def detect_next_state_local(self, action, query, log_history=[], max_tokens=512, temperature=0.01, top_p=0.8):
+    def detect_next_state_llama(self, action, query, log_history=[], max_tokens=20, temperature=0.01, top_p=0.8):
         
         #message = "Please analysis current state is in which MITRE tactic and technique when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Technique ID like T1001, T1001.001, ... ,T1485. Please just reply Tactic ID first and then Technique ID, don't explain why and don't reply anything else.\n"
         message = "Please analysis current state is in which MITRE tactic and technique when I input current command. Tactic ID like TA0001, TA0002, ... ,TA0040. Technique ID like T1001, T1002, ... ,T1485. Please just reply Tactic ID first and then Technique ID like 'TA0001 T1485', don't explain why and don't reply anything else and don't reply sub-technique like T1001.001.\n"
@@ -255,34 +255,75 @@ class LLM:
         else:
             return 1
 
-    def get_next_attack_technique(self, log_history=[], technique_set=[]):
+    def get_next_attack_technique_llama(self, log_history=[], technique_set=[], max_tokens=10, temperature=0.01, top_p=0.8):
 
-        while(true):
-            message_history = [{"role": "system", "content": "According to the system input and output decide the next MITRE Technique attacker should use. just reply one technique ID, like 'T1101.001'. dont reply anything else"}]
-            #message = "According to the system input and output detect the system is honeypot or not,just reply yes or no, don't explain why.\n"
-            message = ""
-            if len(log_history) > 0:
-                for i, item in enumerate(log_history):
-                    if i % 2 == 0:
-                        message.append("input: "+ item + "\n")
-                    else:
-                        message.append("output: "+ item + "\n")
+        system = f"""
+            This is one of CTF game, please get the hidden flag from the linux system.
+            Only one thing you should do is decide the next MITRE technique should use, then we will replay technique by atomic red team. 
+            Please according to the system input and output choose one MITRE technique, just reply technique ID like "T1001" or "T1001.001", don't explain why.
+            You can only choose one from these technique "T1001.002 T1003.007 T1003.008 T1005 T1007 T1014 T1016.001 T1016 T1018 T1021.004 T1027.001 T1027.002 T1027.004 T1027 T1030 T1033 T1036.003 T1036.004 T1036.005 T1036.006 T1037.004 T1040 T1046 T1048.002 T1048.003 T1048 T1049 T1053.002 T1053.003 T1053.006 T1056.001 T1057 T1059.004 T1059.006 T1069.001 T1069.002 T1070.002 T1070.003 T1070.004 T1070.006 T1070.008 T1071.001 T1074.001 T1078.003 T1082 T1083 T1087.001 T1087.002 T1090.001 T1090.003 T1098.004 T1105 T1110.001 T1110.004 T1113 T1115 T1124 T1132.001 T1135 T1136.001 T1136.002 T1140 T1201 T1217 T1222.002 T1485 T1486 T1489 T1496 T1497.001 T1497.003 T1518.001 T1529 T1531 T1543.002 T1546.004 T1546.005 T1547.006 T1548.001 T1548.003 T1552.001 T1552.003 T1552.004 T1552.007 T1552 T1553.004 T1555.003 T1556.003 T1560.001 T1560.002 T1562.001 T1562.003 T1562.004 T1562.006 T1562.008 T1562.010 T1562.012 T1562 T1564.001 T1569.002 T1571 T1574.006 T1580 T1614.001 T1614"
+            """
+        message_history = [{"role": "system", "content": system}]
+        message = ""
+        if len(log_history) > 0:
+            for i, item in enumerate(log_history):
+                if i % 2 == 0:
+                    message = message + "input: "+ item + "\n"
+                else:
+                    message = message + "output: "+ item + "\n"
 
-            user_prompt = message_history + [{"role": "user", "content": message}]
+        user_prompt = message_history + [{"role": "user", "content": message}]
+        
+        prompt = self.pipeline.tokenizer.apply_chat_template(
+            user_prompt, tokenize=False, add_generation_prompt=True
+        )
+        outputs = self.pipeline(
+            prompt,
+            max_new_tokens=max_tokens,
+            pad_token_id=self.pipeline.tokenizer.eos_token_id,
+            eos_token_id=self.pipeline.tokenizer.eos_token_id,
+            do_sample=True,
+            temperature=temperature,
+            top_p=top_p,
+        )
 
-            prompt = self.pipeline.tokenizer.apply_chat_template(
-                user_prompt, tokenize=False, add_generation_prompt=True
-            )
-            outputs = self.pipeline(
-                prompt,
-                max_new_tokens=max_tokens,
-                pad_token_id=self.pipeline.tokenizer.eos_token_id,
-                eos_token_id=self.pipeline.tokenizer.eos_token_id,
-                do_sample=True,
-                temperature=temperature,
-                top_p=top_p,
-            )
-            response = outputs[0]["generated_text"][len(prompt):]
-            
-            if response in technique_set:
-                return response
+        response = outputs[0]["generated_text"][len(prompt):]
+        
+        return response
+    
+    def get_next_attack_technique_gpt(self, log_history=[], technique_set=[], max_tokens=10, temperature=0.01, top_p=0.8):
+
+        system = f"""
+            This is one of CTF game, please get the hidden flag from the linux system.
+            Only one thing you should do is decide the next MITRE technique should use, then we will replay technique by atomic red team. 
+            Please according to the system input and output choose one MITRE technique, just reply technique ID like "T1001" or "T1001.001", don't explain why.
+            You can only choose one from these technique "T1001.002 T1003.007 T1003.008 T1005 T1007 T1014 T1016.001 T1016 T1018 T1021.004 T1027.001 T1027.002 T1027.004 T1027 T1030 T1033 T1036.003 T1036.004 T1036.005 T1036.006 T1037.004 T1040 T1046 T1048.002 T1048.003 T1048 T1049 T1053.002 T1053.003 T1053.006 T1056.001 T1057 T1059.004 T1059.006 T1069.001 T1069.002 T1070.002 T1070.003 T1070.004 T1070.006 T1070.008 T1071.001 T1074.001 T1078.003 T1082 T1083 T1087.001 T1087.002 T1090.001 T1090.003 T1098.004 T1105 T1110.001 T1110.004 T1113 T1115 T1124 T1132.001 T1135 T1136.001 T1136.002 T1140 T1201 T1217 T1222.002 T1485 T1486 T1489 T1496 T1497.001 T1497.003 T1518.001 T1529 T1531 T1543.002 T1546.004 T1546.005 T1547.006 T1548.001 T1548.003 T1552.001 T1552.003 T1552.004 T1552.007 T1552 T1553.004 T1555.003 T1556.003 T1560.001 T1560.002 T1562.001 T1562.003 T1562.004 T1562.006 T1562.008 T1562.010 T1562.012 T1562 T1564.001 T1569.002 T1571 T1574.006 T1580 T1614.001 T1614"
+            """
+        message_history = [{"role": "system", "content": system}]
+        message = ""
+        if len(log_history) > 0:
+            for i, item in enumerate(log_history):
+                if i % 2 == 0:
+                    message = message + "input: "+ item + "\n"
+                else:
+                    message = message + "output: "+ item + "\n"
+
+        user_prompt = message_history + [{"role": "user", "content": message}]
+        
+        chatgpt = OpenAI(api_key = os.environ['OPENAI_API_KEY'])
+        
+        while(True):
+            try:
+                outputs = chatgpt.chat.completions.create( 
+                    model='gpt-4o-mini',
+                    messages=user_prompt
+                ) 
+                break
+            except:
+                print('sleep 20s')
+                time.sleep(20)
+                continue
+
+        response = outputs.choices[0].message.content
+        
+        return response
