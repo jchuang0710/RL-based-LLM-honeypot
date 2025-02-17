@@ -5,7 +5,7 @@ from datetime import datetime
 from Lifecycle import *
 
 class HoneypotEnv(gym.Env):
-    def __init__(self, llm, action_space):
+    def __init__(self, llm, action_space, date):
         super(HoneypotEnv, self).__init__()
         self.action_space = spaces.Discrete(action_space)  # 定義8個離散動作
         self.observation_space = spaces.Box(low=0, high=1, shape=(203,), dtype=np.float32)
@@ -15,6 +15,7 @@ class HoneypotEnv(gym.Env):
         self.tactic_buffer = []
         self.max_tactic = 1
         self.histroy = []
+        self.date = date
 
         self.llm = llm
 
@@ -82,7 +83,7 @@ class HoneypotEnv(gym.Env):
 
         start = datetime.now()
         ## 如果判斷系統輸出是 honeypot 或沒有下一個 command 就結束
-        if self.llm.detect_honeypot2(self.histroy):
+        if self.llm.detect_honeypot_gpt(self.histroy):
             done = True
             self.next_state[-1] = 1
             return self.next_state, -5, done, {}
@@ -113,7 +114,7 @@ class HoneypotEnv(gym.Env):
         # 從執行 command 取得系統輸出
         start = datetime.now()
         system_response = self.llm.answer(action, self.command_buffer[0], self.histroy)
-        #print('system_response:', system_response)
+        self.log_history(action, self.command_buffer[0], system_response)
         self.histroy.append(self.command_buffer[0])
         self.histroy.append(system_response)
         del self.command_buffer[0]
@@ -123,7 +124,7 @@ class HoneypotEnv(gym.Env):
 
         start = datetime.now()
         # 如果判斷系統輸出是 honeypot 或沒有下一個 command 就結束
-        if self.llm.detect_honeypot_llama(self.histroy):
+        if self.llm.detect_honeypot_gpt(self.histroy):
             done = True
             self.next_state[-1] = 1
             return self.next_state, -5, done, {}
@@ -152,3 +153,10 @@ class HoneypotEnv(gym.Env):
             self.max_tactic = tactic + 1
 
         return self.next_state, reward, done, {}
+
+    def log_history(self, action, command, response):
+        with open('interact_{}.txt'.format(self.date), 'a') as f:
+            f.write("action:" + action + "\n")
+            f.write("command:" + command + "\n")
+            f.write("response:" + response + "\n")
+            f.write("\n")

@@ -6,20 +6,23 @@ from Lifecycle import *
 import torch
 from datetime import datetime
 import os
-torch.set_num_threads(8) 
+torch.set_num_threads(8)
 
-action_set = ["", "{ Restore to original state }", "{ Degrade the network speed }", "{ Block the network traffic }", "{ Change hardware setting }","{ Change output }","{ Change the file content }", "{ Change the access rights }", "{ Block this command this time }"]
-#action_set = ["", "{ Block this command this time }", "{ Change output }", "{ Insult user }"]
+date = datetime.now().strftime("%m-%d-%H")
+
+# action_set = ["", "{ Restore to original state }", "{ if output contain network speed, Degrade the network speed }", "{ if output is upload or download, Block this command by the network traffic }", "{ if output contain hardware setting, Change hardware setting }","{ Change terminal output this time }","{ if output is file content, Change the file content }", "{ if output content access right relative, change the access rights }", "{ Block this command this time }"]
+action_set = ["", "{ Block this command this time }", "{ Change output }", "{ Insult user }"]
 
 #env = HoneypotEnv(ChatGPT(), len(action_set))
-env = HoneypotEnv(LLM("../models/Meta-Llama-3.1-8B-Instruct"), len(action_set))
+env = HoneypotEnv(LLM("../models/Meta-Llama-3.1-8B-Instruct"), len(action_set), date)
+# env = HoneypotEnv(LLM("../models/DeepSeek-R1-Distill-Llama-8B"), len(action_set), date)
 
 # Environment parameters
 n_actions = env.action_space.n
 n_states = env.observation_space.shape[0]
 
 # Other parameters
-date = datetime.now().strftime("%m-%d-%H")
+
 warmup_steps = 400
 total_step = 0
 
@@ -32,7 +35,7 @@ eps_min = 0.15            # 最多
 eps_decay = 20            # 下降的區間有 100 個
 gamma = 0.9               # reward discount factor
 target_replace_iter = 10  # target network 更新間隔
-memory_capacity = 20000   # 可以儲存多少經驗
+memory_capacity = 10000   # 可以儲存多少經驗
 train_step = 100          # 多少 step 訓練一次
 n_episodes = 10000
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -101,5 +104,4 @@ for i_episode in range(n_episodes):
             break
         
         #input('next')
-
 env.close()
