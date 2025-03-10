@@ -1,0 +1,62 @@
+
+
+Mon Mar 10 10:01:44 2025
+Command line: TestDisk
+
+TestDisk 7.1, Data Recovery Utility, July 2019
+Christophe GRENIER <grenier@cgsecurity.org>
+https://www.cgsecurity.org
+OS: Linux, kernel 6.8.0-51-generic (#52~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Dec  9 15:00:52 UTC 2) x86_64
+Compiler: GCC 11.2
+ext2fs lib: 1.46.5, ntfs lib: libntfs-3g, reiserfs lib: none, ewf lib: none, curses lib: ncurses 6.3
+Warning: can't get size for Disk /dev/mapper/control - 0 B - 0 sectors, sector size=512
+/dev/sr0 is not an ATA disk
+Warning: can't get size for Disk /dev/loop19 - 0 B - 0 sectors, sector size=512
+Warning: can't get size for Disk /dev/loop2 - 0 B - 0 sectors (RO), sector size=512
+Hard disk list
+Disk /dev/sda - 274 GB / 256 GiB - CHS 33418 255 63, sector size=512 - QEMU QEMU HARDDISK, FW:2.5+
+Disk /dev/sr0 - 5017 MB / 4784 MiB - 2449881 sectors (RO), sector size=2048 - QEMU DVD-ROM, S/N:QM00003, FW:2.5+
+Disk /dev/loop0 - 4096 B - 8 sectors (RO), sector size=512
+Disk /dev/loop1 - 541 MB / 516 MiB - 1056784 sectors (RO), sector size=512
+Disk /dev/loop10 - 529 MB / 505 MiB - 1034424 sectors (RO), sector size=512
+Disk /dev/loop11 - 96 MB / 91 MiB - 187776 sectors (RO), sector size=512
+Disk /dev/loop12 - 12 MB / 12 MiB - 24984 sectors (RO), sector size=512
+Disk /dev/loop13 - 12 MB / 12 MiB - 25240 sectors (RO), sector size=512
+Disk /dev/loop14 - 332 MB / 316 MiB - 648856 sectors (RO), sector size=512
+Disk /dev/loop15 - 46 MB / 44 MiB - 91008 sectors (RO), sector size=512
+Disk /dev/loop16 - 577 KB / 564 KiB - 1128 sectors (RO), sector size=512
+Disk /dev/loop17 - 581 KB / 568 KiB - 1136 sectors (RO), sector size=512
+Disk /dev/loop18 - 334 MB / 319 MiB - 653696 sectors (RO), sector size=512
+Disk /dev/loop3 - 270 MB / 257 MiB - 528256 sectors (RO), sector size=512
+Disk /dev/loop4 - 66 MB / 63 MiB - 130448 sectors (RO), sector size=512
+Disk /dev/loop5 - 270 MB / 257 MiB - 528368 sectors (RO), sector size=512
+Disk /dev/loop6 - 77 MB / 73 MiB - 151288 sectors (RO), sector size=512
+Disk /dev/loop7 - 66 MB / 63 MiB - 130552 sectors (RO), sector size=512
+Disk /dev/loop8 - 46 MB / 44 MiB - 91024 sectors (RO), sector size=512
+Disk /dev/loop9 - 77 MB / 73 MiB - 151328 sectors (RO), sector size=512
+
+Partition table type (auto): EFI GPT
+Partition table type (auto): None
+Media is opened in read-only.
+Partition table type (auto): EFI GPT
+Disk /dev/sda - 274 GB / 256 GiB - QEMU QEMU HARDDISK
+Partition table type: Intel
+
+Interface Advanced
+Geometry from i386 MBR: head=256 sector=63
+check_part_i386 1 type EE: no test
+ 1 P EFI GPT                  0   0  2 33418 170 32  536870911
+New options :
+ Dump : No
+ Align partition: Yes
+ Expert mode : No
+
+Analyse Disk /dev/sda - 274 GB / 256 GiB - CHS 33418 255 63
+Geometry from i386 MBR: head=256 sector=63
+check_part_i386 1 type EE: no test
+Current partition structure:
+ 1 P EFI GPT                  0   0  2 33418 170 32  536870911
+
+Warning: Bad ending head (CHS and LBA don't match)
+No partition is bootable
+SIGINT detected! TestDisk has been killed.

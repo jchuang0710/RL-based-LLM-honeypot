@@ -9,11 +9,11 @@ import os
 torch.set_num_threads(8) 
 date = datetime.now().strftime("%m-%d-%H")
 
-action_set = ["", "{ Restore to original state }", "{ if output contain network speed, Degrade the network speed }", "{ if output is upload or download, Block this command by the network traffic }", "{ if output contain hardware setting, Change hardware setting }","{ Change terminal output this time }","{ if output is file content, Change the file content }", "{ if output content access right relative, change the access rights }", "{ Block this command this time }"]
-#action_set = ["", "{ Block this command this time }", "{ Change output }", "{ Insult user }"]
+# action_set = ["", "{ Restore to original state }", "{ if output contain network speed, Degrade the network speed }", "{ if output is upload or download, Block this command by the network traffic }", "{ if output contain hardware setting, Change hardware setting }","{ change terminal output this time }","{ if output is file content, Change the file content }", "{ change the output by change the access right }", "{ Block this command this time }"]
+action_set = ["", "{ Block this command this time }", "{ Change output }", "{ Output should contain you are ugly }"]
 
-#env = HoneypotEnv(ChatGPT(), len(action_set))
-env = HoneypotEnv(LLM("../models/Meta-Llama-3.1-8B-Instruct"), len(action_set), date)
+env = HoneypotEnv(ChatGPT(), len(action_set), date)
+# env = HoneypotEnv(LLM("../models/Meta-Llama-3.1-8B-Instruct"), len(action_set), date)
 
 # Environment parameters
 n_actions = env.action_space.n
@@ -28,7 +28,7 @@ total_step = 0
 n_hidden = 256
 batch_size = 256
 lr = 0.001                # learning rate
-epsilon = 1.0             # 最初的 epsilon-greedy
+epsilon = 0.15            # 最初的 epsilon-greedy
 eps_min = 0.15            # 最多
 eps_decay = 20            # 下降的區間有 100 個
 gamma = 0.9               # reward discount factor
@@ -40,7 +40,8 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 # 建立 DQN
 dqn = DQN(device, n_states, n_actions, n_hidden, batch_size, lr, epsilon, eps_min, eps_decay, gamma, target_replace_iter, memory_capacity)
-dqn.load('./model/02-07-04/model_02-07-04_episode_650') # DDQN
+# dqn.load('./model/02-07-04/model_02-07-04_episode_650') # DDQN
+dqn.load('./model/02-17-18/model_02-17-18_episode_358') # DDQN
 # Hacker = Environment
 # State = Command's Tactic
 # Next_State = Command's Tactic
@@ -72,7 +73,7 @@ for i_episode in range(n_episodes):
         # 執行並取得回饋
         ## 送 action + command 給 LLM honeypot，LLM honeypot 送 response 給駭客 ，等駭客回覆 command
         next_state, reward, done, info = env.step_llm(action_set[action])
-        # next_state, reward, done, info = env.step_llm('')
+        # next_state, reward, done, info = env.step_llm("{ allow command execute this time }")
 
         # 累積 reward
         rewards += reward
@@ -81,10 +82,8 @@ for i_episode in range(n_episodes):
         # 將 state 與 action 給入環境達成的新的 state，紀錄 reward
         # dqn.store_transition(state, action, reward, next_state)
 
-        # 有足夠 experience 後進行訓練
-        # if total_step <= warmup_steps:
-        #     dqn.epsilon = 1.0
-        # elif total_step % train_step == 0: # 儲存 500 個經驗後訓練一次
+        # # 有足夠 experience 後進行訓練
+        # if total_step % train_step == 0: # 儲存 500 個經驗後訓練一次
         #     dqn.learn_DDQN()
         #     dqn.record_loss()
         #     dqn.epsilon_decay()

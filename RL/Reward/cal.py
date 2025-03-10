@@ -39,8 +39,11 @@ ax1.legend()
 plt.show()
 fig.savefig(fname='./Max_Depth'+'.png', format='png')
 
-print('DDQN-Reward:', sum(get_total_reward("../rewards_02-14-10.txt")))
-print('DDQN-Depth:', sum(get_max_depth("../rewards_02-14-10.txt")))
+print('DDQN-Reward:', sum(get_total_reward("../rewards_03-08-02.txt")))
+print('DDQN-Depth:', sum(get_max_depth("../rewards_03-08-02.txt")))
 
-print('Original-Reward:', sum(get_total_reward("../rewards_02-13-14.txt")))
-print('Original-Depth:', sum(get_max_depth("../rewards_02-13-14.txt")))
+print('Original-Reward:', sum(get_total_reward("../rewards_02-23-05.txt")))
+print('Original-Depth:', sum(get_max_depth("../rewards_02-23-05.txt")))
+
+print('ABSI-Reward:', sum(get_total_reward("../rewards_03-08-10.txt")))
+print('ABSI-Depth:', sum(get_max_depth("../rewards_03-08-10.txt")))

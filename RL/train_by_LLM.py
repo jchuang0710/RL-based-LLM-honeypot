@@ -10,11 +10,11 @@ torch.set_num_threads(8)
 
 date = datetime.now().strftime("%m-%d-%H")
 
-# action_set = ["", "{ Restore to original state }", "{ if output contain network speed, Degrade the network speed }", "{ if output is upload or download, Block this command by the network traffic }", "{ if output contain hardware setting, Change hardware setting }","{ Change terminal output this time }","{ if output is file content, Change the file content }", "{ if output content access right relative, change the access rights }", "{ Block this command this time }"]
-action_set = ["", "{ Block this command this time }", "{ Change output }", "{ Insult user }"]
+action_set = ["", "{ Restore to original state }", "{ if output contain network speed, Degrade the network speed }", "{ if output is upload or download, Block this command by the network traffic }", "{ if output contain hardware setting, Change hardware setting }","{ Change terminal output this time }","{ if output is file content, Change the file content }", "{ change the terminal output via change the access rights }", "{ Block this command this time }"]
+# action_set = ["", "{ Block this command this time }", "{ Change output }", "{ write you are ugly in output}"]
 
-#env = HoneypotEnv(ChatGPT(), len(action_set))
-env = HoneypotEnv(LLM("../models/Meta-Llama-3.1-8B-Instruct"), len(action_set), date)
+env = HoneypotEnv(ChatGPT(), len(action_set), date)
+# env = HoneypotEnv(LLM("../models/Meta-Llama-3.1-8B-Instruct"), len(action_set), date)
 # env = HoneypotEnv(LLM("../models/DeepSeek-R1-Distill-Llama-8B"), len(action_set), date)
 
 # Environment parameters
@@ -37,7 +37,7 @@ gamma = 0.9               # reward discount factor
 target_replace_iter = 10  # target network 更新間隔
 memory_capacity = 10000   # 可以儲存多少經驗
 train_step = 100          # 多少 step 訓練一次
-n_episodes = 10000
+n_episodes = 500
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 # 建立 DQN
