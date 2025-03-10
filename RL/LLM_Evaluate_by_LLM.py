@@ -80,17 +80,11 @@ for i_episode in range(n_episodes):
                 
         # 儲存 experience
         # 將 state 與 action 給入環境達成的新的 state，紀錄 reward
-        # dqn.store_transition(state, action, reward, next_state)
+        dqn.store_transition(state, action, reward, next_state)
 
         # # 有足夠 experience 後進行訓練
-        # if total_step % train_step == 0: # 儲存 500 個經驗後訓練一次
-        #     dqn.learn_DDQN()
-        #     dqn.record_loss()
-        #     dqn.epsilon_decay()
-        #     os.makedirs('model/{}'.format(date), exist_ok=True)
-        #     dqn.save('model/{}/model_{}_episode_{}'.format(date, date, i_episode))
-        #     with open('loss_{}.txt'.format(date), 'a') as f:
-        #         f.write('Episode {} finished after {} steps loss {} \n'.format(i_episode, total_step, dqn.loss))
+        if total_step % train_step == 0: # 儲存 500 個經驗後訓練一次
+            dqn.learn_DDQN()
 
         # 進入下一 state
         state = next_state
