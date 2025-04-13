@@ -6,10 +6,14 @@ import re
 import pandas as pd
 import glob
 import random
+import setting
 # random.seed(11) # evaluate.py
 random.seed(10) # train.py
 atomic_path = '../atomic-red-team/atomics/T*/*.yaml'
-victim_path = '/home/atomic'
+if setting.system == 'linux':
+    victim_path = '/home/atomics'
+elif setting.system == 'windows':
+    victim_path = 'C:\\atomics'
 lifecycle_path = "lifecycle.xlsx"
 
 def replace_placeholders(data, input_arguments):
@@ -54,7 +58,7 @@ def get_technique_command():
             if yaml_dict['attack_technique'] not in technique_command:
                 technique_command[yaml_dict['attack_technique']] = []
                 #print('add:',yaml_dict['attack_technique'])
-            if 'linux' in item['supported_platforms']:
+            if setting.system in item['supported_platforms']:
                 #print(yaml_dict['attack_technique'])
                 
                 arguments = {}

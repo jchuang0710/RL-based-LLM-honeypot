@@ -14,6 +14,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.tensorboard import SummaryWriter
+import setting
 #torch.set_grad_enabled(True)
 
 class Net(nn.Module):
@@ -31,26 +32,26 @@ class Net(nn.Module):
         return self.layers(x)
 
 class DQN(object):
-    def __init__(self, device, n_states, n_actions, n_hidden, batch_size, lr, epsilon, eps_min, eps_decay, gamma, target_replace_iter, memory_capacity):
+    def __init__(self, device, n_states, n_actions):
         self.device = device
         self.n_states = n_states
         self.n_actions = n_actions
-        self.n_hidden = n_hidden
-        self.batch_size = batch_size
-        self.lr = lr
-        self.epsilon = epsilon
-        self.eps_min = eps_min
-        self.eps_decay = eps_decay
+        self.n_hidden = setting.n_hidden
+        self.batch_size = setting.batch_size
+        self.lr = setting.lr
+        self.epsilon = setting.epsilon
+        self.eps_min = setting.eps_min
+        self.eps_decay = setting.eps_decay
 
-        self.gamma = gamma
-        self.target_replace_iter = target_replace_iter
-        self.memory_capacity = memory_capacity
+        self.gamma = setting.gamma
+        self.target_replace_iter = setting.target_replace_iter
+        self.memory_capacity = setting.memory_capacity
         
         self.eval_net = self._build_model()
         self.target_net = self._build_model()
 
-        self.memory = np.zeros((memory_capacity, n_states * 2 + 2)) # 每個 memory 中的 experience 大小為 (state + next state + reward + action)
-        self.optimizer = torch.optim.Adam(self.eval_net.parameters(), lr=lr)
+        self.memory = np.zeros((setting.memory_capacity, n_states * 2 + 2)) # 每個 memory 中的 experience 大小為 (state + next state + reward + action)
+        self.optimizer = torch.optim.Adam(self.eval_net.parameters(), lr=setting.lr)
         
         self.scheduler = ReduceLROnPlateau(self.optimizer, mode='min', factor=0.5, patience=6, verbose=True, min_lr=1e-6) # 新增基於 Loss 的學習率調整
         self.loss_func = nn.SmoothL1Loss()

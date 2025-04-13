@@ -13,11 +13,17 @@ from openai import OpenAI
 import paramiko
 import time
 
+env = 'linux'
+# env = 'windows'
+
 # 記得金鑰不要洩漏出去
 api_key = os.environ['OPENAI_API_KEY']
 client = OpenAI(api_key = api_key)
 
-path = 'C:\AtomicRedTeam'
+if env == 'linux':
+    path = '/home/atomics'
+if env == 'windows':
+    path = 'C:\\atomics'
 dirPath = '/workspace/LLM-Honeypot/atomic-red-team/atomics/T*/*.yaml'
 file_set = glob.glob(dirPath)
 file_set.sort()
@@ -52,7 +58,7 @@ for f in file_set:
     flag = False
     for item in yaml_dict['atomic_tests']:
         command_set = []
-        if 'windows' in item['supported_platforms']:
+        if env in item['supported_platforms']:
             set1.add(yaml_dict['attack_technique'])
             print(yaml_dict['attack_technique'])
             arguments = {}
@@ -102,25 +108,19 @@ for f in file_set:
                 '''
             '''
             # ChatGPT generate command/response pair
-            
-            #message_history = [{"role": "system", "content": "I want you to act as a ubuntu terminal which have join into ad domain 'hslab.com' which contain ten domain computer and 20 domain user.Please set the relevant parameters randomly.  I will type commands and you will reply with what the terminal should show. I want you only to reply with the terminal output in plaintest, and nothing else.You have already install all atomic red team relatvie file under path '/home/atomic'. Some commands will be composed of multiple instructs, please reply them in order and reply need to consider the previous instructs.  Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output. All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}."}]
-            message_history = [{"role": "system", "content": "I want you to act as a windows powershell." + 
-                                "Please set the relevant parameters randomly." +
-                                "I will type commands and you will reply with what the powershell should show." +
-                                "I want you only to reply with the powershell output in plaintest, and nothing else.You have already install all atomic red team relatvie file under path 'C:\AtomicRedTeam'." +
-                                "Do not write explanations." +
-                                "Do not type commands unless I instruct you to do so. Don't omit any output." +
-                                "All the software have already install." +
-                                "When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}."}]
-            for command in command_set:
-                try:
+            if env == 'linux':
+                message_history = [{"role": "system", "content": "I want you to act as a ubuntu terminal. Please set the relevant parameters randomly.  I will type commands and you will reply with what the terminal should show. I want you only to reply with the terminal output in plaintest, and nothing else.You have already install all atomic red team relatvie file under path '/home/atomic'. Some commands will be composed of multiple instructs, please reply them in order and reply need to consider the previous instructs.  Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output. All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}."}]
+            if env == 'windows':
+                message_history = [{"role": "system", "content": "I want you to act as a windows powershell which have join into ad domain 'hslab.com' which contain ten domain computer and 20 domain user.Please set the relevant parameters randomly.  I will type commands and you will reply with what the powershell should show. I want you only to reply with the powershell output in plaintest, and nothing else.You have already install all atomic red team relative file under path 'C:\\atomics'. Some commands will be composed of multiple instructs, please reply them in order and reply need to consider the previous instructs.  Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output. All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}."}]
+            try:
+                for command in command_set:
                     message_history.append({"role": "user", "content": command})
                     outputs = client.chat.completions.create(
-                        model="gpt-4o-mini",
+                        model="gpt-4o",
                         messages=message_history
                     )
                     response = outputs.choices[0].message.content
-                
+                    response.replace("plaintext", '')
                     if response.startswith("plaintext"):
                         response = response[9:0]
                     elif response.startswith("```") and response.endswith("```"):
@@ -129,10 +129,10 @@ for f in file_set:
                         response = response[1:-1]
                     
                     message_history.append({"role": "assistant", "content": response})
-                except:
-                    continue
+            except:
+                continue
             '''
-            
+            '''
             # Cowrie generate command/response pair
             
             # 建立一个sshclient对象
@@ -141,7 +141,12 @@ for f in file_set:
             # 允许将信任的主机自动加入到host_allow 列表，此方法必须放在connect方法的前面
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             # 调用connect方法连接服务器
-            ssh.connect(hostname='192.168.101.23', port=22, username='TEST\Administrator', password='Win*Server')
+            # Linux
+            if env == 'linux':
+                ssh.connect(hostname='192.168.101.26', port=22, username='test', password='test')
+            # Windows
+            if env == 'windows':
+                ssh.connect(hostname='192.168.101.23', port=22, username='TEST/Administrator', password='Win*Server')
             # 执行命令
             shell = ssh.invoke_shell()
             time.sleep(0.1)
@@ -164,8 +169,8 @@ for f in file_set:
             finally:
                 # 关闭连接
                 ssh.close()
-            
-            
+            '''
+            '''
             # ChatGPT judge the env is real or not
             history = ''
             i = 0
@@ -176,32 +181,42 @@ for f in file_set:
                 else:
                     if i%2 == 0 :
                         #print('content:', item)
-                        history = history + '\ninput:' + item['content']
+                        history = history + '\noutput:' + item['content']
+                        with open('{}_gpt.txt'.format(env), 'a') as f:
+                            f.write('output: ' + item['content']+'\n')
                     else:
                         #print('content:', item)
-                        history = history + '\noutput:' + item['content']
+                        history = history + '\ninput:' + item['content']
+                        with open('{}_gpt.txt'.format(env), 'a') as f:
+                            f.write('input: ' + item['content']+'\n')
                 i = i + 1
             try:
                 Completion = client.chat.completions.create( 
                     model="gpt-4o",
                     messages=[ 
-                        #{ "role" : "system" , "content" : "The following is some system input and output please determine the attack is success or not, and system is honeypot or not. If attack is success and system is not honeypot please reply yes, else reply no. don't explain."},
-                        { "role" : "system" , "content" : "The following is windows powershell input and output please determine the system is honeypot or not. If system is not honeypot please reply yes, else reply no. don't explain."},
+                        # { "role" : "system" , "content" : "The following is some system input and output please determine the attack is success or not, and system is honeypot or not. If attack is success and system is not honeypot please reply yes, else reply no. don't explain."},
+                        { "role" : "system" , "content" : "According to the system input and output detect the system is honeypot or not,just reply yes or no, don't explain why."},
                         { "role" : "user" , "content" : history}
                     ] 
-                ) 
-                print ('Analysis honeypot or not: ', Completion.choices[0].message.content)
-                total = total + 1
-                if (Completion.choices[0].message.content != 'no'):
-                    correct = correct + 1
-                
-                #print('history:', history)
-                print('total:', total, 'success: ', correct, ' f1-score: ', correct/total)
-                #input('next')
+                )
             except:
                 continue
-
+            with open('{}_gpt.txt'.format(env), 'a') as f:
+                f.write('Analysis honeypot or not: '+ Completion.choices[0].message.content+'\n\n') 
+            print ('Analysis honeypot or not: ', Completion.choices[0].message.content)
+            total = total + 1
+            if (Completion.choices[0].message.content == 'yes' or Completion.choices[0].message.content == 'Yes'):
+                correct = correct + 1
+            
+            #print('history:', history)
+            print('total:', total, 'success: ', correct, ' Simulate Success Rate: ', correct/total)
+            #input('next')
+            '''
+print(set1)
+print(len(set1))
+'''
 path = 'output.txt'
 with open(path, 'w') as f:
-    f.write('total:' + str(total) + 'success: ' + str(correct) + ' f1-score: ' + str(correct/total))
+    f.write('total:' + str(total) + 'success: ' + str(correct) + ' Simulate Success Rate: ' + str(correct/total))
 print('end')
+'''

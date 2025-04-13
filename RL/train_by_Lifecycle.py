@@ -6,20 +6,21 @@ from Lifecycle import *
 import torch
 from datetime import datetime
 torch.set_num_threads(8) 
+date = datetime.now().strftime("%m-%d-%H")
 
-action_set = ["", "{ Restore to original state }", "{ Degrade the network speed }", "{ Block the network traffic }", "{ Change hardware setting }","{ Change output }","{ Change the file content }", "{ Change the access rights }"]
-#action_set = ["", "{ Block this command this time }", "{ Change output }", "{ Insult user }"]
+action_set = action_set = ["", "{ Restore to original state }", "{ if output contain network speed, Degrade the network speed }", "{ if output is upload or download, Block this command by the network traffic }", "{ if output contain hardware setting, Change hardware setting }","{ change terminal output this time }","{ if output is file content, Change the file content }", "{ change the output by change the access right }", "{ Block this command this time }"]
+#action_set = ["", "{ Block this command this time }", "{ Change output }", "{ Output should contain you are ugly }"]
 
-#env = HoneypotEnv(ChatGPT(), len(action_set))
+env = HoneypotEnv(ChatGPT(), len(action_set), date)
 # env = HoneypotEnv(LLM("../models/Meta-Llama-3.1-8B-Instruct"), len(action_set))
-env = HoneypotEnv(LLM("../models/DeepSeek-R1-Distill-Llama-8B"), len(action_set))
+# env = HoneypotEnv(LLM("../models/DeepSeek-R1-Distill-Llama-8B"), len(action_set))
 
 # Environment parameters
 n_actions = env.action_space.n
 n_states = env.observation_space.shape[0]
 
 # Other parameters
-date = datetime.now().strftime("%m-%d-%H")
+
 warmup_steps = 400
 total_step = 0
 
@@ -34,7 +35,7 @@ gamma = 0.9               # reward discount factor
 target_replace_iter = 10  # target network 更新間隔
 memory_capacity = 10000    # 可以儲存多少經驗
 train_step = 100          # 多少 step 訓練一次
-n_episodes = 10000
+n_episodes = 5000
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 # 建立 DQN
@@ -89,6 +90,7 @@ for i_episode in range(n_episodes):
             dqn.learn_DDQN()
             dqn.record_loss()
             dqn.epsilon_decay()
+            os.makedirs('model/{}'.format(date), exist_ok=True)
             dqn.save('model/{}/model_{}_episode_{}'.format(date, date, i_episode))
             with open('loss_{}.txt'.format(date), 'a') as f:
                 f.write('Episode {} finished after {} steps loss {} \n'.format(i_episode, total_step, dqn.loss))
