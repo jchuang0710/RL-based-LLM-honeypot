@@ -81,7 +81,10 @@ for i_episode in range(setting.n_episodes):
         state = next_state
 
         if done or step > 50:
-            with open('rewards_{}.txt'.format(date), 'a') as f:
+            if done:
+                with open('error.txt', 'a') as f:
+                    f.write(info['technique'] + '\n')
+            with open('Reward/rewards_{}.txt'.format(date), 'a') as f:
                 f.write('Episode {} finished after {} steps total rewards {} max tactic id {}\n'.format(i_episode, total_step, rewards, env.max_tactic))
             dqn.record_reward(i_episode, rewards)
             break

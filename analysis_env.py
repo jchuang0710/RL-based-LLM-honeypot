@@ -13,8 +13,8 @@ from openai import OpenAI
 import paramiko
 import time
 
-env = 'linux'
-# env = 'windows'
+# env = 'linux'
+env = 'windows'
 
 # 記得金鑰不要洩漏出去
 api_key = os.environ['OPENAI_API_KEY']
@@ -59,7 +59,6 @@ for f in file_set:
     for item in yaml_dict['atomic_tests']:
         command_set = []
         if env in item['supported_platforms']:
-            set1.add(yaml_dict['attack_technique'])
             print(yaml_dict['attack_technique'])
             arguments = {}
             #flag = True
@@ -106,7 +105,7 @@ for f in file_set:
                     if i != '':
                         command_set.append(i)
                 '''
-            '''
+            
             # ChatGPT generate command/response pair
             if env == 'linux':
                 message_history = [{"role": "system", "content": "I want you to act as a ubuntu terminal. Please set the relevant parameters randomly.  I will type commands and you will reply with what the terminal should show. I want you only to reply with the terminal output in plaintest, and nothing else.You have already install all atomic red team relatvie file under path '/home/atomic'. Some commands will be composed of multiple instructs, please reply them in order and reply need to consider the previous instructs.  Do not write explanations. Do not type commands unless I instruct you to do so. Don't omit any output. All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets {like this}."}]
@@ -116,7 +115,7 @@ for f in file_set:
                 for command in command_set:
                     message_history.append({"role": "user", "content": command})
                     outputs = client.chat.completions.create(
-                        model="gpt-4o",
+                        model="gpt-4o-mini",
                         messages=message_history
                     )
                     response = outputs.choices[0].message.content
@@ -131,7 +130,7 @@ for f in file_set:
                     message_history.append({"role": "assistant", "content": response})
             except:
                 continue
-            '''
+            
             '''
             # Cowrie generate command/response pair
             
@@ -170,7 +169,7 @@ for f in file_set:
                 # 关闭连接
                 ssh.close()
             '''
-            '''
+            
             # ChatGPT judge the env is real or not
             history = ''
             i = 0
@@ -207,16 +206,16 @@ for f in file_set:
             total = total + 1
             if (Completion.choices[0].message.content == 'yes' or Completion.choices[0].message.content == 'Yes'):
                 correct = correct + 1
+                set1.add(yaml_dict['attack_technique'])
             
             #print('history:', history)
             print('total:', total, 'success: ', correct, ' Simulate Success Rate: ', correct/total)
             #input('next')
-            '''
+            
 print(set1)
 print(len(set1))
-'''
+
 path = 'output.txt'
 with open(path, 'w') as f:
     f.write('total:' + str(total) + 'success: ' + str(correct) + ' Simulate Success Rate: ' + str(correct/total))
 print('end')
-'''

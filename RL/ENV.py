@@ -18,7 +18,7 @@ class HoneypotEnv(gym.Env):
         self.max_tactic = 1
         self.histroy = []
         self.date = date
-
+        self.next_technique = ''
         self.llm = llm
 
     def reset(self, lifecycle_command):
@@ -89,6 +89,7 @@ class HoneypotEnv(gym.Env):
         ## 取得下一個 command 的 technique 作為狀態，tactic 作為 reward
         tactic, technique = self.llm.detect_next_state_gpt(action, self.command_buffer[0], self.histroy)
         print('analysis time:' + str(datetime.now()-start))
+        
         print('tactic:', tactic)
         print('technique:', technique)
         self.next_state = np.zeros(self.observation_space.shape[0])
@@ -108,33 +109,37 @@ class HoneypotEnv(gym.Env):
         start = datetime.now()
         system_response = self.llm.answer(action, self.command_buffer[0], self.histroy)
         self.log_history(action, self.command_buffer[0], system_response)
-        self.histroy.append(self.command_buffer[0])
+        self.histroy.append(action + self.command_buffer[0])
         self.histroy.append(system_response)
         del self.command_buffer[0]
  
-        self.next_state = np.zeros(self.observation_space.shape[0])
         print('Generate Response time:' + str(datetime.now()-start))
-
+        self.next_state = np.zeros(self.observation_space.shape[0])
         start = datetime.now()
         # 如果判斷系統輸出是 honeypot 或沒有下一個 command 就結束
         if self.llm.detect_honeypot_gpt(self.histroy):
             done = True
             self.next_state[-1] = 1
-            return self.next_state, -5, done, {}
+            print(self.next_technique)
+            return self.next_state, -5, done, {'technique':self.next_technique}
         
         # 當 command_buffer == null 時，呼叫 LLM 生成 technique
         # Linux 約 111 個 technique
-        next_technique = ''
         if self.command_buffer == []:
-            while not technique_exist(next_technique):
-                next_technique = self.llm.get_next_attack_technique_gpt()
-            self.command_buffer = get_command(next_technique)
-            print("attack technique:", next_technique)
+            self.next_technique = ''
+            while not technique_exist(self.next_technique):
+                self.next_technique = self.llm.get_next_attack_technique_gpt()
+            self.command_buffer = get_command(self.next_technique)
+            print("attack technique:", self.next_technique)
         
         print('detect or get command time:' + str(datetime.now()-start))
         start = datetime.now()
         ## 取得下一個 command 的 technique 作為狀態，tactic 作為 reward
         tactic, technique = self.llm.detect_next_state_gpt(action, self.command_buffer[0], self.histroy)
+        with open('interact/interact_{}.txt'.format(self.date), 'a') as f:
+            f.write('tactic:' + str(tactic) + "\n")
+            f.write('technique:' + str(technique) + "\n")
+            f.write("\n\n")
         print('analysis time:' + str(datetime.now()-start))
         print('tactic:', tactic)
         print('technique:', technique)
@@ -148,11 +153,10 @@ class HoneypotEnv(gym.Env):
         return self.next_state, reward, done, {}
 
     def log_history(self, action, command, response):
-        with open('interact_{}.txt'.format(self.date), 'a') as f:
+        with open('interact/interact_{}.txt'.format(self.date), 'a') as f:
             f.write("action:" + action + "\n")
             f.write("command:" + command + "\n")
             f.write("response:" + response + "\n")
-            f.write("\n")
 
     def step_qrassh(self):
         reward = 0
@@ -200,15 +204,13 @@ class HoneypotEnv(gym.Env):
             while not technique_exist(next_technique):
                 next_technique = self.llm.get_next_attack_technique_gpt()
             self.command_buffer = get_command(next_technique)
-            print("attack technique:", next_technique)
+            print("next technique:", next_technique)
         
         print('detect or get command time:' + str(datetime.now()-start))
         start = datetime.now()
         ## 取得下一個 command 的 technique 作為狀態，tactic 作為 reward
         tactic, technique = self.llm.detect_next_state_gpt("", self.command_buffer[0], self.histroy)
         print('analysis time:' + str(datetime.now()-start))
-        print('tactic:', tactic)
-        print('technique:', technique)
         self.next_state = np.zeros(self.observation_space.shape[0])
         self.next_state[technique] = 1
 
