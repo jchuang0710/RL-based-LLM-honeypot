@@ -1,0 +1,5 @@
+Episode 47 finished after 700 steps loss 0.24217557907104492 
+Episode 50 finished after 800 steps loss 0.31251370906829834 
+Episode 57 finished after 900 steps loss 0.41891029477119446 
+Episode 62 finished after 1000 steps loss 0.5889914631843567 
+Episode 68 finished after 1100 steps loss 0.4593522250652313 

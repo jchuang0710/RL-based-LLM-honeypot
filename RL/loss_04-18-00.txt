@@ -1,0 +1,4 @@
+Episode 111 finished after 700 steps loss 0.3814793825149536 
+Episode 128 finished after 800 steps loss 0.22064155340194702 
+Episode 143 finished after 900 steps loss 0.30148518085479736 
+Episode 156 finished after 1000 steps loss 0.47463810443878174 

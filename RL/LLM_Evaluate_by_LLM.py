@@ -12,7 +12,7 @@ torch.set_num_threads(8)
 # date setting
 date = datetime.now().strftime("%m-%d-%H")
 
-env = HoneypotEnv(ChatGPT(setting.system), len(setting.action_set), date)
+env = HoneypotEnv(ChatGPT(), len(setting.action_set), date)
 # env = HoneypotEnv(LLM("../models/Meta-Llama-3.1-8B-Instruct"), len(action_set), date)
 
 # Environment parameters
@@ -25,8 +25,14 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 # 建立 DQN
 dqn = DQN(device, n_states, n_actions)
-# dqn.load('./model/02-07-04/model_02-07-04_episode_650') # Engage
-# dqn.load('./model/02-17-18/model_02-17-18_episode_358') # ABSI
+if setting.system == 'linux' and setting.action == 'Engage':
+    dqn.load('./model/02-07-04/model_02-07-04_episode_650') # Engage in Linux
+elif setting.system == 'linux' and setting.action == 'ABSI':
+    dqn.load('./model/02-17-18/model_02-17-18_episode_358') # ABSI in Linux
+elif setting.system == 'windows' and setting.action == 'Engage':
+    dqn.load('./model/04-14-07/model_04-14-07_episode_732')
+elif setting.system == 'windows' and setting.action == 'ABSI':
+    pass
 
 # Hacker = Environment
 # State = Command's Tactic
@@ -59,16 +65,15 @@ for i_episode in range(setting.n_episodes):
         # 選擇 action
         # state 丟入，回傳 MITRE Engage Action
         action = dqn.choose_action(state)
-            
-
         # 執行並取得回饋
         ## 送 action + command 給 LLM honeypot，LLM honeypot 送 response 給駭客 ，等駭客回覆 command
-        if setting.mode == 'RL':
-            ext_state, reward, done, info = env.step_llm(setting.action_set[action])
-        elif setting.mode == 'Original':
-            next_state, reward, done, info = env.step_llm("{ allow command execute this time }")
-        elif setting.mode == 'qrassh':
-            next_state, reward, done, info = env.step_qrassh()
+        mode_step_fn = {
+            'RL': lambda a: env.step_llm(setting.action_set[action]),
+            'Original': lambda a: env.step_llm("{ allow command execute this time }"),
+            'qrassh': lambda a: env.step_qrassh()
+        }
+
+        next_state, reward, done, info = mode_step_fn[setting.type](action)
 
         # 累積 reward
         rewards += reward

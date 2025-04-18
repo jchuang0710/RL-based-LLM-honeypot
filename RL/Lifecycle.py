@@ -7,8 +7,11 @@ import pandas as pd
 import glob
 import random
 import setting
-# random.seed(11) # evaluate.py
-random.seed(10) # train.py
+if setting.mode == 'train':
+    random.seed(10) # train.py
+elif setting.mode == 'test':
+    random.seed(11) # evaluate.py
+
 atomic_path = '../atomic-red-team/atomics/T*/*.yaml'
 if setting.system == 'linux':
     victim_path = '/home/atomics'
