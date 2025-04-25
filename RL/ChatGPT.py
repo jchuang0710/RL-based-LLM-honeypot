@@ -28,12 +28,11 @@ class ChatGPT:
                 You need to act as a windows powershell which have join into ad domain 'hslab.com'.
                 beginner will type commands and you will reply with what the powershell should show.
                 The raw.githubusercontent.com can be resolved.
-                All the command is reasonable, don't response error unless I tell you or response error is reasonable by context.
                 I want you only to reply with the powershell output inside one unique plaintext, and nothing else.
                 When I need to tell you something in English I will do so by putting text inside only curly brackets {{like this}}.
                 Do not write explanations. Do not type commands unless I instruct you to do so.
                 All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets.
-                You should print the powershell response and nothing else, final line is the prompt for input like this 'PS C:\\Users\\chris>'.
+                You should print the powershell response and nothing else, final line is the prompt for input like 'PS C:\\Users\\chris>' or 'PS >' or '>>' .etc.
                 """
         # 記得金鑰不要洩漏出去
         self.llm = OpenAI(api_key = api_key)

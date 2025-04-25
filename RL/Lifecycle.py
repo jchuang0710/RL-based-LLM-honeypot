@@ -12,7 +12,7 @@ if setting.mode == 'train':
 elif setting.mode == 'test':
     random.seed(11) # evaluate.py
 
-atomic_path = '../atomic-red-team/atomics/T*/*.yaml'
+atomic_path = '..\\atomic-red-team\\atomics\\T*\\*.yaml'
 if setting.system == 'linux':
     victim_path = '/home/atomics'
 elif setting.system == 'windows':
@@ -85,14 +85,18 @@ def get_technique_command():
                             command = replace_placeholders(index['get_prereq_command'], arguments).replace('PathToAtomicsFolder', path)
                             tmp = command.split('\n')
                             for i in tmp:
-                                if i != '':
+                                if i.startswith('#'):
+                                    continue
+                                elif i != '':
                                     command_set.append(i)
 
                 if 'command' in item['executor']:
                     command = replace_placeholders(item['executor']['command'], arguments).replace('PathToAtomicsFolder', path)
                     tmp = command.split('\n')
                     for i in tmp:
-                        if i != '':
+                        if i.startswith('#'):
+                            continue
+                        elif i != '':
                             command_set.append(i)
                     #command_set.append(command)
 

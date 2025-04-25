@@ -8,7 +8,7 @@ from datetime import datetime
 torch.set_num_threads(8) 
 date = datetime.now().strftime("%m-%d-%H")
 
-action_set = action_set = ["", "{ Restore to original state }", "{ if output contain network speed, Degrade the network speed }", "{ if output is upload or download, Block this command by the network traffic }", "{ if output contain hardware setting, Change hardware setting }","{ change terminal output this time }","{ if output is file content, Change the file content }", "{ change the output by change the access right }", "{ Block this command this time }"]
+# action_set = ["", "{ Restore to original state }", "{ if output contain network speed, Degrade the network speed }", "{ if output is upload or download, Block this command by the network traffic }", "{ if output contain hardware setting, Change hardware setting }","{ change terminal output this time }","{ if output is file content, Change the file content }", "{ change the output by change the access right }", "{ Block this command this time }"]
 #action_set = ["", "{ Block this command this time }", "{ Change output }", "{ Output should contain you are ugly }"]
 
 env = HoneypotEnv(ChatGPT(), len(action_set), date)
@@ -46,7 +46,8 @@ dqn = DQN(device, n_states, n_actions, n_hidden, batch_size, lr, epsilon, eps_mi
 # Next_State = Command's Tactic
 # Reward = Command's Tactic
 # 實際的 Action = LLM Honeypot's Response
-
+prev_depth = 0
+visited_tactics = []
 
 # 學習
 for i_episode in range(n_episodes):
@@ -74,7 +75,16 @@ for i_episode in range(n_episodes):
 
         # 執行並取得回饋
         ## 送 action + command 給 LLM honeypot，LLM honeypot 送 response 給駭客 ，等駭客回覆 command
-        next_state, reward, done, info = env.step(action_set[action])
+        next_state, base_reward, done, info = env.step(action_set[action])
+
+        reward = base_reward  # 根據你本來的設計
+        prev_depth = current_depth
+        current_depth = base_reward
+
+        # 1. 深度差異懲罰（回退就給負值）
+        depth_diff = current_depth - prev_depth
+        if depth_diff <= 0:
+            reward = -0.5 * (depth_diff + 1)  # alpha = -0.2
 
         # 累積 reward
         rewards += reward

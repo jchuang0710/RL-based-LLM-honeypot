@@ -108,7 +108,10 @@ class HoneypotEnv(gym.Env):
         # 從執行 command 取得系統輸出
         start = datetime.now()
         system_response = self.llm.answer(action, self.command_buffer[0], self.histroy)
-        self.log_history(action, self.command_buffer[0], system_response)
+        try:
+            self.log_history(action, self.command_buffer[0], system_response)
+        except:
+            print('log history error')
         self.histroy.append(action + self.command_buffer[0])
         self.histroy.append(system_response)
         del self.command_buffer[0]

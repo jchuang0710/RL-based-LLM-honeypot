@@ -1,0 +1,11 @@
+Episode 81 finished after 600 steps loss 0.23305490612983704 
+Episode 88 finished after 700 steps loss 0.21980497241020203 
+Episode 100 finished after 800 steps loss 0.3461458683013916 
+Episode 116 finished after 900 steps loss 0.41044068336486816 
+Episode 126 finished after 1000 steps loss 0.44759419560432434 
+Episode 141 finished after 1100 steps loss 0.30932801961898804 
+Episode 148 finished after 1200 steps loss 0.43458306789398193 
+Episode 159 finished after 1300 steps loss 0.6647615432739258 
+Episode 175 finished after 1400 steps loss 0.7105419039726257 
+Episode 182 finished after 1500 steps loss 0.6158653497695923 
+Episode 195 finished after 1600 steps loss 0.7274684906005859 

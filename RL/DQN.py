@@ -53,7 +53,7 @@ class DQN(object):
         self.memory = np.zeros((setting.memory_capacity, n_states * 2 + 2)) # 每個 memory 中的 experience 大小為 (state + next state + reward + action)
         self.optimizer = torch.optim.Adam(self.eval_net.parameters(), lr=setting.lr)
         
-        self.scheduler = ReduceLROnPlateau(self.optimizer, mode='min', factor=0.5, patience=6, verbose=True, min_lr=1e-6) # 新增基於 Loss 的學習率調整
+        self.scheduler = ReduceLROnPlateau(self.optimizer, mode='min', factor=0.5, patience=6, verbose=True, min_lr=1e-9) # 新增基於 Loss 的學習率調整
         self.loss_func = nn.SmoothL1Loss()
         self.memory_counter = 0
         self.learn_step_counter = 0 # 讓 target network 知道什麼時候要更新
@@ -157,10 +157,10 @@ class DQN(object):
         
         # 計算 loss
         self.loss = self.loss_func(q_eval, q_target)
-
+        self.print_gap(q_eval, q_target)
         # 根據 Loss 調整學習率
         self.scheduler.step(self.loss.item())
-
+        
         # Backpropagation
         self.optimizer.zero_grad()
         self.loss.backward()
@@ -172,6 +172,11 @@ class DQN(object):
 
     def record_loss(self):
         self.writer.add_scalar('Loss/train', self.loss.item(), self.learn_step_counter)
+
+    def print_gap(self, q_eval, q_target):
+        with open('gap.txt', 'a') as f:
+            f.write(f"Loss: {self.loss.item():.4f}, Q_eval mean: {q_eval.mean().item():.2f}, Q_target mean: {q_target.mean().item():.2f}")
+        
     
     def record_reward(self, episode, reward):
         self.writer.add_scalar('Reward/episode', reward, episode)

