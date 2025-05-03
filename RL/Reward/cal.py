@@ -27,16 +27,15 @@ def get_total_reward(file):
 
 print('LLM')
 
-print('Original-Reward:', sum(get_total_reward("./rewards_04-23-09.txt")))
-print('Original-Depth:', sum(get_max_depth("./rewards_04-23-09.txt")))
+# print('Original-Reward:', sum(get_total_reward("./rewards_04-28-12.txt")))
+# print('Original-Depth:', sum(get_max_depth("./rewards_04-28-12.txt")))
 
+print('DDQN-Reward:', sum(get_total_reward("./rewards_05-02-22.txt")))
+print('DDQN-Depth:', sum(get_max_depth("./rewards_05-02-22.txt")))
+
+'''
 print('ABSI-Reward:', sum(get_total_reward("./rewards_04-22-20.txt")))
 print('ABSI-Depth:', sum(get_max_depth("./rewards_04-22-20.txt")))
-
-print('DDQN-Reward:', sum(get_total_reward("./rewards_04-22-23.txt")))
-print('DDQN-Depth:', sum(get_max_depth("./rewards_04-22-23.txt")))
-'''
-
 
 print('QRASSH-Reward:', sum(get_total_reward("../rewards_03-13-01.txt")))
 print('QRASSH-Depth:', sum(get_max_depth("../rewards_03-13-01.txt")))

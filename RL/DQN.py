@@ -178,11 +178,13 @@ class DQN(object):
             f.write(f"Loss: {self.loss.item():.4f}, Q_eval mean: {q_eval.mean().item():.2f}, Q_target mean: {q_target.mean().item():.2f}")
         
     
-    def record_reward(self, episode, reward):
+    def record_reward(self, episode, reward, max_tactic):
         self.writer.add_scalar('Reward/episode', reward, episode)
+        self.writer.add_scalar('Depth/episode', max_tactic, episode)
 
     def evaluate_reward(self, episode, reward):
         self.writer.add_scalar('Evaluate/reward', reward, episode)
+        self.writer.add_scalar('Depth/episode', max_tactic, episode)
 
     def load(self, name):
         self.eval_net.load_state_dict(torch.load(name, map_location=self.device))

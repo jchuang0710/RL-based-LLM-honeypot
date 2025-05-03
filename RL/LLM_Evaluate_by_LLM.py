@@ -26,7 +26,8 @@ print(device)
 # 建立 DQN
 dqn = DQN(device, n_states, n_actions)
 if setting.system == 'linux' and setting.action == 'Engage':
-    dqn.load('./model/02-07-04/model_02-07-04_episode_650') # Engage in Linux
+    # dqn.load('./model/02-07-04/model_02-07-04_episode_650') # Engage in Linux
+    dqn.load('./model/05-02-00/model_05-02-00_episode_352') # 有負 reward
 elif setting.system == 'linux' and setting.action == 'ABSI':
     dqn.load('./model/02-17-18/model_02-17-18_episode_358') # ABSI in Linux
 elif setting.system == 'windows' and setting.action == 'Engage':
@@ -39,7 +40,8 @@ elif setting.system == 'windows' and setting.action == 'ABSI':
 # Next_State = Command's Tactic
 # Reward = Command's Tactic
 # 實際的 Action = LLM Honeypot's Response
-
+prev_depth = 0
+current_depth = 0
 # 學習
 for i_episode in range(setting.n_episodes):
     print('episode: ',i_episode)
@@ -69,22 +71,30 @@ for i_episode in range(setting.n_episodes):
         ## 送 action + command 給 LLM honeypot，LLM honeypot 送 response 給駭客 ，等駭客回覆 command
         mode_step_fn = {
             'RL': lambda a: env.step_llm(setting.action_set[action]),
-            'Original': lambda a: env.step_llm("{ allow command execute }"),
+            'Original': lambda a: env.step_llm(""),
             'qrassh': lambda a: env.step_qrassh()
         }
 
-        next_state, reward, done, info = mode_step_fn[setting.type](action)
+        next_state, base_reward, done, info = env.step_llm(setting.action_set[action])
 
+        reward = base_reward  # 根據你本來的設計
+        prev_depth = current_depth
+        current_depth = base_reward
+
+        # 1. 深度差異懲罰（回退就給負值）
+        depth_diff = current_depth - prev_depth
+        if depth_diff <= 0:
+            reward = -0.5 * (depth_diff + 1)  # alpha = -0.2
         # 累積 reward
         rewards += reward
         
         # 儲存 experience
         # 將 state 與 action 給入環境達成的新的 state，紀錄 reward
-        dqn.store_transition(state, action, reward, next_state)
+        # dqn.store_transition(state, action, reward, next_state)
 
         # 有足夠 experience 後進行訓練
-        if total_step % setting.train_step == 0: # 儲存 500 個經驗後訓練一次
-            dqn.learn_DDQN()
+        # if total_step % setting.train_step == 0: # 儲存 500 個經驗後訓練一次
+        #     dqn.learn_DDQN()
 
         # 進入下一 state
         state = next_state
@@ -92,7 +102,7 @@ for i_episode in range(setting.n_episodes):
         if done or step > 50:
             with open('rewards_{}.txt'.format(date), 'a') as f:
                 f.write('Episode {} finished after {} steps total rewards {} max tactic id {}\n'.format(i_episode, total_step, rewards, env.max_tactic))
-            dqn.record_reward(i_episode, rewards)
+            dqn.record_reward(i_episode, rewards, env.max_tactic)
             break
         
         #input('next')

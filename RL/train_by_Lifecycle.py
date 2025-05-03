@@ -61,7 +61,7 @@ for i_episode in range(n_episodes):
             continue
     state = env.reset(tmp)
     step = 0
-
+    current_depth = 0
     while True:
 
         print('step: ',step)
@@ -85,10 +85,9 @@ for i_episode in range(n_episodes):
         depth_diff = current_depth - prev_depth
         if depth_diff <= 0:
             reward = -0.5 * (depth_diff + 1)  # alpha = -0.2
-
         # 累積 reward
         rewards += reward
-                
+        
         # 儲存 experience
         # 將 state 與 action 給入環境達成的新的 state，紀錄 reward
         dqn.store_transition(state, action, reward, next_state)

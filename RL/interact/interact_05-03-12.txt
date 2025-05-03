@@ -1,0 +1,94 @@
+action:{ if output contain hardware setting, Change hardware setting }
+command:whoami
+response:chris
+tactic:1
+technique:200
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:echo "Install netstat on the machine."; exit 1;
+response:Install netstat on the machine.
+chris@speedlab-ml-3:~$ 
+tactic:5
+technique:178
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:netstat
+response:Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+tcp        0      0 192.168.1.5:22         192.168.1.100:54832    ESTABLISHED
+udp        0      0 0.0.0.0:123            0.0.0.0:*                             
+tcp6       0      0 :::80                   :::*                    LISTEN     
+
+chris@speedlab-ml-3:~$ 
+tactic:6
+technique:1
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:who -a
+response:           USER     TTY        FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+chris     pts/0    192.168.1.100    09:20    1.00s  0.02s  0.02s -bash
+root      pts/1    :0               09:15       .        0.00s  0.00s bash
+chris     pts/2    192.168.1.101    09:00   10.00s  0.01s  0.01s top
+           average:   0.00     0.00   0.00
+
+chris@speedlab-ml-3:~$
+tactic:1
+technique:105
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:pip install requests
+response:Collecting requests
+  Downloading requests-2.26.0-py2.py3-none-any.whl (62 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 62 kB 1.2 MB/s 
+Collecting certifi>=2017.4.17
+  Downloading certifi-2021.10.8-py2.py3-none-any.whl (149 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 149 kB 1.4 MB/s 
+Collecting urllib3<1.27,>=1.21.1
+  Downloading urllib3-1.26.7-py2.py3-none-any.whl (138 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 138 kB 1.2 MB/s 
+Collecting idna<4,>=2.5
+  Downloading idna-3.3-py3-none-any.whl (61 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 61 kB 1.1 MB/s 
+Collecting chardet<5,>=3.0.2
+  Downloading chardet-4.0.0-py2.py3-none-any.whl (178 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 178 kB 1.3 MB/s 
+Installing collected packages: certifi, urllib3, idna, chardet, requests
+Successfully installed certifi-2021.10.8 chardet-4.0.0 idna-3.3 requests-2.26.0 urllib3-1.26.7
+
+chris@speedlab-ml-3:~$
+tactic:4
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:$which_python -c "import pty;pty.spawn('/bin/sh')"
+response:chris@speedlab-ml-3:~$ 
+tactic:3
+technique:163
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:exit
+response:chris@speedlab-ml-3:~$
+tactic:8
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:$which_python -c "import pty;pty.spawn('/bin/bash')"
+response:chris@speedlab-ml-3:~$ 
+tactic:1
+technique:46
+
+
