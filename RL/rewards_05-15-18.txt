@@ -1,0 +1,16 @@
+Episode 0 finished after 51 steps total rewards 243 max tactic id 12
+Episode 1 finished after 57 steps total rewards 23 max tactic id 9
+Episode 2 finished after 108 steps total rewards 224 max tactic id 12
+Episode 3 finished after 159 steps total rewards 230 max tactic id 12
+Episode 4 finished after 166 steps total rewards 14 max tactic id 6
+Episode 5 finished after 171 steps total rewards 6 max tactic id 5
+Episode 6 finished after 222 steps total rewards 231 max tactic id 12
+Episode 7 finished after 273 steps total rewards 216 max tactic id 9
+Episode 8 finished after 324 steps total rewards 194 max tactic id 9
+Episode 9 finished after 326 steps total rewards 0 max tactic id 5
+Episode 10 finished after 377 steps total rewards 245 max tactic id 12
+Episode 11 finished after 386 steps total rewards 28 max tactic id 7
+Episode 12 finished after 401 steps total rewards 50 max tactic id 7
+Episode 13 finished after 404 steps total rewards 4 max tactic id 7
+Episode 14 finished after 407 steps total rewards 7 max tactic id 6
+Episode 15 finished after 433 steps total rewards 99 max tactic id 7

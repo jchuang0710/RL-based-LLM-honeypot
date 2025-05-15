@@ -15,23 +15,23 @@ def get_max_depth(file):
     max_depth = []
     with open(file, 'r', encoding='utf-8') as file:
         for line in file:
-            max_depth.append(int(line.strip().split(' ')[12]))
+            max_depth.append(float(line.strip().split(' ')[12]))
     return max_depth
 
 def get_total_reward(file):
     total_reward = []
     with open(file, 'r', encoding='utf-8') as file:
         for line in file:
-            total_reward.append(int(line.strip().split(' ')[8]))
+            total_reward.append(float(line.strip().split(' ')[8]))
     return total_reward
 
 print('LLM')
 
-# print('Original-Reward:', sum(get_total_reward("./rewards_04-28-12.txt")))
-# print('Original-Depth:', sum(get_max_depth("./rewards_04-28-12.txt")))
+print('Original-Reward:', sum(get_total_reward("./rewards_05-03-23.txt")))
+print('Original-Depth:', sum(get_max_depth("./rewards_05-03-23.txt")))
 
-print('DDQN-Reward:', sum(get_total_reward("./rewards_05-02-22.txt")))
-print('DDQN-Depth:', sum(get_max_depth("./rewards_05-02-22.txt")))
+print('DDQN-Reward:', sum(get_total_reward("./rewards_05-04-15.txt")))
+print('DDQN-Depth:', sum(get_max_depth("./rewards_05-04-15.txt")))
 
 '''
 print('ABSI-Reward:', sum(get_total_reward("./rewards_04-22-20.txt")))

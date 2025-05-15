@@ -12,7 +12,7 @@ lr = 0.001                  # learning rate
 if mode == 'train':
     epsilon = 1             # 最初的 epsilon-greedy
 elif mode == 'test':
-    epsilon = 0
+    epsilon = 1
 eps_min = 0.15              # 最多
 eps_decay = 20              # 下降的區間有 100 個
 gamma = 0.9                 # reward discount factor
@@ -29,7 +29,7 @@ elif mode == 'train':
 # action setting
 if action == 'Engage':
     if system == 'linux':
-        action_set = ["", "{ Restore to original state }", "{ if output contain network speed, Degrade the network speed }", "{ if output is upload or download, Block this command by the network traffic }", "{ if output contain hardware setting, Change hardware setting }","{ Change terminal output this time }","{ if output is file content, Change the file content }", "{ change the terminal output via change the access rights }", "{ Block this command this time }"]
+        action_set = ["", "{ Restore to original state }", "{ if output contain network speed, Degrade the network speed }", "{ if output is upload or download, Block this command by the network traffic }", "{ if output contain hardware setting, Change hardware setting }","{ Change terminal output this time }","{ if output is file content, Change the file content }", "{ if output content access right relative, change the access rights }", "{ Block this command this time }"]
     elif system == 'windows':
         action_set = ["","{ allow command execute this time }", "{ Restore to original state }", "{ if response contain network speed, Degrade the network speed }", "{ if response is upload or download, Block this command by the network traffic }", "{ if response contain hardware setting, modify hardware setting }","{ modify powershell response }","{ if response is file content, modify the file content }", "{ modify the response by change the access right }", "{ Block this command this time }"]
 elif action == 'ABSI':

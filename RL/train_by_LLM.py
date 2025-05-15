@@ -33,7 +33,6 @@ dqn = DQN(device, n_states, n_actions)
 # 實際的 Action = LLM Honeypot's Response
 prev_depth = 0
 current_depth = 0
-visited_tactics = []
 # 學習
 for i_episode in range(setting.n_episodes):
     print('episode: ',i_episode)
@@ -60,13 +59,13 @@ for i_episode in range(setting.n_episodes):
         next_state, base_reward, done, info = env.step_llm(setting.action_set[action])
 
         reward = base_reward  # 根據你本來的設計
-        prev_depth = current_depth
-        current_depth = base_reward
+        # prev_depth = current_depth
+        # current_depth = base_reward
 
-        # 1. 深度差異懲罰（回退就給負值）
-        depth_diff = current_depth - prev_depth
-        if depth_diff <= 0:
-            reward = -0.5 * (depth_diff + 1)  # alpha = -0.2
+        # # 1. 深度差異懲罰（回退就給負值）
+        # depth_diff = current_depth - prev_depth
+        # if depth_diff <= 0:
+        #     reward = -0.5 * (depth_diff + 1)  # alpha = -0.2
         # 累積 reward
         rewards += reward
                 
