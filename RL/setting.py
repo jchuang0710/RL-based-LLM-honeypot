@@ -3,7 +3,7 @@
 action = 'Engage'   # Engage, ABSI
 type = 'RL'         # RL, Original, real system, qrassh
 system = 'linux'    # linux, windows
-mode = 'test'      # train, test
+mode = 'train'      # train, test
 
 # RL Hyper parameters
 n_hidden = 256
@@ -12,7 +12,7 @@ lr = 0.001                  # learning rate
 if mode == 'train':
     epsilon = 1             # 最初的 epsilon-greedy
 elif mode == 'test':
-    epsilon = 1
+    epsilon = 0
 eps_min = 0.15              # 最多
 eps_decay = 20              # 下降的區間有 100 個
 gamma = 0.9                 # reward discount factor

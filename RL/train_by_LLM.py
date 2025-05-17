@@ -88,7 +88,7 @@ for i_episode in range(setting.n_episodes):
         # 進入下一 state
         state = next_state
 
-        if done or step > 100:
+        if done or step > 50:
             if done:
                 with open('error.txt', 'a') as f:
                     f.write(info['technique'] + '\n')
