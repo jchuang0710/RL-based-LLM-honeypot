@@ -26,8 +26,8 @@ print(device)
 # 建立 DQN
 dqn = DQN(device, n_states, n_actions)
 if setting.system == 'linux' and setting.action == 'Engage':
-    # dqn.load('./model/02-07-04/model_02-07-04_episode_650') # Engage in Linux
-    dqn.load('./model/05-02-00/model_05-02-00_episode_352') # 有負 reward
+    dqn.load('./model/02-07-04/model_02-07-04_episode_650') # Engage in Linux
+    # dqn.load('./model/05-02-00/model_05-02-00_episode_352') # 有負 reward
 elif setting.system == 'linux' and setting.action == 'ABSI':
     dqn.load('./model/02-17-18/model_02-17-18_episode_468') # ABSI in Linux
 elif setting.system == 'windows' and setting.action == 'Engage':
@@ -103,8 +103,8 @@ for i_episode in range(setting.n_episodes):
             with open('rewards_{}.txt'.format(date), 'a') as f:
                 f.write('Episode {} finished after {} steps total rewards {} max tactic id {}\n'.format(i_episode, total_step, rewards, env.max_tactic))
             dqn.record_reward(i_episode, rewards, env.max_tactic)
+            with open('unknow_technique_{}.txt'.format(date), 'a') as f:
+                f.write('Episode {} unknown tehcnique count {}\n'.format(i_episode, env.unknown_technique))
             break
-        
-        #input('next')
-
+#input('next')
 env.close()

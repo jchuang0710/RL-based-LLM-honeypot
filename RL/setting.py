@@ -2,8 +2,8 @@
 # Experiment setting
 action = 'Engage'   # Engage, ABSI
 type = 'RL'         # RL, Original, real system, qrassh
-system = 'linux'    # linux, windows
-mode = 'train'      # train, test
+system = 'windows'    # linux, windows
+mode = 'test'      # train, test
 
 # RL Hyper parameters
 n_hidden = 256
