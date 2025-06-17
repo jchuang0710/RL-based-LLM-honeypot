@@ -1,3 +1,0 @@
-@CMD: 
-@RESP: user-name@computer-name:curr-dir$ 
-

@@ -1,6 +1,0 @@
-@CMD: 
-@RESP: user-name@computer-name:curr-dir$ user-name=root password=123.
-
-@CMD: 
-@RESP: user-name@computer-name:curr-dir$ user-name=root password=123.
-
