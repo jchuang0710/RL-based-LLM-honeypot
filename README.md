@@ -22,9 +22,11 @@ RUN:
 Connect:
 * `ssh -T -p 2222 root@localhost`
 
-訓練與評估 RL: under RL
+## 訓練與評估 RL: under RL
+* 透過修改 setting 即可
 * `python train_by_LLM.py` : train RL model
 * `python LLM_Evaluate_by_LLM.py`: evaluate model
 
-評估 backend
+## 評估 backend
+* 需修改程式來評估不同的 backend
 * `python analysis_env.py` : 評估 honeypot backend 的好壞

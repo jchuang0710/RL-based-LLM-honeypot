@@ -4,6 +4,8 @@ from datetime import datetime
 import torch
 from DQN import DQN
 import numpy as np
+import setting
+import time
 
 # Generate keys with 'ssh-keygen -t rsa -f server.key'
 HOST_KEY = paramiko.RSAKey(filename='server.key')
@@ -13,31 +15,31 @@ SSH_PORT = 2222
 LOGFILE = 'logs/auth.log' 
 LOGFILE_LOCK = threading.Lock()
 
-# Environment parameters
-n_actions = 8
-n_states = 12
-
-# Hyper parameters
-n_hidden = 50
-batch_size = 32
-lr = 0.01                 # learning rate
-epsilon = 0.1             # epsilon-greedy
-gamma = 0.9               # reward discount factor
-target_replace_iter = 100 # target network 更新間隔
-memory_capacity = 2000
-n_episodes = 10000
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 #device = 'cpu'
 print(device)
 # 建立 DQN
-dqn = DQN(device, n_states, n_actions, n_hidden, batch_size, lr, epsilon, gamma, target_replace_iter, memory_capacity)
+n_actions = len(setting.action_set)
+n_states = 203
+
+dqn = DQN(device, n_states, n_actions)
+if setting.system == 'linux' and setting.action == 'Engage':
+    dqn.load('./model/02-07-04/model_02-07-04_episode_650') # Engage in Linux
+    # dqn.load('./model/05-02-00/model_05-02-00_episode_352') # 有負 reward
+elif setting.system == 'linux' and setting.action == 'ABSI':
+    dqn.load('./model/02-17-18/model_02-17-18_episode_468') # ABSI in Linux
+elif setting.system == 'windows' and setting.action == 'Engage':
+    dqn.load('./model/04-21-14/model_04-21-14_episode_847')
+elif setting.system == 'windows' and setting.action == 'ABSI':
+    dqn.load('./model/04-18-17/model_04-18-17_episode_722')
+
 
 class SSHServerHandler(paramiko.ServerInterface):
     def __init__(self, llm_model):
         self.event = threading.Event()
         self.llm_model = llm_model
         self.log_history = []
-        self.action_set = ["", "{ Restore to original state }", "{ Degrade the network speed }", "{ Block the network traffic }", "{ Change hardware setting of current command}","{ Change output of current command }","{ Change the file content of current command }", "{ Change the access rights of current command }"]
+        self.action_set = setting.action_set
         self.dpn = dqn
 
     def check_channel_request(self, kind, channelID): 
@@ -71,7 +73,7 @@ class SSHServerHandler(paramiko.ServerInterface):
         return paramiko.AUTH_SUCCESSFUL
     
     def handle_shell(self):
-        log_filename = f"logs/log_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
+        log_filename = f"real_time_logs/log_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
         response = self.llm_model.answer(self.action_set[0], '\n', self.log_history)
         self.channel.sendall(f'{response}')
         self.log_history.append('\n')
@@ -83,18 +85,25 @@ class SSHServerHandler(paramiko.ServerInterface):
                 command = self.channel.recv(1024).decode("utf-8").strip()
                 
                 print("CMD:", command)
-                
-                id = self.llm_model.next_state(command, self.log_history)
+                if command == 'exit' or command == 'logout':
+                    break
+                start = datetime.now()
+                tactic_id, technique_id = self.llm_model.detect_next_state_gpt(command, self.log_history)
+                log_file = open(log_filename, "a")
+                log_file.write(f"Detection Time: {datetime.now()- start}\n")
+                log_file.close()
                 state = np.zeros(n_states)
-                state[id-1] = 1
+                state[technique_id-1] = 1
 
                 action = dqn.choose_action(state)
                 print("action:", self.action_set[action])
                 # Produce output with LLM
+                start = datetime.now()
                 response = self.llm_model.answer(self.action_set[action], command, self.log_history)
+                log_file = open(log_filename, "a")
+                log_file.write(f"Generate Response Time: {datetime.now()- start}\n")
+                log_file.close()
                 print(response)
-                if response == 'exit' or response == 'logout':
-                    break
                 
                 # Save the logs
                 self.log_history.append(command)
