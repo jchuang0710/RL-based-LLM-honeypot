@@ -9,7 +9,7 @@ import time
 
 # Generate keys with 'ssh-keygen -t rsa -f server.key'
 HOST_KEY = paramiko.RSAKey(filename='server.key')
-SSH_PORT = 2222
+SSH_PORT = 22
 
 # Log the user:password combinations to files
 LOGFILE = 'logs/auth.log' 
@@ -51,15 +51,12 @@ class SSHServerHandler(paramiko.ServerInterface):
         return True
     
     def check_channel_pty_request(self, c, t, w, h, p, ph, m): 
-        return True
-    
-    def get_allowed_auths(self, username):
-        return 'password'
+        return True    
     
     def check_auth_password(self, username, password):
         self.username = username
         self.password = password
-        self.llm_model.add_system_prompt('user-name=' + self.username + ' passowrd=' + self.password + '.')
+        self.llm_model.add_system_prompt(self.username,self.password)
         # save login info to a file
         LOGFILE_LOCK.acquire()
         try:
@@ -74,6 +71,7 @@ class SSHServerHandler(paramiko.ServerInterface):
     
     def handle_shell(self):
         log_filename = f"real_time_logs/log_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
+        time.sleep(1)
         response = self.llm_model.answer(self.action_set[0], '\n', self.log_history)
         self.channel.sendall(f'{response}')
         self.log_history.append('\n')
@@ -82,7 +80,21 @@ class SSHServerHandler(paramiko.ServerInterface):
             try:
                 # Receive user input
                 # self.channel.sendall(f'{self.username}@localhost:~/ $')
-                command = self.channel.recv(1024).decode("utf-8").strip()
+                buffer = ""
+                while True:
+                    # ✅ 一次讀 1 byte
+                    char = self.channel.recv(1).decode("utf-8")
+
+                    # 顯示回顯（回傳給 client 顯示打的字）
+                    self.channel.send(char)
+
+                    if char == '\r' or char == '\n':
+                        break
+                    else:
+                        buffer += char
+
+                command = buffer.strip()
+                # command = self.channel.recv(1024).decode("utf-8").strip()
                 
                 print("CMD:", command)
                 if command == 'exit' or command == 'logout':
@@ -111,9 +123,12 @@ class SSHServerHandler(paramiko.ServerInterface):
                 log_file = open(log_filename, "a")
                 log_file.write(f"@CMD: {command}\n@Action: {self.action_set[action]}\n@RESP: {response}\n\n")
                 log_file.close()
-
+                response2 = response.split('\n')
+                for resp in response2:
+                    resp.replace('\n','')
+                    self.channel.sendall(f'\r\n{resp}')
                 # Send response
-                self.channel.sendall(f'{response} ')
+                
 
             except Exception as e:
                 print("Channel closed:", e)

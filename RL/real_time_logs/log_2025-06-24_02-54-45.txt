@@ -1,0 +1,28 @@
+Detection Time: 0:00:01.428998
+Generate Response Time: 0:00:00.960604
+@CMD: ls
+@Action: { if output is upload or download, Block this command by the network traffic }
+@RESP: total 0
+chris@speedlab-ml-3:~$ 
+
+Detection Time: 0:00:01.711561
+Generate Response Time: 0:00:00.762150
+@CMD: dir
+@Action: 
+@RESP: total 0
+chris@speedlab-ml-3:~$ 
+
+Detection Time: 0:00:01.845605
+Generate Response Time: 0:00:03.463235
+@CMD: ping 8.8.8.8
+@Action: { if output content access right relative, change the access rights }
+@RESP: PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=117 time=14.8 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=117 time=14.3 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=117 time=14.9 ms
+
+--- 8.8.8.8 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2001ms
+rtt min/avg/max/mdev = 14.3/14.6/14.9/0.3 ms
+chris@speedlab-ml-3:~$ 
+

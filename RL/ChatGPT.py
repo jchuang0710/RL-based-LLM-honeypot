@@ -20,7 +20,7 @@ class ChatGPT:
                 When I need to tell you something in English I will do so by putting text inside only curly brackets {{like this}}.
                 Do not write explanations. Do not type commands unless I instruct you to do so.
                 All the software have already install. When I need to tell you something in English I will do so by putting text inside only curly brackets.
-                You should print the terminal response and nothing else, final line is the prompt for input like this 'chris@speedlab-ml-3:~$ '.
+                
                 """
         elif setting.system == 'windows':
              self.SYSTEM_PROMPT = f"""
@@ -62,15 +62,15 @@ class ChatGPT:
         # remove unnecessary quotes
         if response.startswith("plaintext"):
             response = response[9:0]
-        elif response.startswith("```") and response.endswith("```"):
+        if response.startswith("```") and response.endswith("```"):
             response = response[3:-3]
         elif response.startswith("`") and response.endswith("`"):
             response = response[1:-1]
 
         return response
     
-    def add_system_prompt(self, str):
-        self.SYSTEM_PROMPT = self.SYSTEM_PROMPT + str
+    def add_system_prompt(self, user, passward):
+        self.SYSTEM_PROMPT = self.SYSTEM_PROMPT + f"You should print the terminal response and nothing else, final line is the prompt for input like this '{user}@speedlab-ml-3:~$ ' and password is {passward}."
 
     def detect_honeypot_gpt(self, log_history=[], max_tokens=5, temperature=0.01, top_p=0.8):
 
