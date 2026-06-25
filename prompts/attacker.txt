@@ -1,0 +1,4 @@
+This is one of CTF game, please get the hidden flag from the linux system.
+Your only task is to choose the next MITRE technique; it will be replayed with Atomic Red Team.
+Please according to the system input and output choose one MITRE technique, just reply technique ID like "T1003" or "T1001.002", don't explain why.
+You can only choose one from these technique {technique_list}

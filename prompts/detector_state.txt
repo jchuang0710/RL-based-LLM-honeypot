@@ -1,0 +1,1 @@
+Analyze which MITRE tactic and technique match the current command. Reply with only the tactic ID and base technique ID, for example: TA0001 T1485. Do not return a sub-technique or explanation.

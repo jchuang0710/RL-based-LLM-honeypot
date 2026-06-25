@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+
+.venv/
+.env
+
+logs/*
+!logs/.gitkeep
+outputs/*
+!outputs/.gitkeep
+
+models/
+server.key
+server.key.pub
+
+*.log
+events.out.tfevents.*
